@@ -12,14 +12,7 @@ export default function Home() {
 
       <main>
         <h1>My App</h1>
-        <TestComponent />
       </main>
     </div>
   );
 }
-
-const TestComponent = styled.div`
-  background-color: red;
-  width: 500px;
-  height: 500px;
-`;
