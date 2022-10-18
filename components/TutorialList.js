@@ -16,7 +16,7 @@ export default function TutorialList({ tutorials }) {
                 objectFit="cover"
               ></Image>
             </ListImage>
-            <h2>{tutorial.name}</h2>
+            <ListName>{tutorial.name}</ListName>
           </ListItem>
         );
       })}
@@ -25,13 +25,18 @@ export default function TutorialList({ tutorials }) {
 }
 
 const ListContainer = styled.ul`
-  all: unset;
+  padding: 1em;
+  list-style: none;
+  background-color: var(--background);
 `;
 
 const ListItem = styled.li`
+  background-color: var(--primary-50);
   display: flex;
   flex-wrap: nowrap;
-  justify-content: left;
+  margin: 1em 0;
+  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08),
+    0px 4px 6px -2px rgba(16, 24, 40, 0.03);
 `;
 
 const ListImage = styled.figure`
@@ -39,4 +44,11 @@ const ListImage = styled.figure`
   aspect-ratio: 1;
   width: 5.625em;
   height: 5.625em;
+`;
+
+const ListName = styled.h2`
+  font-weight: 500;
+  font-size: 1.2em;
+  line-height: 1.35em;
+  color: var(--primary-100);
 `;

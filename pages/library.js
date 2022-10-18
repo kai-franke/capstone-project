@@ -1,12 +1,25 @@
 import initialTutorials from "../db";
 import TutorialList from "../components/TutorialList";
+import styled from "styled-components";
 
 export default function LibraryPage() {
   return (
     <>
-      <h1>My tutorials</h1>
-
+      <Headline>My tutorials</Headline>
       <TutorialList tutorials={initialTutorials} />
+      <Message>No more tutorials</Message>
     </>
   );
 }
+
+const Headline = styled.h1`
+ font-weight: 500;
+ font-size: 1.5em;
+ margin: 0 0.5em;
+`
+
+const Message = styled.p`
+text-align: center;
+font-size: 0.7em;
+color: var(--lighttext);
+`
