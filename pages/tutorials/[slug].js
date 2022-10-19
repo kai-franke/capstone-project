@@ -28,7 +28,6 @@ export async function getStaticProps(context) {
 }
 
 export default function Tutorial({ name, steps, id, slug }) {
-  console.log(steps);
   return (
     <>
       <h1>{name}</h1>

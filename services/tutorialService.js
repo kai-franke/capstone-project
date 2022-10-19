@@ -114,11 +114,6 @@ export async function getAllTutorials() {
   return tutorials;
 }
 
-/* 
-export async function getTutorialById(id) {
-  return tutorials.find((tutorial) => tutorial.id === id);
-} */
-
 export async function getTutorialBySlug(slug) {
   return tutorials.find((tutorial) => tutorial.slug === slug);
 }
