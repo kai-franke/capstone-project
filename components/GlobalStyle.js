@@ -2,8 +2,12 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
       :root {
-          --text-primary: #0c2c4d;
-          --background-primary: #edf0f5;
+          --darktext: #101828;
+          --background: #F8FCFB;
+          --primary-100: #19A7B0;
+          --primary-50: #ECF9F8;
+          --lighttext: #CDCDCD;
+
       }
   
       /* poppins-100 - latin */
@@ -80,16 +84,19 @@ const GlobalStyle = createGlobalStyle`
 }
 
 
-      * {
+      *,
+      *::before,
+      *::after {
+          margin: 0;
+          padding: 0;
           box-sizing: border-box;
       }
   
       body {
           font-family: 'Poppins', sans-serif;
-          background-color: var(--background-primary);
-          color: var(--text-primary);
+          background-color: var(--background);
+          color: var(--darktext);
       }
   `;
 
 export default GlobalStyle;
-
