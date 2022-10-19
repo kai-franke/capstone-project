@@ -1,6 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
+import { SlArrowRight } from "react-icons/sl";
+import { IconContext } from "react-icons";
 
 export default function TutorialList({ tutorials }) {
   return (
@@ -16,6 +19,9 @@ export default function TutorialList({ tutorials }) {
             ></Image>
           </ListImage>
           <ListName>{tutorial.name}</ListName>
+          <IconContext.Provider value={{ color: `red` }}>
+            <SlArrowRight />
+          </IconContext.Provider>
         </ListItem>
       ))}
     </ListContainer>
