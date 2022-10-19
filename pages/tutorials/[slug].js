@@ -1,3 +1,5 @@
+import Headline from "../../components/Headline";
+import TutorialStartCard from "../../components/TutorialStartCard";
 import {
   getAllTutorials,
   getTutorialBySlug,
@@ -30,9 +32,8 @@ export async function getStaticProps(context) {
 export default function Tutorial({ name, steps, id, slug }) {
   return (
     <>
-      <h1>{name}</h1>
-      <p>id: {id}</p>
-      <p>slug: {slug}</p>
+      <Headline>{name}</Headline>
+      <TutorialStartCard />
     </>
   );
 }
