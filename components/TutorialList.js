@@ -10,7 +10,7 @@ export default function TutorialList({ tutorials }) {
     <ListContainer>
       {tutorials.map((tutorial) => (
         <Link key={tutorial.id} href={`/tutorials/${tutorial.slug}`}>
-          <ListItem >
+          <ListItem>
             <ListImage>
               <Image
                 src={tutorial.cover}
@@ -48,14 +48,15 @@ const ListItem = styled.li`
   background-color: var(--primary-50);
   padding: 0.7em;
   display: grid;
-  gap: 0.7em;
+  column-gap: 0.7em;
   grid-template-columns: 5.625em 1fr;
   box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08),
     0px 4px 6px -2px rgba(16, 24, 40, 0.03);
-    transition: 300ms linear;
+  transition: 300ms linear;
 
   &:hover {
     background-color: var(--primary-60);
+    cursor: pointer;
   }
 `;
 
