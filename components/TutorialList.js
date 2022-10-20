@@ -55,7 +55,7 @@ const ListItem = styled.li`
     transition: 300ms linear;
 
   &:hover {
-    background-color: #e5f6f6; // var(--primary-60)
+    background-color: var(--primary-60);
   }
 `;
 
