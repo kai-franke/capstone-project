@@ -8,19 +8,16 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   padding: 0.4em;
-  background: var(
-    ${({ isPrimary }) => (isPrimary ? "--primary-100" : "--background-pale")}
-  );
-  color: var(${({ isPrimary }) => (isPrimary ? "--white" : "--gray-70")});
-  border-color: var(
-    ${({ isPrimary }) => (isPrimary ? "--primary-100" : "--gray-70")}
-  );
+  background-color: ${({ isPrimary }) =>
+    isPrimary ? "var(--primary-100)" : "var(--background-pale)"};
+  border-color: ${({ isPrimary }) =>
+    isPrimary ? "var(--primary-100)" : "var(--gray-70)"};
+  color: ${({ isPrimary }) => (isPrimary ? "var(--white)" : "var(--gray-70)")};
 
   &:hover {
     cursor: pointer;
-    background: var(
-      ${({ isPrimary }) => (isPrimary ? "--primary-90" : "--white")}
-    );
+    background-color: ${({ isPrimary }) =>
+      isPrimary ? "var(--primary-90)" : "var(--white)"};
   }
 `;
 

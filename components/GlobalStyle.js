@@ -99,7 +99,11 @@ const GlobalStyle = createGlobalStyle`
           padding: 0;
           box-sizing: border-box;
       }
-  
+      
+      html {
+          font-size: 100%;
+      }
+
       body {
           font-family: 'Poppins', sans-serif;
           background-color: var(--background);
