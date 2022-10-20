@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react";
 import { Button, ButtonContainer } from "../../components/Buttons";
 import Headline from "../../components/Headline";
@@ -35,68 +36,48 @@ export async function getStaticProps(context) {
 export default function Tutorial({ name, steps, id, slug }) {
   const [currentStep, setCurrentStep] = useState(0);
 
+  function addStep() {
+    setCurrentStep((prevCurrentStep) =>
+      prevCurrentStep < steps.length ? prevCurrentStep + 1 : prevCurrentStep
+    );
+  }
+
+  function subtractStep() {
+    setCurrentStep((prevCurrentStep) =>
+      prevCurrentStep > 0 ? prevCurrentStep - 1 : 0
+    );
+  }
+
   return (
     <>
       <Headline>{name}</Headline>
+
       {currentStep === 0 ? (
-        <>
-          <TutorialStartCard />
-          <ButtonContainer>
-            <Button
-              isPrimary={true}
-              onClick={() =>
-                setCurrentStep((prevCurrentStep) => prevCurrentStep + 1)
-              }
-            >
-              start
-            </Button>
-          </ButtonContainer>
-        </>
+        <TutorialStartCard />
       ) : currentStep < steps.length ? (
-        <>
-          <TutorialCard step={steps[currentStep]} />
-          <ButtonContainer>
-            <Button
-              isPrimary={false}
-              onClick={() =>
-                setCurrentStep((prevCurrentStep) =>
-                  prevCurrentStep > 0 ? prevCurrentStep - 1 : 0
-                )
-              }
-            >
-              prev
-            </Button>
-            <Button
-              isPrimary={true}
-              onClick={() =>
-                setCurrentStep((prevCurrentStep) =>
-                  prevCurrentStep < steps.length
-                    ? prevCurrentStep + 1
-                    : prevCurrentStep
-                )
-              }
-            >
-              next
-            </Button>
-          </ButtonContainer>
-        </>
+        <TutorialCard step={steps[currentStep]} />
       ) : (
-        <>
-          <h2>done</h2>
-          <ButtonContainer>
-            <Button
-              isPrimary={false}
-              onClick={() =>
-                setCurrentStep((prevCurrentStep) =>
-                  prevCurrentStep > 0 ? prevCurrentStep - 1 : 0
-                )
-              }
-            >
-              prev
-            </Button>
-          </ButtonContainer>
-        </>
+        <h2>done</h2>
       )}
+
+      <ButtonContainer>
+        {currentStep === 0 ? (
+          <>
+            <Link href="/tutorials">
+              <Button isPrimary={false}>back to library</Button>
+            </Link>
+          </>
+        ) : (
+          <Button isPrimary={false} onClick={() => subtractStep()}>
+            prev
+          </Button>
+        )}
+        {currentStep !== steps.length && (
+          <Button isPrimary={true} onClick={() => addStep()}>
+            {currentStep === 0 ? "start" : "next"}
+          </Button>
+        )}
+      </ButtonContainer>
     </>
   );
 }
