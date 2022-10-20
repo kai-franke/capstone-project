@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Headline from "../../components/Headline";
 import TutorialList from "../../components/TutorialList";
 import { getAllTutorials } from "../../services/tutorialService";
 
@@ -19,13 +20,6 @@ export default function TutorialsPage({ tutorials }) {
     </>
   );
 }
-
-const Headline = styled.h1`
-  font-weight: 500;
-  font-size: 1.5em;
-  padding: 1em 1em 0 1em;
-  //margin: 0 0.5em;
-`;
 
 const Message = styled.p`
   text-align: center;

@@ -1,22 +1,37 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { IconContext } from "react-icons";
 
 export default function TutorialList({ tutorials }) {
   return (
     <ListContainer>
       {tutorials.map((tutorial) => (
-        <ListItem key={tutorial.id}>
-          <ListImage>
-            <Image
-              src={tutorial.cover}
-              alt={tutorial.name}
-              layout="fill"
-              objectFit="cover"
-            ></Image>
-          </ListImage>
-          <ListName>{tutorial.name}</ListName>
-        </ListItem>
+        <Link key={tutorial.id} href={`/tutorials/${tutorial.slug}`}>
+          <ListItem >
+            <ListImage>
+              <Image
+                src={tutorial.cover}
+                alt={tutorial.name}
+                layout="fill"
+                objectFit="cover"
+              ></Image>
+            </ListImage>
+            <ListName>{tutorial.name}</ListName>
+            <IconContext.Provider
+              value={{
+                color: "#19A7B0",
+                size: "2em",
+                title: "arrow icon",
+                style: { alignSelf: "end", justifySelf: "end" },
+              }}
+            >
+              <MdKeyboardArrowRight />
+            </IconContext.Provider>
+          </ListItem>
+        </Link>
       ))}
     </ListContainer>
   );
@@ -37,12 +52,17 @@ const ListItem = styled.li`
   grid-template-columns: 5.625em 1fr;
   box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08),
     0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+    transition: 300ms linear;
+
+  &:hover {
+    background-color: var(--primary-60);
+  }
 `;
 
 const ListImage = styled.figure`
+  grid-row: 1 / span 2;
   position: relative;
   aspect-ratio: 1;
-  width: 5.625em;
 `;
 
 const ListName = styled.h2`
