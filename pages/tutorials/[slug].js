@@ -1,3 +1,4 @@
+import { Button, ButtonContainer } from "../../components/Buttons";
 import Headline from "../../components/Headline";
 import TutorialStartCard from "../../components/TutorialStartCard";
 import {
@@ -34,6 +35,9 @@ export default function Tutorial({ name, steps, id, slug }) {
     <>
       <Headline>{name}</Headline>
       <TutorialStartCard />
+      <ButtonContainer>
+        <Button isPrimary={true}>Start</Button>
+      </ButtonContainer>
     </>
   );
 }
