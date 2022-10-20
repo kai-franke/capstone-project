@@ -57,7 +57,7 @@ export default function Tutorial({ name, steps, id, slug }) {
       ) : currentStep < steps.length ? (
         <TutorialCard step={steps[currentStep]} />
       ) : (
-        <h2>done</h2>
+        <Headline>done</Headline>
       )}
 
       <ButtonContainer>
