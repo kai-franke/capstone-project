@@ -4,23 +4,18 @@ import styled from "styled-components";
 
 export default function TutorialStartCard() {
   return (
-    <>
-      <CardContainer>
-        <Image
-          src="/assets/tutorial-start-card_animation_300x300.gif"
-          alt="rocket animation"
-          width={300}
-          height={300}
-        ></Image>
-        <Subline>Let&apos;s get started!</Subline>
-        <p>
-          You&apos;re about to learn something new.
-          <br />
-          That&apos;s awesome.
-        </p>
-        <StyledP>Have fun!</StyledP>
-      </CardContainer>
-    </>
+    <CardContainer>
+      <Image
+        src="/assets/tutorial-start-card_animation_300x300.gif"
+        alt="rocket animation"
+        width={300}
+        height={300}
+      ></Image>
+      <Subline>Let&apos;s get started!</Subline>
+      <p>You&apos;re about to learn something new.</p>
+      <p>That&apos;s awesome.</p>
+      <StyledP>Have fun!</StyledP>
+    </CardContainer>
   );
 }
 
