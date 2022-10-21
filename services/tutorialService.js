@@ -7,39 +7,34 @@ const tutorials = [
     steps: [
       {
         step: 0,
-        title: "Start",
       },
       {
         step: 1,
         title: "Steal a hamster",
-        descripton:
+        description:
           "Step 1 description. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ",
-        img: "/assets/tutorial-1_cover-image_1900x1900.jpg",
+        img: "/assets/tutorial-1_step1-image_2000x2000.jpg",
       },
       {
         step: 2,
         title: "Put on life vest",
-        descripton:
+        description:
           "Step 2 description. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ",
-        img: "/assets/tutorial-1_cover-image_1900x1900.jpg",
+        img: "/assets/tutorial-1_step2-image_2000x2000.jpg",
       },
       {
         step: 3,
         title: "Use lukewarm water",
-        descripton:
+        description:
           "Step 3 description. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ",
-        img: "/assets/tutorial-1_cover-image_1900x1900.jpg",
+        img: "/assets/tutorial-1_step3-image_2000x2000.jpg",
       },
       {
         step: 4,
         title: "Blow dry",
-        descripton:
+        description:
           "Step 4 description. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ",
-        img: "/assets/tutorial-1_cover-image_1900x1900.jpg",
-      },
-      {
-        step: 5,
-        title: "End",
+        img: "/assets/tutorial-1_step4-image_2000x2000.jpg",
       },
     ],
   },
@@ -50,32 +45,35 @@ const tutorials = [
     slug: "baking-sourdough-bread",
     steps: [
       {
+        step: 0,
+      },
+      {
         step: 1,
         title: "Weigh the ingredients",
-        descripton:
+        description:
           "Step 1 description. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ",
-        img: "/assets/tutorial-2_cover-image_2000x2000.jpg",
+        img: "/assets/tutorial-2_step1-image_2000x2000.jpg",
       },
       {
         step: 2,
         title: "Mix the ingredients",
-        descripton:
+        description:
           "Step 2 description. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ",
-        img: "/assets/tutorial-2_cover-image_2000x2000.jpg",
+        img: "/assets/tutorial-2_step2-image_2000x2000.jpg",
       },
       {
         step: 3,
         title: "Bake at 250 °C",
-        descripton:
+        description:
           "Step 3 description. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ",
-        img: "/assets/tutorial-2_cover-image_2000x2000.jpg",
+        img: "/assets/tutorial-2_step3-image_2000x2000.jpg",
       },
       {
         step: 4,
         title: "Extinguish the burning oven",
-        descripton:
+        description:
           "Step 4 description. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ",
-        img: "/assets/tutorial-2_cover-image_2000x2000.jpg",
+        img: "/assets/tutorial-2_step4-image_2000x2000.jpg",
       },
     ],
   },
@@ -86,25 +84,28 @@ const tutorials = [
     slug: "building-a-helpful-robot",
     steps: [
       {
+        step: 0,
+      },
+      {
         step: 1,
         title: "Make friends at NASA",
-        descripton:
+        description:
           "Step 1 description. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ",
-        img: "/assets/tutorial-3_cover-image_2000x2000.jpg",
+        img: "/assets/tutorial-3_step1-image_2000x2000.jpg",
       },
       {
         step: 2,
         title: "Get drunk with your new friends",
-        descripton:
+        description:
           "Step 2 description. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ",
-        img: "/assets/tutorial-3_cover-image_2000x2000.jpg",
+        img: "/assets/tutorial-3_step2-image_2000x2000.jpg",
       },
       {
         step: 3,
         title: "Ask them how to build a helpful robot",
-        descripton:
+        description:
           "Step 3 description. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ",
-        img: "/assets/tutorial-3_cover-image_2000x2000.jpg",
+        img: "/assets/tutorial-3_step3-image_2000x2000.jpg",
       },
     ],
   },
