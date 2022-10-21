@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, ButtonContainer } from "../../components/Buttons";
 import Headline from "../../components/Headline";
 import TutorialCard from "../../components/TutorialCard";
+import TutorialEndCard from "../../components/TutorialEndCard";
 import TutorialStartCard from "../../components/TutorialStartCard";
 import {
   getAllTutorials,
@@ -57,7 +58,7 @@ export default function Tutorial({ name, steps, id, slug }) {
       ) : currentStep < steps.length ? (
         <TutorialCard step={steps[currentStep]} />
       ) : (
-        <Headline>done</Headline>
+        <TutorialEndCard />
       )}
 
       <ButtonContainer>
@@ -76,6 +77,11 @@ export default function Tutorial({ name, steps, id, slug }) {
           <Button isPrimary={true} onClick={() => addStep()}>
             {currentStep === 0 ? "start" : "next"}
           </Button>
+        )}
+        {currentStep === steps.length && (
+          <Link href="/tutorials">
+            <Button isPrimary={true}>back to library</Button>
+          </Link>
         )}
       </ButtonContainer>
     </>
