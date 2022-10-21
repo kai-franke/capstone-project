@@ -69,7 +69,7 @@ export default function Tutorial({ name, steps, id, slug }) {
           </>
         ) : (
           <Button isPrimary={false} onClick={() => subtractStep()}>
-            prev
+            {currentStep === 1 ? "back to start" : "prev"}
           </Button>
         )}
         {currentStep !== steps.length && (
