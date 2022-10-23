@@ -4,12 +4,10 @@ import Footer from "./Footer";
 function Layout({ children }) {
   return (
     <>
-      <StyledMain>{children}</StyledMain>
+      <main>{children}</main>
       <Footer />
     </>
   );
 }
 
 export default Layout;
-
-const StyledMain = styled.main``;
