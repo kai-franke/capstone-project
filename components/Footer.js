@@ -6,8 +6,7 @@ import { IconContext } from "react-icons";
 
 function Footer() {
   const router = useRouter();
-  console.log(router.pathname);
-
+  
   return (
     <footer>
       <NavBar>

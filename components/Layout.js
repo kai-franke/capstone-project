@@ -12,6 +12,4 @@ function Layout({ children }) {
 
 export default Layout;
 
-const StyledMain = styled.main`
-  //min-height: calc(100vh - 8rem);
-`;
+const StyledMain = styled.main``;
