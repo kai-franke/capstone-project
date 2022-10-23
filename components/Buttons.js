@@ -26,6 +26,7 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 1em;
+  margin-bottom: 4.5em;
 `;
 
 export { Button, ButtonContainer };
