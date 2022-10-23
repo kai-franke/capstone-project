@@ -18,7 +18,7 @@ function Footer() {
                 color: "inherit",
                 size: "2em",
                 title: "arrow icon",
-                style: { justifySelf: "center" },
+                style: { justifySelf: "center", alignSelf: "end" },
               }}
             >
               <TbBook2 />
@@ -53,15 +53,15 @@ const NavItem = styled.a`
   color: ${({ isActive }) => (isActive ? "var(--white)" : "var(--gray-70)")};
   text-align: center;
   text-decoration: none;
-  transition: 300ms linear;
   font-size: 0.7em;
-  letter-spacing: 1px;
+  letter-spacing: 0.05em;
+  transition: 300ms linear;
   display: grid;
-  justify-content: center;
 
   &:hover {
     cursor: pointer;
     background-color: ${({ isActive }) =>
       isActive ? "var(--primary-90)" : "var(--white)"};
+    font-size: 0.75em;
   }
 `;
