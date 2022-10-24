@@ -1,30 +1,62 @@
+import { useState } from "react";
 import styled from "styled-components";
+import { Button, ButtonContainer } from "./Buttons";
 
 function CreateForm() {
+  const [steps, setSteps] = useState(1);
+
+  function handleAddStep() {
+    setSteps((prevSteps) => prevSteps + 1);
+  }
+
   return (
     <>
-      <FormContainer>
+      <FormContainer id="createForm">
         <FormCard>
           <StyledLabel isPrimary>
             <LabelText>Tutorial title</LabelText>
-            <StyledInput />
+            <StyledInput
+              placeholder="e.g. Repair a faucet"
+              aria-placeholder="e.g. Repair a faucet"
+            />
           </StyledLabel>
         </FormCard>
-        <FormCard>
-          <StyledLabel isPrimary={false}>
-            <LabelText>Step title</LabelText>
-            <StyledInput />
-          </StyledLabel>
-          <StyledLabel isPrimary={false}>
-            <LabelText>Picture URL</LabelText>
-            <StyledInput />
-          </StyledLabel>
-          <StyledLabel isPrimary={false}>
-            <LabelText>Step description</LabelText>
-            <StyledInput />
-          </StyledLabel>
-        </FormCard>
+        {[...Array(steps)].map((step, index) => {
+          return (
+            <>
+              <FormCard key={index}>
+                <StepNumber>Step {index + 1}</StepNumber>
+                <StyledLabel isPrimary={false}>
+                  <LabelText>Step title</LabelText>
+                  <StyledInput
+                    placeholder="e.g. Prepare your tools"
+                    aria-placeholder="e.g. Prepare your tools"
+                  />
+                </StyledLabel>
+                <StyledLabel isPrimary={false}>
+                  <LabelText>Picture URL</LabelText>
+                  <StyledInput
+                    placeholder="https://www..."
+                    aria-placeholder="https://www..."
+                  />
+                </StyledLabel>
+                <StyledLabel isPrimary={false}>
+                  <LabelText>Step description</LabelText>
+                  <StyledTextarea
+                    placeholder="Enter a description"
+                    aria-placeholder="Enter a description"
+                  />
+                </StyledLabel>
+              </FormCard>
+            </>
+          );
+        })}
       </FormContainer>
+      <ButtonContainer>
+        <Button isPrimary onClick={handleAddStep}>
+          Add step
+        </Button>
+      </ButtonContainer>
     </>
   );
 }
@@ -57,6 +89,7 @@ const StyledLabel = styled.label`
 `;
 
 const LabelText = styled.span`
+  font-weight: 500;
   padding: 0.3em 0;
 `;
 
@@ -65,4 +98,25 @@ const StyledInput = styled.input`
   border: 1px solid var(--gray-30);
   border-radius: 8px;
   padding: 0.4em;
+
+  &::placeholder {
+    color: var(--gray-30);
+  }
+`;
+
+const StyledTextarea = styled.textarea`
+  all: unset;
+  border: 1px solid var(--gray-30);
+  border-radius: 8px;
+  padding: 0.4em;
+
+  &::placeholder {
+    color: var(--gray-30);
+  }
+`;
+
+const StepNumber = styled.p`
+  font-weight: 500;
+  padding: 0.7em 0 0.3em 0;
+  color: var(--primary-100);
 `;
