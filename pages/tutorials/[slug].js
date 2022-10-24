@@ -63,7 +63,7 @@ export default function Tutorial({ name, steps, id, slug }) {
 
       <ButtonContainer>
         {currentStep === 0 ? (
-          <Link href="/tutorials">
+          <Link href="/tutorials" passHref>
             <Button isPrimary={false}>back to library</Button>
           </Link>
         ) : (

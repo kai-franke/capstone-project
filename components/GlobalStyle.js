@@ -15,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
           --primary-50: #ECF9F8;
           --gray-70: #959596;
           --gray-30: #D0D5DD;
+          --gray-10: #f5f5f5;
 
       }
   

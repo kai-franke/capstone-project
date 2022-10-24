@@ -13,6 +13,7 @@ const Button = styled.button`
   border-color: ${({ isPrimary }) =>
     isPrimary ? "var(--primary-100)" : "var(--gray-70)"};
   color: ${({ isPrimary }) => (isPrimary ? "var(--white)" : "var(--gray-70)")};
+  transition: 300ms linear;
 
   &:hover {
     cursor: pointer;
@@ -25,6 +26,7 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 1em;
+  margin-bottom: 4.5em;
 `;
 
 export { Button, ButtonContainer };
