@@ -4,6 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { IconContext } from "react-icons";
+import ListContainer from "./ListContainer";
 
 export default function TutorialList({ tutorials }) {
   return (
@@ -36,13 +37,6 @@ export default function TutorialList({ tutorials }) {
     </ListContainer>
   );
 }
-
-const ListContainer = styled.ul`
-  padding: 1em;
-  list-style: none;
-  display: grid;
-  gap: 1em;
-`;
 
 const ListItem = styled.li`
   background-color: var(--primary-50);
