@@ -5,13 +5,13 @@ import { TbBook2 } from "react-icons/tb";
 import { IconContext } from "react-icons";
 
 function Footer() {
-  const router = useRouter();
-  
+  const { pathname } = useRouter();
+
   return (
     <footer>
       <NavBar>
         <Link href="/tutorials" passHref>
-          <NavItem isActive={router.pathname === "/tutorials"}>
+          <NavItem isActive={pathname === "/tutorials"}>
             <IconContext.Provider
               value={{
                 color: "inherit",

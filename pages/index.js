@@ -1,5 +1,6 @@
 import Head from "next/head";
 import styled from "styled-components";
+import Headline from "../components/Headline";
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1>Tutorial Maker</h1>
+        <Headline>Tutorial Maker</Headline>
       </main>
     </div>
   );
