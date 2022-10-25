@@ -3,10 +3,56 @@ import styled from "styled-components";
 import { Button, ButtonContainer } from "./Buttons";
 import { TbCheck, TbPlus } from "react-icons/tb";
 import { IconContext } from "react-icons";
+import { nanoid, customAlphabet } from "nanoid";
 
 function CreateForm() {
-  const [steps, setSteps] = useState(1);
   const buttonRef = useRef();
+  const [inputSteps, setInputSteps] = useState([
+    { step: 1, stepTitle: "", stepUrl: "", stepDescription: "" },
+  ]);
+
+  function handleFormChange(index, event) {
+    const data = [...inputSteps];
+    data[index][event.target.name] = event.target.value;
+    setInputSteps(data);
+  }
+
+  function handleAddStep() {
+    const newEmptyStep = {
+      step: inputSteps.length + 1,
+      stepTitle: "",
+      stepUrl: "",
+      stepDescription: "",
+    };
+    setInputSteps((prevInputSteps) => [...prevInputSteps, newEmptyStep]);
+    scrollToButton();
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+
+    const slugSuffix = customAlphabet(
+      "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
+      4
+    );
+
+    const newTutorial = {
+      id: nanoid(),
+      name: data.tutorialTitle,
+      cover: inputSteps[inputSteps.length - 1]["stepUrl"],
+      slug: data.tutorialTitle
+        .toLowerCase()
+        .replace(/ /g, "-")
+        .replace(/[-]+/g, "-")
+        .replace(/[^\w-]+/g, "")
+        .concat("-", slugSuffix()),
+      steps: [...inputSteps],
+    };
+    console.log({ newTutorial }); // LEAVE FOR QUALITY ASSURANCE <---------- REMOVE BEFORE FLIGHT
+  }
 
   function scrollToButton() {
     setTimeout(() => {
@@ -14,18 +60,14 @@ function CreateForm() {
     });
   }
 
-  function handleAddStep() {
-    setSteps((prevSteps) => prevSteps + 1);
-    scrollToButton();
-  }
-
   return (
     <>
-      <FormContainer id="tutorialForm">
+      <FormContainer id="tutorialForm" onSubmit={handleSubmit}>
         <FormCard>
           <StyledLabel isPrimary>
             <LabelText>Tutorial title</LabelText>
             <StyledInput
+              name="tutorialTitle"
               placeholder="e.g. Repair a faucet"
               aria-placeholder="e.g. Repair a faucet"
               minLength="5"
@@ -34,33 +76,47 @@ function CreateForm() {
             />
           </StyledLabel>
         </FormCard>
-        {[...Array(steps)].map((step, index) => {
+
+        {inputSteps.map((step, index) => {
           return (
             <FormCard key={index.toString()}>
               <StepNumber>Step {index + 1}</StepNumber>
               <StyledLabel isPrimary={false}>
                 <LabelText>Step title</LabelText>
                 <StyledInput
+                  name="stepTitle"
+                  value={step.stepTitle}
                   placeholder="e.g. Prepare your tools"
                   aria-placeholder="e.g. Prepare your tools"
                   maxLength="60"
+                  onChange={(event) => handleFormChange(index, event)}
+                  required
                 />
               </StyledLabel>
               <StyledLabel isPrimary={false}>
                 <LabelText>Picture URL</LabelText>
                 <StyledInput
+                  name="stepUrl"
+                  value={step.stepUrl}
+                  type="text"
                   placeholder="https://www..."
                   aria-placeholder="https://www..."
-                  type="url"
-                  pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)(.gif|.jpg|.jpeg|.jfif|.pjpeg|.pjp|.png|.webp)"
+                  pattern="(http)?s?:?(\/\/[^']*\.(?:gif|jpg|jpeg|jfif|pjpeg|pjp|png|webp))"
+                  title="Valid format: 'https://www.yourdomain.com/image.jpg'"
+                  onChange={(event) => handleFormChange(index, event)}
+                  required
                 />
               </StyledLabel>
               <StyledLabel isPrimary={false}>
                 <LabelText>Step description</LabelText>
                 <StyledTextarea
+                  name="stepDescription"
+                  value={step.stepDescription}
                   placeholder="Enter a description"
                   aria-placeholder="Enter a description"
                   maxLength="300"
+                  onChange={(event) => handleFormChange(index, event)}
+                  required
                 />
               </StyledLabel>
             </FormCard>
@@ -81,7 +137,7 @@ function CreateForm() {
           </IconContext.Provider>
           Add step
         </Button>
-        <Button isPrimary form="tutorialForm">
+        <Button isPrimary type="submit" form="tutorialForm">
           finish creating
           <IconContext.Provider
             value={{
@@ -137,6 +193,10 @@ const StyledInput = styled.input`
   &::placeholder {
     color: var(--gray-30);
   }
+
+  &:invalid {
+    border-color: var(--primary-100);
+  }
 `;
 
 const StyledTextarea = styled.textarea`
@@ -148,6 +208,10 @@ const StyledTextarea = styled.textarea`
 
   &::placeholder {
     color: var(--gray-30);
+  }
+
+  &:invalid {
+    border-color: var(--primary-100);
   }
 `;
 
