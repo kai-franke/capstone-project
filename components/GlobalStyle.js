@@ -17,6 +17,8 @@ const GlobalStyle = createGlobalStyle`
           --gray-30: #D0D5DD;
           --gray-10: #f5f5f5;
 
+          --boxshadow-primary: 0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+
       }
   
       /* poppins-100 - latin */

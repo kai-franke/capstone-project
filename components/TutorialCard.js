@@ -20,8 +20,7 @@ const CardContainer = styled.div`
   margin: 1em;
   padding: 1em 0.7em;
   text-align: left;
-  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08),
-    0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+  box-shadow: var(--boxshadow-primary)
 `;
 
 const StepTitle = styled.h2`

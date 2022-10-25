@@ -81,8 +81,7 @@ const FormCard = styled.fieldset`
   background-color: var(--white);
   padding: 0.7em;
   display: grid;
-  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08),
-    0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+  box-shadow: var(--boxshadow-primary);
   transition: 300ms linear;
 `;
 
