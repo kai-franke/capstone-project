@@ -17,28 +17,30 @@ function CreateForm() {
     setInputSteps(data);
   }
 
+  function scrollToButton() {
+    setTimeout(() => {
+      buttonRef.current.scrollIntoView({ behavior: "smooth" });
+    });
+  }
   function handleAddStep() {
-    const newEmptyStep = {
+    const additionalStep = {
       step: inputSteps.length + 1,
       stepTitle: "",
       stepUrl: "",
       stepDescription: "",
     };
-    setInputSteps((prevInputSteps) => [...prevInputSteps, newEmptyStep]);
+    setInputSteps((prevInputSteps) => [...prevInputSteps, additionalStep]);
     scrollToButton();
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-
     const slugSuffix = customAlphabet(
       "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
       4
     );
-
     const newTutorial = {
       id: nanoid(),
       name: data.tutorialTitle,
@@ -52,12 +54,6 @@ function CreateForm() {
       steps: [...inputSteps],
     };
     console.log({ newTutorial }); // LEAVE FOR QUALITY ASSURANCE <---------- REMOVE BEFORE FLIGHT
-  }
-
-  function scrollToButton() {
-    setTimeout(() => {
-      buttonRef.current.scrollIntoView({ behavior: "smooth" });
-    });
   }
 
   return (
@@ -135,7 +131,7 @@ function CreateForm() {
           >
             <TbPlus />
           </IconContext.Provider>
-          Add step
+          add step
         </Button>
         <Button isPrimary type="submit" form="tutorialForm">
           finish creating
