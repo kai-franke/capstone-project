@@ -5,6 +5,11 @@ import { TbCheck, TbPlus } from "react-icons/tb";
 import { IconContext } from "react-icons";
 import { nanoid, customAlphabet } from "nanoid";
 
+const slugSuffix = customAlphabet(
+  "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
+  4
+);
+
 function CreateForm() {
   const buttonRef = useRef();
   const [inputSteps, setInputSteps] = useState([
@@ -22,6 +27,7 @@ function CreateForm() {
       buttonRef.current.scrollIntoView({ behavior: "smooth" });
     });
   }
+
   function handleAddStep() {
     const additionalStep = {
       step: inputSteps.length + 1,
@@ -37,10 +43,7 @@ function CreateForm() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    const slugSuffix = customAlphabet(
-      "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
-      4
-    );
+    
     const newTutorial = {
       id: nanoid(),
       name: data.tutorialTitle,
