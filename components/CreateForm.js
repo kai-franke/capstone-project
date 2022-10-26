@@ -14,6 +14,18 @@ function CreateForm() {
   const [inputSteps, setInputSteps] = useState([
     { step: 1, stepTitle: "", stepUrl: "", stepDescription: "" },
   ]);
+  const [inputTutorialTitle, setInputTutorialTitle] = useState("");
+
+  function handleTitleChange(event) {
+    let titleInput = event.target.value;
+    // Thank you, https://github.com/Roland-Hufnagel
+    titleInput = titleInput.startsWith(" ")
+      ? titleInput.replace(" ", "")
+      : titleInput.includes("  ")
+      ? titleInput.replace("  ", " ")
+      : titleInput;
+    setInputTutorialTitle(titleInput);
+  }
 
   function handleFormChange(index, event) {
     if (event.target.value[0] !== " ") {
@@ -21,12 +33,6 @@ function CreateForm() {
       data[index][event.target.name] = event.target.value;
       setInputSteps(data);
     }
-  }
-
-  function scrollToButton() {
-    setTimeout(() => {
-      buttonRef.current.scrollIntoView({ behavior: "smooth" });
-    });
   }
 
   function handleAddStep() {
@@ -42,28 +48,19 @@ function CreateForm() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-
-    // early return if only spaces entered
-    /* if (!!!data.tutorialTitle.trim()) {
-      alert("Invalid Input");
-      return;
-    } */
-
-    // removes special characters AND spaces, alert and return if less than 5 valid characters
-    if (data.tutorialTitle.replace(/[^a-zA-Z0-9]/g, "").length < 5) {
+    if (inputTutorialTitle.replace(/[^a-zA-Z0-9]/g, "").length < 5) {
       alert(
         "The tutorial title must not consist of less than five letters and numbers (a-Z, 0-9, no special characters)."
       );
       return;
     }
-
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
     const newTutorial = {
       id: nanoid(),
-      name: data.tutorialTitle,
+      name: inputTutorialTitle,
       cover: inputSteps[inputSteps.length - 1]["stepUrl"],
-      slug: data.tutorialTitle
+      slug: inputTutorialTitle
         .toLowerCase()
         .replace(/ /g, "-")
         .replace(/[-]+/g, "-")
@@ -72,6 +69,12 @@ function CreateForm() {
       steps: [...inputSteps],
     };
     console.log({ newTutorial }); // LEAVE FOR QUALITY ASSURANCE <---------- REMOVE BEFORE FLIGHT
+  }
+
+  function scrollToButton() {
+    setTimeout(() => {
+      buttonRef.current.scrollIntoView({ behavior: "smooth" });
+    });
   }
 
   return (
@@ -87,6 +90,8 @@ function CreateForm() {
               minLength="5"
               maxLength="60"
               required
+              onChange={(event) => handleTitleChange(event)}
+              value={inputTutorialTitle}
             />
           </StyledLabel>
         </FormCard>
@@ -111,7 +116,7 @@ function CreateForm() {
                 <LabelText>Picture URL</LabelText>
                 <StyledInput
                   name="stepUrl"
-                  value={step.stepUrl.trim()} // <------------------ .trim() removes every whitespace
+                  value={step.stepUrl.trim()}
                   type="text"
                   placeholder="https://www..."
                   aria-placeholder="https://www..."
@@ -193,6 +198,7 @@ const StyledInput = styled.input`
   border: 1px solid var(--gray-30);
   border-radius: 8px;
   padding: 0.4em;
+  margin-bottom: 0.7em;
 
   &::placeholder {
     color: var(--gray-30);
@@ -209,6 +215,7 @@ const StyledTextarea = styled.textarea`
   border-radius: 8px;
   padding: 0.4em;
   height: 4.5em;
+  margin-bottom: 0.7em;
 
   &::placeholder {
     color: var(--gray-30);
