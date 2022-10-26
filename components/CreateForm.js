@@ -121,30 +121,20 @@ function CreateForm() {
       </FormContainer>
       <ButtonContainer>
         <Button ref={buttonRef} isPrimary onClick={handleAddStep}>
-          <IconContext.Provider
-            value={{
+          <TbPlus
+            style={{
               color: "inherit",
-              size: "1.4em",
-              title: "checkmark icon",
-              style: { marginRight: "0.5em" },
+              fontSize: "1.4em",
+              marginRight: "0.5em",
             }}
-          >
-            <TbPlus />
-          </IconContext.Provider>
+          />
           add step
         </Button>
         <Button isPrimary type="submit" form="tutorialForm">
           finish creating
-          <IconContext.Provider
-            value={{
-              color: "inherit",
-              size: "1.4em",
-              title: "checkmark icon",
-              style: { marginLeft: "0.5em" },
-            }}
-          >
-            <TbCheck />
-          </IconContext.Provider>
+          <TbCheck
+            style={{ color: "inherit", fontSize: "1.4em", marginLeft: "0.5em" }}
+          />
         </Button>
       </ButtonContainer>
     </>
