@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import styled from "styled-components";
 import { Button, ButtonContainer } from "./Buttons";
 import { TbCheck, TbPlus } from "react-icons/tb";
-import { IconContext } from "react-icons";
 import { nanoid, customAlphabet } from "nanoid";
 
 const slugSuffix = customAlphabet(
@@ -17,9 +16,11 @@ function CreateForm() {
   ]);
 
   function handleFormChange(index, event) {
-    const data = [...inputSteps];
-    data[index][event.target.name] = event.target.value;
-    setInputSteps(data);
+    if (event.target.value[0] !== " ") {
+      const data = [...inputSteps];
+      data[index][event.target.name] = event.target.value;
+      setInputSteps(data);
+    }
   }
 
   function scrollToButton() {
@@ -43,7 +44,21 @@ function CreateForm() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    
+
+    // early return if only spaces entered
+    /* if (!!!data.tutorialTitle.trim()) {
+      alert("Invalid Input");
+      return;
+    } */
+
+    // removes special characters AND spaces, alert and return if less than 5 valid characters
+    if (data.tutorialTitle.replace(/[^a-zA-Z0-9]/g, "").length < 5) {
+      alert(
+        "The tutorial title must not consist of less than five letters and numbers (a-Z, 0-9, no special characters)."
+      );
+      return;
+    }
+
     const newTutorial = {
       id: nanoid(),
       name: data.tutorialTitle,
@@ -96,7 +111,7 @@ function CreateForm() {
                 <LabelText>Picture URL</LabelText>
                 <StyledInput
                   name="stepUrl"
-                  value={step.stepUrl}
+                  value={step.stepUrl.trim()} // <------------------ .trim() removes every whitespace
                   type="text"
                   placeholder="https://www..."
                   aria-placeholder="https://www..."
