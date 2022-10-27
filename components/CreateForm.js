@@ -9,33 +9,29 @@ const slugSuffix = customAlphabet(
   4
 );
 
+function sanitizeString(dirtyString) {
+  return dirtyString.trimStart().replace("  ", " ");
+  // Thank you, https://github.com/Roland-Hufnagel and Felix!
+}
+
 function CreateForm() {
   const buttonRef = useRef();
   const [inputSteps, setInputSteps] = useState([
-    { step: 1, stepTitle: "", stepUrl: "", stepDescription: "" },
+    { step: 1, stepTitle: "", stepImageUrl: "", stepDescription: "" },
   ]);
   const [inputTutorialTitle, setInputTutorialTitle] = useState("");
 
   function handleTitleChange(event) {
-    let titleInput = event.target.value;
-    // Thank you, https://github.com/Roland-Hufnagel
-    titleInput = titleInput.startsWith(" ")
-      ? titleInput.replace(" ", "")
-      : titleInput.includes("  ")
-      ? titleInput.replace("  ", " ")
-      : titleInput;
-    setInputTutorialTitle(titleInput);
+    const titleInput = event.target.value;
+    const sanitizedTitleInput = sanitizeString(titleInput);
+    setInputTutorialTitle(sanitizedTitleInput);
   }
 
   function handleFormChange(index, event) {
+    const stepsInput = event.target.value;
+    const sanitizedInput = sanitizeString(stepsInput);
     const data = [...inputSteps];
-    if (event.target.value.trim() === "") {
-      data[index][event.target.name] = "";
-    } else if (event.target.value[0] === " ") {
-      data[index][event.target.name] = event.target.value.trim();
-    } else {
-      data[index][event.target.name] = event.target.value;
-    }
+    data[index][event.target.name] = sanitizedInput;
     setInputSteps(data);
   }
 
@@ -43,7 +39,7 @@ function CreateForm() {
     const additionalStep = {
       step: inputSteps.length + 1,
       stepTitle: "",
-      stepUrl: "",
+      stepImageUrl: "",
       stepDescription: "",
     };
     setInputSteps((prevInputSteps) => [...prevInputSteps, additionalStep]);
@@ -61,14 +57,13 @@ function CreateForm() {
     const newTutorial = {
       id: nanoid(),
       name: inputTutorialTitle,
-      cover: inputSteps[inputSteps.length - 1]["stepUrl"],
+      cover: inputSteps[inputSteps.length - 1]["stepImageUrl"],
       slug: inputTutorialTitle
         .toLowerCase()
-        .replace(/ /g, "-")
-        .replace(/[-]+/g, "-")
+        .replace(/[ ]+/g, "-")
         .replace(/[^\w-]+/g, "")
         .concat("-", slugSuffix()),
-      steps: [...inputSteps],
+      steps: inputSteps,
     };
   }
 
@@ -116,8 +111,8 @@ function CreateForm() {
               <StyledLabel isPrimary={false}>
                 <LabelText>Picture URL</LabelText>
                 <StyledInput
-                  name="stepUrl"
-                  value={step.stepUrl.trim()}
+                  name="stepImageUrl"
+                  value={step.stepImageUrl.trim()}
                   type="text"
                   placeholder="https://www..."
                   aria-placeholder="https://www..."
