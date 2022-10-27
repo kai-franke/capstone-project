@@ -3,9 +3,8 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { TbCheck, TbPlus } from "react-icons/tb";
 import { nanoid, customAlphabet } from "nanoid";
-import useStore from "../store/useStore";
+//import useStore from "../store/useStore";
 import { Button, ButtonContainer } from "./Buttons";
-
 
 const slugSuffix = customAlphabet(
   "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
@@ -20,7 +19,7 @@ function sanitizeString(dirtyString) {
 function CreateForm() {
   //const addNewTutorial = useStore((state) => state.addTutorial);
   const [inputSteps, setInputSteps] = useState([
-    { step: 1, stepTitle: "", stepImageUrl: "", stepDescription: "" },
+    { step: 1, title: "", img: "", description: "" },
   ]);
   const [inputTutorialTitle, setInputTutorialTitle] = useState("");
 
@@ -34,8 +33,8 @@ function CreateForm() {
         body: JSON.stringify(data),
       });
       const result = await response.json();
-      console.log(result)
-      //router.push(`/products/${result.createdId}`);
+      console.log(result);
+      router.push(`/tutorials/${result.createdSlug}`);
     } catch (error) {
       console.error(error);
     }
@@ -58,9 +57,9 @@ function CreateForm() {
   function handleAddStep() {
     const additionalStep = {
       step: inputSteps.length + 1,
-      stepTitle: "",
-      stepImageUrl: "",
-      stepDescription: "",
+      title: "",
+      img: "",
+      description: "",
     };
     setInputSteps((prevInputSteps) => [...prevInputSteps, additionalStep]);
     scrollToButton();
@@ -77,18 +76,18 @@ function CreateForm() {
     const newTutorial = {
       id: nanoid(),
       name: inputTutorialTitle,
-      cover: inputSteps[inputSteps.length - 1]["stepImageUrl"],
+      cover: inputSteps[inputSteps.length - 1]["img"],
       slug: inputTutorialTitle
         .toLowerCase()
         .replace(/[ ]+/g, "-")
         .replace(/[^\w-]+/g, "")
         .concat("-", slugSuffix()),
-      steps: inputSteps,
+      steps: [{ step: 0 }, ...inputSteps],
     };
 
     addNewTutorial(newTutorial);
 
-    router.push("/tutorials");
+    //router.push("/tutorials");
   }
 
   function scrollToButton() {
@@ -123,8 +122,8 @@ function CreateForm() {
               <StyledLabel isPrimary={false}>
                 <LabelText>Step title</LabelText>
                 <StyledInput
-                  name="stepTitle"
-                  value={step.stepTitle}
+                  name="title"
+                  value={step.title}
                   placeholder="e.g. Prepare your tools"
                   aria-placeholder="e.g. Prepare your tools"
                   maxLength="60"
@@ -135,8 +134,8 @@ function CreateForm() {
               <StyledLabel isPrimary={false}>
                 <LabelText>Picture URL</LabelText>
                 <StyledInput
-                  name="stepImageUrl"
-                  value={step.stepImageUrl.trim()}
+                  name="img"
+                  value={step.img.trim()}
                   type="text"
                   placeholder="https://www..."
                   aria-placeholder="https://www..."
@@ -149,8 +148,8 @@ function CreateForm() {
               <StyledLabel isPrimary={false}>
                 <LabelText>Step description</LabelText>
                 <StyledTextarea
-                  name="stepDescription"
-                  value={step.stepDescription}
+                  name="description"
+                  value={step.description}
                   placeholder="Enter a description"
                   aria-placeholder="Enter a description"
                   maxLength="300"

@@ -14,7 +14,7 @@ export default async function handler(request, response) {
 
     return response
       .status(201)
-      .json({ message: "Tutorial created", createdId: newTutorial.id });
+      .json({ message: "Tutorial created", createdSlug: newTutorial.slug });
   }
 
   return response.status(405).json({ message: "HTTP method is not allowed" });
