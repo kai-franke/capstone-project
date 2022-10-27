@@ -29,8 +29,10 @@ function CreateForm() {
 
   function handleFormChange(index, event) {
     const data = [...inputSteps];
-    if (event.target.value.trim() == "") {
+    if (event.target.value.trim() === "") {
       data[index][event.target.name] = "";
+    } else if (event.target.value[0] === " ") {
+      data[index][event.target.name] = event.target.value.trim();
     } else {
       data[index][event.target.name] = event.target.value;
     }
@@ -56,8 +58,6 @@ function CreateForm() {
       );
       return;
     }
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
     const newTutorial = {
       id: nanoid(),
       name: inputTutorialTitle,
