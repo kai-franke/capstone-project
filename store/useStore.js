@@ -116,7 +116,6 @@ const useStore = create((set) => {
     ],
     addTutorial: (newTutorial) => {
       set((state) => {
-        console.log("Zustand useStore.js: ", state);
         const updatedTutorials = [newTutorial, ...state.tutorials];
         return {
           tutorials: updatedTutorials,

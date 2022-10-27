@@ -4,6 +4,7 @@ import { Button, ButtonContainer } from "./Buttons";
 import { TbCheck, TbPlus } from "react-icons/tb";
 import { nanoid, customAlphabet } from "nanoid";
 import useStore from "../store/useStore";
+import Router, { useRouter } from "next/router";
 
 const slugSuffix = customAlphabet(
   "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
@@ -17,11 +18,13 @@ function sanitizeString(dirtyString) {
 
 function CreateForm() {
   const addNewTutorial = useStore((state) => state.addTutorial);
-  const buttonRef = useRef();
   const [inputSteps, setInputSteps] = useState([
     { step: 1, stepTitle: "", stepImageUrl: "", stepDescription: "" },
   ]);
   const [inputTutorialTitle, setInputTutorialTitle] = useState("");
+
+  const router = useRouter();
+  const buttonRef = useRef();
 
   function handleTitleChange(event) {
     const titleInput = event.target.value;
@@ -69,6 +72,8 @@ function CreateForm() {
     };
 
     addNewTutorial(newTutorial);
+
+    router.push("/tutorials");
   }
 
   function scrollToButton() {
