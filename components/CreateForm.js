@@ -1,10 +1,11 @@
 import { useState, useRef } from "react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
-import { Button, ButtonContainer } from "./Buttons";
 import { TbCheck, TbPlus } from "react-icons/tb";
 import { nanoid, customAlphabet } from "nanoid";
 import useStore from "../store/useStore";
-import Router, { useRouter } from "next/router";
+import { Button, ButtonContainer } from "./Buttons";
+
 
 const slugSuffix = customAlphabet(
   "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
@@ -17,7 +18,7 @@ function sanitizeString(dirtyString) {
 }
 
 function CreateForm() {
-  const addNewTutorial = useStore((state) => state.addTutorial);
+  //const addNewTutorial = useStore((state) => state.addTutorial);
   const [inputSteps, setInputSteps] = useState([
     { step: 1, stepTitle: "", stepImageUrl: "", stepDescription: "" },
   ]);
@@ -25,6 +26,20 @@ function CreateForm() {
 
   const router = useRouter();
   const buttonRef = useRef();
+
+  async function addNewTutorial(data) {
+    try {
+      const response = await fetch("/api/tutorials", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      console.log(result)
+      //router.push(`/products/${result.createdId}`);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   function handleTitleChange(event) {
     const titleInput = event.target.value;
