@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button, ButtonContainer } from "./Buttons";
 import { TbCheck, TbPlus } from "react-icons/tb";
 import { nanoid, customAlphabet } from "nanoid";
+import useStore from "../store/useStore";
 
 const slugSuffix = customAlphabet(
   "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
@@ -15,6 +16,7 @@ function sanitizeString(dirtyString) {
 }
 
 function CreateForm() {
+  const addNewTutorial = useStore((state) => state.addTutorial);
   const buttonRef = useRef();
   const [inputSteps, setInputSteps] = useState([
     { step: 1, stepTitle: "", stepImageUrl: "", stepDescription: "" },
@@ -65,6 +67,8 @@ function CreateForm() {
         .concat("-", slugSuffix()),
       steps: inputSteps,
     };
+
+    addNewTutorial(newTutorial);
   }
 
   function scrollToButton() {
