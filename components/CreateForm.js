@@ -1,10 +1,71 @@
 import { useState, useRef } from "react";
 import styled from "styled-components";
 import { Button, ButtonContainer } from "./Buttons";
+import { TbCheck, TbPlus } from "react-icons/tb";
+import { nanoid, customAlphabet } from "nanoid";
+
+const slugSuffix = customAlphabet(
+  "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
+  4
+);
+
+function sanitizeString(dirtyString) {
+  return dirtyString.trimStart().replace("  ", " ");
+  // Thank you, https://github.com/Roland-Hufnagel and Felix!
+}
 
 function CreateForm() {
-  const [steps, setSteps] = useState(1);
   const buttonRef = useRef();
+  const [inputSteps, setInputSteps] = useState([
+    { step: 1, stepTitle: "", stepImageUrl: "", stepDescription: "" },
+  ]);
+  const [inputTutorialTitle, setInputTutorialTitle] = useState("");
+
+  function handleTitleChange(event) {
+    const titleInput = event.target.value;
+    const sanitizedTitleInput = sanitizeString(titleInput);
+    setInputTutorialTitle(sanitizedTitleInput);
+  }
+
+  function handleFormChange(index, event) {
+    const stepsInput = event.target.value;
+    const sanitizedInput = sanitizeString(stepsInput);
+    const data = [...inputSteps];
+    data[index][event.target.name] = sanitizedInput;
+    setInputSteps(data);
+  }
+
+  function handleAddStep() {
+    const additionalStep = {
+      step: inputSteps.length + 1,
+      stepTitle: "",
+      stepImageUrl: "",
+      stepDescription: "",
+    };
+    setInputSteps((prevInputSteps) => [...prevInputSteps, additionalStep]);
+    scrollToButton();
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    if (inputTutorialTitle.replace(/[^a-zA-Z0-9]/g, "").length < 5) {
+      alert(
+        "The tutorial title must not consist of less than five letters and numbers (a-Z, 0-9, no special characters)."
+      );
+      return;
+    }
+    const newTutorial = {
+      id: nanoid(),
+      name: inputTutorialTitle,
+      cover: inputSteps[inputSteps.length - 1]["stepImageUrl"],
+      slug: inputTutorialTitle
+        .toLowerCase()
+        .replace(/[ ]+/g, "-")
+        .replace(/[^\w-]+/g, "")
+        .concat("-", slugSuffix()),
+      steps: inputSteps,
+    };
+  }
 
   function scrollToButton() {
     setTimeout(() => {
@@ -12,46 +73,65 @@ function CreateForm() {
     });
   }
 
-  function handleAddStep() {
-    setSteps((prevSteps) => prevSteps + 1);
-    scrollToButton();
-  }
-
   return (
     <>
-      <FormContainer>
+      <FormContainer id="tutorialForm" onSubmit={handleSubmit}>
         <FormCard>
           <StyledLabel isPrimary>
             <LabelText>Tutorial title</LabelText>
             <StyledInput
+              name="tutorialTitle"
               placeholder="e.g. Repair a faucet"
               aria-placeholder="e.g. Repair a faucet"
+              minLength="5"
+              maxLength="60"
+              required
+              onChange={(event) => handleTitleChange(event)}
+              value={inputTutorialTitle}
             />
           </StyledLabel>
         </FormCard>
-        {[...Array(steps)].map((step, index) => {
+
+        {inputSteps.map((step, index) => {
           return (
             <FormCard key={index.toString()}>
               <StepNumber>Step {index + 1}</StepNumber>
               <StyledLabel isPrimary={false}>
                 <LabelText>Step title</LabelText>
                 <StyledInput
+                  name="stepTitle"
+                  value={step.stepTitle}
                   placeholder="e.g. Prepare your tools"
                   aria-placeholder="e.g. Prepare your tools"
+                  maxLength="60"
+                  onChange={(event) => handleFormChange(index, event)}
+                  required
                 />
               </StyledLabel>
               <StyledLabel isPrimary={false}>
                 <LabelText>Picture URL</LabelText>
                 <StyledInput
+                  name="stepImageUrl"
+                  value={step.stepImageUrl.trim()}
+                  type="text"
                   placeholder="https://www..."
                   aria-placeholder="https://www..."
+                  pattern="(http)?s?:?(\/\/[^']*\.(?:gif|jpg|jpeg|jfif|pjpeg|pjp|png|webp))"
+                  title="Valid format: 'https://www.yourdomain.com/image.jpg'"
+                  onChange={(event) => handleFormChange(index, event)}
+                  required
                 />
               </StyledLabel>
               <StyledLabel isPrimary={false}>
                 <LabelText>Step description</LabelText>
                 <StyledTextarea
+                  name="stepDescription"
+                  value={step.stepDescription}
                   placeholder="Enter a description"
                   aria-placeholder="Enter a description"
+                  maxLength="300"
+                  onChange={(event) => handleFormChange(index, event)}
+                  required
                 />
               </StyledLabel>
             </FormCard>
@@ -60,7 +140,20 @@ function CreateForm() {
       </FormContainer>
       <ButtonContainer>
         <Button ref={buttonRef} isPrimary onClick={handleAddStep}>
-          Add step
+          <TbPlus
+            style={{
+              color: "inherit",
+              fontSize: "1.4em",
+              marginRight: "0.5em",
+            }}
+          />
+          add step
+        </Button>
+        <Button isPrimary type="submit" form="tutorialForm">
+          finish creating
+          <TbCheck
+            style={{ color: "inherit", fontSize: "1.4em", marginLeft: "0.5em" }}
+          />
         </Button>
       </ButtonContainer>
     </>
@@ -81,8 +174,7 @@ const FormCard = styled.fieldset`
   background-color: var(--white);
   padding: 0.7em;
   display: grid;
-  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08),
-    0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+  box-shadow: var(--boxshadow-primary);
   transition: 300ms linear;
 `;
 
@@ -102,9 +194,14 @@ const StyledInput = styled.input`
   border: 1px solid var(--gray-30);
   border-radius: 8px;
   padding: 0.4em;
+  margin-bottom: 0.7em;
 
   &::placeholder {
     color: var(--gray-30);
+  }
+
+  &:invalid {
+    border-color: var(--primary-100);
   }
 `;
 
@@ -114,9 +211,14 @@ const StyledTextarea = styled.textarea`
   border-radius: 8px;
   padding: 0.4em;
   height: 4.5em;
+  margin-bottom: 0.7em;
 
   &::placeholder {
     color: var(--gray-30);
+  }
+
+  &:invalid {
+    border-color: var(--primary-100);
   }
 `;
 

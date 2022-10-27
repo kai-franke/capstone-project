@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { TbBook2 } from "react-icons/tb";
+import { TbBook2, TbPalette } from "react-icons/tb";
 import { IconContext } from "react-icons";
 
 function Footer() {
@@ -25,6 +25,21 @@ function Footer() {
             Library
           </NavItem>
         </Link>
+        <Link href="/create" passHref>
+          <NavItem isActive={pathname === "/create"}>
+            <IconContext.Provider
+              value={{
+                color: "inherit",
+                size: "2em",
+                title: "arrow icon",
+                style: { justifySelf: "center", alignSelf: "end" },
+              }}
+            >
+              <TbPalette />
+            </IconContext.Provider>
+            Create
+          </NavItem>
+        </Link>
       </NavBar>
     </footer>
   );
@@ -39,7 +54,8 @@ const NavBar = styled.nav`
   height: 3.5em;
   position: fixed;
   bottom: 0;
-  display: grid;
+  display: flex;
+  flex-wrap: nowrap;
 `;
 
 const NavItem = styled.a`
@@ -56,6 +72,7 @@ const NavItem = styled.a`
   letter-spacing: 0.05em;
   transition: 300ms linear;
   display: grid;
+  flex: 1;
 
   &:hover {
     cursor: pointer;
