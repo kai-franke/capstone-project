@@ -3,7 +3,7 @@ import Headline from "../../components/Headline";
 import TutorialList from "../../components/TutorialList";
 import { getAllTutorials } from "../../services/tutorialService";
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const tutorials = await getAllTutorials();
 
   return {
