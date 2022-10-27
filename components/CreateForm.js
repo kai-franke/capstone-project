@@ -70,7 +70,6 @@ function CreateForm() {
         .concat("-", slugSuffix()),
       steps: [...inputSteps],
     };
-    console.log({ newTutorial }); // LEAVE FOR QUALITY ASSURANCE <---------- REMOVE BEFORE FLIGHT
   }
 
   function scrollToButton() {
