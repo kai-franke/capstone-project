@@ -28,11 +28,13 @@ function CreateForm() {
   }
 
   function handleFormChange(index, event) {
-    if (event.target.value[0] !== " ") {
-      const data = [...inputSteps];
+    const data = [...inputSteps];
+    if (event.target.value.trim() == "") {
+      data[index][event.target.name] = "";
+    } else {
       data[index][event.target.name] = event.target.value;
-      setInputSteps(data);
     }
+    setInputSteps(data);
   }
 
   function handleAddStep() {
