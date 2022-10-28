@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { TbCheck, TbPlus } from "react-icons/tb";
 import { nanoid, customAlphabet } from "nanoid";
-//import useStore from "../store/useStore";
 import { Button, ButtonContainer } from "./Buttons";
 
 const slugSuffix = customAlphabet(
@@ -17,7 +16,6 @@ function sanitizeString(dirtyString) {
 }
 
 function CreateForm() {
-  //const addNewTutorial = useStore((state) => state.addTutorial);
   const [inputSteps, setInputSteps] = useState([
     { step: 1, title: "", img: "", description: "" },
   ]);
@@ -33,8 +31,6 @@ function CreateForm() {
         body: JSON.stringify(data),
       });
       const result = await response.json();
-      console.log(result);
-      router.push(`/tutorials/${result.createdSlug}`);
     } catch (error) {
       console.error(error);
     }
@@ -87,7 +83,7 @@ function CreateForm() {
 
     addNewTutorial(newTutorial);
 
-    //router.push("/tutorials");
+    router.push("/tutorials");
   }
 
   function scrollToButton() {

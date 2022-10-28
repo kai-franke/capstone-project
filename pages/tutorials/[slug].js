@@ -5,9 +5,7 @@ import Headline from "../../components/Headline";
 import TutorialCard from "../../components/TutorialCard";
 import TutorialEndCard from "../../components/TutorialEndCard";
 import TutorialStartCard from "../../components/TutorialStartCard";
-import {
-  getTutorialBySlug,
-} from "../../services/tutorialService";
+import { getTutorialBySlug } from "../../services/tutorialService";
 
 export async function getServerSideProps(context) {
   const { slug } = context.params;

@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Headline from "../../components/Headline";
 import TutorialList from "../../components/TutorialList";
 import { getAllTutorials } from "../../services/tutorialService";
-import useStore from "../../store/useStore";
 
 export async function getServerSideProps(context) {
   const tutorials = await getAllTutorials();
@@ -12,10 +11,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-
 export default function TutorialsPage({ tutorials }) {
-//export default function TutorialsPage() {
-  //const tutorials = useStore(state => {return state.tutorials;})
   return (
     <>
       <Headline>My tutorials</Headline>

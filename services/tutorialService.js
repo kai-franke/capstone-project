@@ -32,3 +32,4 @@ export async function getTutorialBySlug(slug) {
 
   return sanitizedTutorial;
 }
+
