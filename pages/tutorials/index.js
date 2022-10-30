@@ -5,14 +5,12 @@ import { getAllTutorials } from "../../services/tutorialService";
 
 export async function getServerSideProps(context) {
   const tutorials = await getAllTutorials();
-
   return {
     props: { tutorials: tutorials },
   };
 }
 
 export default function TutorialsPage({ tutorials }) {
-
   return (
     <>
       <Headline>My tutorials</Headline>

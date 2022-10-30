@@ -15,8 +15,8 @@ function sanitizeString(dirtyString) {
   // Thank you, https://github.com/Roland-Hufnagel and Felix!
 }
 
-function addProxyToImgUrl(prevUrl) {
-  return `https://res.cloudinary.com/kaifranke/image/fetch/${prevUrl}`;
+function addProxyToImgUrl(previousUrl) {
+  return `https://res.cloudinary.com/kaifranke/image/fetch/${previousUrl}`;
 }
 
 function CreateForm() {
@@ -35,6 +35,7 @@ function CreateForm() {
         body: JSON.stringify(data),
       });
       const result = await response.json();
+      router.push("/tutorials");
     } catch (error) {
       console.error(error);
     }
@@ -79,7 +80,6 @@ function CreateForm() {
         img: addProxyToImgUrl(inputStep.img),
       };
     });
-    console.log(stepsWithModifiedUrls);
 
     const newTutorial = {
       id: nanoid(),
@@ -94,8 +94,6 @@ function CreateForm() {
     };
 
     addNewTutorial(newTutorial);
-
-    router.push("/tutorials");
   }
 
   function scrollToButton() {
