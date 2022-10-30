@@ -15,6 +15,10 @@ function sanitizeString(dirtyString) {
   // Thank you, https://github.com/Roland-Hufnagel and Felix!
 }
 
+function addProxyToImgUrl(prevUrl) {
+  return `https://res.cloudinary.com/kaifranke/image/fetch/${prevUrl}`;
+}
+
 function CreateForm() {
   const [inputSteps, setInputSteps] = useState([
     { step: 1, title: "", img: "", description: "" },
@@ -69,16 +73,24 @@ function CreateForm() {
       );
       return;
     }
+    const stepsWithModifiedUrls = inputSteps.map((inputStep) => {
+      return {
+        ...inputStep,
+        img: addProxyToImgUrl(inputStep.img),
+      };
+    });
+    console.log(stepsWithModifiedUrls);
+
     const newTutorial = {
       id: nanoid(),
       name: inputTutorialTitle,
-      cover: inputSteps[inputSteps.length - 1]["img"],
+      cover: stepsWithModifiedUrls[inputSteps.length - 1]["img"],
       slug: inputTutorialTitle
         .toLowerCase()
         .replace(/[ ]+/g, "-")
         .replace(/[^\w-]+/g, "")
         .concat("-", slugSuffix()),
-      steps: [{ step: 0 }, ...inputSteps],
+      steps: [{ step: 0 }, ...stepsWithModifiedUrls],
     };
 
     addNewTutorial(newTutorial);

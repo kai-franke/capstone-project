@@ -25,4 +25,5 @@ const Message = styled.p`
   text-align: center;
   font-size: 0.7em;
   color: var(--lighttext);
+  margin-bottom: 7em;
 `;
