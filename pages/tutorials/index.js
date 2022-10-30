@@ -25,23 +25,24 @@ export default function TutorialsPage() {
       });
   }, []);
 
-  /* if (isLoading) return <Message>Loading...</Message>;
-  if (!tutorials) return <Message>No tutorial data</Message>;
- */
+  if (isLoading)
+    return (
+      <>
+        <Headline>My tutorials</Headline>
+        <Message>Loading...</Message>
+      </>
+    );
+  if (!tutorials)
+    return (
+      <>
+        <Headline>My tutorials</Headline>
+        <Message>No tutorial data</Message>
+      </>
+    );
+
   return (
     <>
       <Headline>My tutorials</Headline>
-      {isLoading && (
-        <>
-          <Message>Loading...</Message>
-        </>
-      )}
-      ;
-      {!tutorials && (
-        <>
-          <Message>No tutorial data</Message>
-        </>
-      )}
       <TutorialList tutorials={tutorials} />
       <Message>No more tutorials</Message>
     </>
