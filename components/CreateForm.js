@@ -150,6 +150,16 @@ function CreateForm() {
                   onChange={(event) => handleFormChange(index, event)}
                   required
                 />
+                <p
+                  style={{
+                    fontSize: "0.75em",
+                    marginBottom: "1em",
+                    color: "var(--gray-70)",
+                  }}
+                >
+                  Your URL must end on one of the following file extensions:
+                  .gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp, .png, .webp
+                </p>
               </StyledLabel>
               <StyledLabel isPrimary={false}>
                 <LabelText>Step description</LabelText>

@@ -2,14 +2,6 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Headline from "../../components/Headline";
 import TutorialList from "../../components/TutorialList";
-//import { getAllTutorials } from "../../services/tutorialService";
-
-/* export async function getServerSideProps(context) {
-  const tutorials = await getAllTutorials();
-  return {
-    props: { tutorials: tutorials },
-  };
-} */
 
 export default function TutorialsPage() {
   const [tutorials, setTutorials] = useState(null);
@@ -25,26 +17,19 @@ export default function TutorialsPage() {
       });
   }, []);
 
-  if (isLoading)
-    return (
-      <>
-        <Headline>My tutorials</Headline>
-        <Message>Loading...</Message>
-      </>
-    );
-  if (!tutorials)
-    return (
-      <>
-        <Headline>My tutorials</Headline>
-        <Message>No tutorial data</Message>
-      </>
-    );
-
   return (
     <>
       <Headline>My tutorials</Headline>
-      <TutorialList tutorials={tutorials} />
-      <Message>No more tutorials</Message>
+      {isLoading ? (
+        <Message>Loading...</Message>
+      ) : !tutorials ? (
+        <Message>No tutorial data</Message>
+      ) : (
+        <>
+          <TutorialList tutorials={tutorials} />
+          <Message>No more tutorials</Message>
+        </>
+      )}
     </>
   );
 }
@@ -53,4 +38,5 @@ const Message = styled.p`
   text-align: center;
   font-size: 0.7em;
   color: var(--lighttext);
+  margin-top: 1.5em;
 `;
