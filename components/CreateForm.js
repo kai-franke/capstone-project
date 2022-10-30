@@ -16,7 +16,7 @@ function sanitizeString(dirtyString) {
 }
 
 function addProxyToImgUrl(previousUrl) {
-  return `https://res.cloudinary.com/kaifranke/image/fetch/${previousUrl}`;
+  return `https://res.cloudinary.com/kaifranke/image/fetch/d_not_found_nqtjzx.jpg/${previousUrl}`;
 }
 
 function CreateForm() {
@@ -146,7 +146,7 @@ function CreateForm() {
                   placeholder="https://www..."
                   aria-placeholder="https://www..."
                   pattern="(http)?s?:?(\/\/[^']*\.(?:gif|jpg|jpeg|jfif|pjpeg|pjp|png|webp))"
-                  title="Valid format: 'https://www.yourdomain.com/image.jpg'"
+                  //title="Valid format: 'https://www.yourdomain.com/image.jpg'"
                   onChange={(event) => handleFormChange(index, event)}
                   required
                 />
