@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Headline from "../../components/Headline";
 import TutorialList from "../../components/TutorialList";
@@ -12,11 +14,31 @@ export async function getServerSideProps(context) {
 }
 
 export default function TutorialsPage({ tutorials }) {
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const router = useRouter();
+
+  const refreshData = () => {
+    router.replace(router.asPath);
+    setIsRefreshing(true);
+  };
+
+  useEffect(() => {
+    setIsRefreshing(false);
+  }, [tutorials]);
+
+  useEffect(() => {
+    refreshData();
+  }, []);
+
   return (
     <>
       <Headline>My tutorials</Headline>
       <TutorialList tutorials={tutorials} />
-      <Message>No more tutorials</Message>
+      {isRefreshing ? (
+        <Message>Loading tutorials...</Message>
+      ) : (
+        <Message>No more tutorials</Message>
+      )}
     </>
   );
 }
