@@ -5,7 +5,14 @@ export default function TutorialCard({ step }) {
   return (
     <>
       <CardContainer>
-        <Image src={step.img} alt={step.title} width={350} height={350}></Image>
+        <ImageContainer>
+        <Image
+          src={step.img}
+          alt={step.title}
+          layout="fill"
+          objectFit="cover"
+        ></Image>
+        </ImageContainer>
         <StepNumber>Step {step.step}</StepNumber>
         <StepTitle>{step.title}</StepTitle>
         <StepDescription>{step.description}</StepDescription>
@@ -20,7 +27,7 @@ const CardContainer = styled.div`
   margin: 1em;
   padding: 1em 0.7em;
   text-align: left;
-  box-shadow: var(--boxshadow-primary)
+  box-shadow: var(--boxshadow-primary);
 `;
 
 const StepTitle = styled.h2`
@@ -40,4 +47,10 @@ const StepDescription = styled.p`
   font-weight: 300;
   color: var(--copytext);
   padding: 0.7em 0;
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
+  aspect-ratio: 1;
+  width: 360px;
 `;

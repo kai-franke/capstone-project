@@ -5,22 +5,9 @@ import Headline from "../../components/Headline";
 import TutorialCard from "../../components/TutorialCard";
 import TutorialEndCard from "../../components/TutorialEndCard";
 import TutorialStartCard from "../../components/TutorialStartCard";
-import {
-  getAllTutorials,
-  getTutorialBySlug,
-} from "../../services/tutorialService";
+import { getTutorialBySlug } from "../../services/tutorialService";
 
-export async function getStaticPaths() {
-  const tutorials = await getAllTutorials();
-  const slugs = tutorials.map((tutorial) => tutorial.slug);
-
-  return {
-    paths: slugs.map((slug) => ({ params: { slug: slug } })),
-    fallback: false,
-  };
-}
-
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const { slug } = context.params;
   const tutorial = await getTutorialBySlug(slug);
 

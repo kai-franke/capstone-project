@@ -111,6 +111,7 @@ const GlobalStyle = createGlobalStyle`
           font-family: 'Poppins', sans-serif;
           background-color: var(--background);
           color: var(--darktext);
+          padding-bottom: 5em;
       }
   `;
 

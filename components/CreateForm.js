@@ -1,8 +1,9 @@
 import { useState, useRef } from "react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
-import { Button, ButtonContainer } from "./Buttons";
 import { TbCheck, TbPlus } from "react-icons/tb";
-import { nanoid, customAlphabet } from "nanoid";
+import { customAlphabet } from "nanoid";
+import { Button, ButtonContainer } from "./Buttons";
 
 const slugSuffix = customAlphabet(
   "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
@@ -14,12 +15,31 @@ function sanitizeString(dirtyString) {
   // Thank you, https://github.com/Roland-Hufnagel and Felix!
 }
 
+function addProxyToImgUrl(previousUrl) {
+  return `https://res.cloudinary.com/kaifranke/image/fetch/d_not_found_nqtjzx.jpg/${previousUrl}`;
+}
+
 function CreateForm() {
-  const buttonRef = useRef();
   const [inputSteps, setInputSteps] = useState([
-    { step: 1, stepTitle: "", stepImageUrl: "", stepDescription: "" },
+    { step: 1, title: "", img: "", description: "" },
   ]);
   const [inputTutorialTitle, setInputTutorialTitle] = useState("");
+
+  const router = useRouter();
+  const buttonRef = useRef();
+
+  async function addNewTutorial(data) {
+    try {
+      const response = await fetch("/api/tutorials", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      router.push("/tutorials");
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   function handleTitleChange(event) {
     const titleInput = event.target.value;
@@ -38,9 +58,9 @@ function CreateForm() {
   function handleAddStep() {
     const additionalStep = {
       step: inputSteps.length + 1,
-      stepTitle: "",
-      stepImageUrl: "",
-      stepDescription: "",
+      title: "",
+      img: "",
+      description: "",
     };
     setInputSteps((prevInputSteps) => [...prevInputSteps, additionalStep]);
     scrollToButton();
@@ -54,17 +74,25 @@ function CreateForm() {
       );
       return;
     }
+    const stepsWithModifiedUrls = inputSteps.map((inputStep) => {
+      return {
+        ...inputStep,
+        img: addProxyToImgUrl(inputStep.img),
+      };
+    });
+
     const newTutorial = {
-      id: nanoid(),
       name: inputTutorialTitle,
-      cover: inputSteps[inputSteps.length - 1]["stepImageUrl"],
+      cover: stepsWithModifiedUrls[inputSteps.length - 1]["img"],
       slug: inputTutorialTitle
         .toLowerCase()
         .replace(/[ ]+/g, "-")
         .replace(/[^\w-]+/g, "")
         .concat("-", slugSuffix()),
-      steps: inputSteps,
+      steps: [{ step: 0 }, ...stepsWithModifiedUrls],
     };
+
+    addNewTutorial(newTutorial);
   }
 
   function scrollToButton() {
@@ -99,8 +127,8 @@ function CreateForm() {
               <StyledLabel isPrimary={false}>
                 <LabelText>Step title</LabelText>
                 <StyledInput
-                  name="stepTitle"
-                  value={step.stepTitle}
+                  name="title"
+                  value={step.title}
                   placeholder="e.g. Prepare your tools"
                   aria-placeholder="e.g. Prepare your tools"
                   maxLength="60"
@@ -111,22 +139,31 @@ function CreateForm() {
               <StyledLabel isPrimary={false}>
                 <LabelText>Picture URL</LabelText>
                 <StyledInput
-                  name="stepImageUrl"
-                  value={step.stepImageUrl.trim()}
+                  name="img"
+                  value={step.img.trim()}
                   type="text"
                   placeholder="https://www..."
                   aria-placeholder="https://www..."
                   pattern="(http)?s?:?(\/\/[^']*\.(?:gif|jpg|jpeg|jfif|pjpeg|pjp|png|webp))"
-                  title="Valid format: 'https://www.yourdomain.com/image.jpg'"
                   onChange={(event) => handleFormChange(index, event)}
                   required
                 />
+                <p
+                  style={{
+                    fontSize: "0.75em",
+                    marginBottom: "1em",
+                    color: "var(--gray-70)",
+                  }}
+                >
+                  Your URL must end on one of the following file extensions:
+                  .gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp, .png, .webp
+                </p>
               </StyledLabel>
               <StyledLabel isPrimary={false}>
                 <LabelText>Step description</LabelText>
                 <StyledTextarea
-                  name="stepDescription"
-                  value={step.stepDescription}
+                  name="description"
+                  value={step.description}
                   placeholder="Enter a description"
                   aria-placeholder="Enter a description"
                   maxLength="300"
