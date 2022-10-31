@@ -7,7 +7,7 @@ export async function getAllTutorials() {
   const tutorials = await Tutorial.find();
 
   const sanitizedTutorials = tutorials.map((tutorial) => ({
-    id: tutorial.id,
+    id: tutorial._id.valueOf(),
     name: tutorial.name,
     cover: tutorial.cover,
     slug: tutorial.slug,
@@ -23,13 +23,11 @@ export async function getTutorialBySlug(slug) {
   const tutorial = tutorials.find((tutorial) => tutorial.slug === slug);
 
   const sanitizedTutorial = {
-    id: tutorial.id,
+    id: tutorial._id.valueOf(),
     name: tutorial.name,
     cover: tutorial.cover,
     slug: tutorial.slug,
     steps: tutorial.steps,
   };
-
   return sanitizedTutorial;
 }
-

@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { TbCheck, TbPlus } from "react-icons/tb";
-import { nanoid, customAlphabet } from "nanoid";
+import { customAlphabet } from "nanoid";
 import { Button, ButtonContainer } from "./Buttons";
 
 const slugSuffix = customAlphabet(
@@ -82,7 +82,6 @@ function CreateForm() {
     });
 
     const newTutorial = {
-      id: nanoid(),
       name: inputTutorialTitle,
       cover: stepsWithModifiedUrls[inputSteps.length - 1]["img"],
       slug: inputTutorialTitle
@@ -146,7 +145,6 @@ function CreateForm() {
                   placeholder="https://www..."
                   aria-placeholder="https://www..."
                   pattern="(http)?s?:?(\/\/[^']*\.(?:gif|jpg|jpeg|jfif|pjpeg|pjp|png|webp))"
-                  //title="Valid format: 'https://www.yourdomain.com/image.jpg'"
                   onChange={(event) => handleFormChange(index, event)}
                   required
                 />

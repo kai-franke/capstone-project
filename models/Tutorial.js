@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const tutorialSchema = new Schema({
-  id: { type: String, required: true },
   name: { type: String, required: true },
   cover: { type: String, required: true },
   slug: { type: String, required: true },
