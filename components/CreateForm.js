@@ -15,13 +15,9 @@ function sanitizeString(dirtyString) {
   // Thank you, https://github.com/Roland-Hufnagel and Felix!
 }
 
-function addProxyToImgUrl(previousUrl) {
-  return `https://res.cloudinary.com/kaifranke/image/fetch/d_not_found_nqtjzx.jpg/${previousUrl}`;
-}
-
 function CreateForm() {
   const [inputSteps, setInputSteps] = useState([
-    { step: 1, title: "", img: "", description: "" },
+    { step: 1, title: "", img: "", description: "", file: "" },
   ]);
   const [inputTutorialTitle, setInputTutorialTitle] = useState("");
 
@@ -55,18 +51,28 @@ function CreateForm() {
     setInputSteps(data);
   }
 
+  function handleUploadChange(index, changeEvent) {
+    const reader = new FileReader();
+
+    const newFile = changeEvent.target.files[0];
+    const data = [...inputSteps];
+    data[index]["file"] = newFile;
+    setInputSteps(data);
+  }
+
   function handleAddStep() {
     const additionalStep = {
       step: inputSteps.length + 1,
       title: "",
       img: "",
       description: "",
+      file: "",
     };
     setInputSteps((prevInputSteps) => [...prevInputSteps, additionalStep]);
     scrollToButton();
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     if (inputTutorialTitle.replace(/[^a-zA-Z0-9]/g, "").length < 5) {
       alert(
@@ -74,22 +80,36 @@ function CreateForm() {
       );
       return;
     }
-    const stepsWithModifiedUrls = inputSteps.map((inputStep) => {
-      return {
-        ...inputStep,
-        img: addProxyToImgUrl(inputStep.img),
-      };
-    });
 
+    // Upload images to Cloudinary and set URL
+    let index = 0;
+    for (const file of inputSteps) {
+      const formData = new FormData();
+      formData.append("file", file.file);
+      formData.append("upload_preset", "tutorial-img");
+      const data = await fetch(
+        "https://api.cloudinary.com/v1_1/kaifranke/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then((res) => res.json());
+      const updatedInputSteps = [...inputSteps];
+      updatedInputSteps[index]["img"] = data.secure_url;
+      setInputSteps(updatedInputSteps);
+      index += 1;
+    }
+
+    // Compile and format tutorial data
     const newTutorial = {
       name: inputTutorialTitle,
-      cover: stepsWithModifiedUrls[inputSteps.length - 1]["img"],
+      cover: inputSteps[inputSteps.length - 1]["img"],
       slug: inputTutorialTitle
         .toLowerCase()
         .replace(/[ ]+/g, "-")
         .replace(/[^\w-]+/g, "")
         .concat("-", slugSuffix()),
-      steps: [{ step: 0 }, ...stepsWithModifiedUrls],
+      steps: [{ step: 0 }, ...inputSteps],
     };
 
     addNewTutorial(newTutorial);
@@ -139,15 +159,11 @@ function CreateForm() {
               <StyledLabel isPrimary={false}>
                 <LabelText>Picture URL</LabelText>
                 <StyledInput
-                  name="img"
-                  value={step.img.trim()}
-                  type="text"
-                  placeholder="https://www..."
-                  aria-placeholder="https://www..."
-                  pattern="(http)?s?:?(\/\/[^']*\.(?:gif|jpg|jpeg|jfif|pjpeg|pjp|png|webp))"
-                  onChange={(event) => handleFormChange(index, event)}
+                  name="file"
+                  type="file"
+                  onChange={(event) => handleUploadChange(index, event)}
                   required
-                />
+                ></StyledInput>
                 <p
                   style={{
                     fontSize: "0.75em",
@@ -155,8 +171,8 @@ function CreateForm() {
                     color: "var(--gray-70)",
                   }}
                 >
-                  Your URL must end on one of the following file extensions:
-                  .gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp, .png, .webp
+                  Accepted file formats: .gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp,
+                  .png, .webp
                 </p>
               </StyledLabel>
               <StyledLabel isPrimary={false}>
