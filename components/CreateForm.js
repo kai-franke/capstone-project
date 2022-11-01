@@ -191,10 +191,10 @@ function CreateForm() {
                           style={{
                             color: "inherit",
                             fontSize: "1.5em",
+                            marginBottom: "0.2em",
                           }}
                         />
-                        <br />
-                        No image selected
+                        No picture selected
                       </NoImage>
                     )}
                   </PreviewImage>
@@ -362,4 +362,7 @@ const NoImage = styled.p`
   color: var(--white);
   text-align: center;
   font-size: 0.8em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
