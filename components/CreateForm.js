@@ -18,10 +18,10 @@ function sanitizeString(dirtyString) {
 
 function CreateForm() {
   const [inputSteps, setInputSteps] = useState([
-    { step: 1, title: "", img: "", description: "", file: "" }, { step: 1, title: "", img: "", description: "", file: "" }, { step: 1, title: "", img: "", description: "", file: "" }, { step: 1, title: "", img: "", description: "", file: "" }, { step: 1, title: "", img: "", description: "", file: "" },
+    { step: 1, title: "", img: "", description: "", file: "" },
   ]);
   const [inputTutorialTitle, setInputTutorialTitle] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const buttonRef = useRef();
@@ -144,9 +144,13 @@ function CreateForm() {
           width={48}
           height={48}
         ></Image>
-        <p style={{
+        <p
+          style={{
             marginTop: "2em",
-          }}>Uploading your images, please wait...</p>
+          }}
+        >
+          Uploading your images, please wait...
+        </p>
       </LoadingScreen>
       <FormContainer id="tutorialForm" onSubmit={handleSubmit}>
         <FormCard>
