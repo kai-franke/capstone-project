@@ -18,9 +18,10 @@ function sanitizeString(dirtyString) {
 
 function CreateForm() {
   const [inputSteps, setInputSteps] = useState([
-    { step: 1, title: "", img: "", description: "", file: "" },
+    { step: 1, title: "", img: "", description: "", file: "" }, { step: 1, title: "", img: "", description: "", file: "" }, { step: 1, title: "", img: "", description: "", file: "" }, { step: 1, title: "", img: "", description: "", file: "" }, { step: 1, title: "", img: "", description: "", file: "" },
   ]);
   const [inputTutorialTitle, setInputTutorialTitle] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
   const buttonRef = useRef();
@@ -36,6 +37,7 @@ function CreateForm() {
     } catch (error) {
       console.error(error);
     }
+    setIsLoading(false);
   }
 
   function handleTitleChange(event) {
@@ -91,6 +93,8 @@ function CreateForm() {
       return;
     }
 
+    setIsLoading(true);
+
     // Upload images to Cloudinary and set URL
     let index = 0;
     for (const file of inputSteps) {
@@ -133,6 +137,17 @@ function CreateForm() {
 
   return (
     <>
+      <LoadingScreen isLoading={isLoading}>
+        <Image
+          src="/assets/uploading_animation-128x128.gif"
+          alt="rocket animation"
+          width={48}
+          height={48}
+        ></Image>
+        <p style={{
+            marginTop: "2em",
+          }}>Uploading your images, please wait...</p>
+      </LoadingScreen>
       <FormContainer id="tutorialForm" onSubmit={handleSubmit}>
         <FormCard>
           <StyledLabel isPrimary>
@@ -365,4 +380,17 @@ const NoImage = styled.p`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const LoadingScreen = styled.div`
+  display: ${({ isLoading }) => (isLoading ? "flex" : "none")};
+  flex-direction: column;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--background-opac-90);
+  z-index: 1;
+  color: var(--primary-100);
 `;

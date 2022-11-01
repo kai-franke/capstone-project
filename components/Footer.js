@@ -56,6 +56,7 @@ const NavBar = styled.nav`
   bottom: 0;
   display: flex;
   flex-wrap: nowrap;
+  z-index: 30;
 `;
 
 const NavItem = styled.a`

@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
           --background: #F8FCFB;
           --background-pale: #f9f9f9;
           --background-pale-dark: #eeeeee;
+          --background-opac-90: rgba(248, 252, 251, .9);
           --primary-100: #19A7B0;
           --primary-90: #3bb4bc;
           --primary-60: #E5F6F6;
