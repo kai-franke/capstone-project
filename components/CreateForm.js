@@ -1,9 +1,10 @@
 import { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { TbCheck, TbPlus } from "react-icons/tb";
+import { TbCheck, TbPlus, TbCameraOff } from "react-icons/tb";
 import { customAlphabet } from "nanoid";
 import { Button, ButtonContainer } from "./Buttons";
+import Image from "next/image";
 
 const slugSuffix = customAlphabet(
   "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
@@ -15,15 +16,12 @@ function sanitizeString(dirtyString) {
   // Thank you, https://github.com/Roland-Hufnagel and Felix!
 }
 
-function addProxyToImgUrl(previousUrl) {
-  return `https://res.cloudinary.com/kaifranke/image/fetch/d_not_found_nqtjzx.jpg/${previousUrl}`;
-}
-
 function CreateForm() {
   const [inputSteps, setInputSteps] = useState([
-    { step: 1, title: "", img: "", description: "" },
+    { step: 1, title: "", img: "", description: "", file: "" },
   ]);
   const [inputTutorialTitle, setInputTutorialTitle] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const buttonRef = useRef();
@@ -39,6 +37,7 @@ function CreateForm() {
     } catch (error) {
       console.error(error);
     }
+    setIsLoading(false);
   }
 
   function handleTitleChange(event) {
@@ -55,18 +54,37 @@ function CreateForm() {
     setInputSteps(data);
   }
 
+  function handleUploadChange(index, changeEvent) {
+    const newFile = changeEvent.target.files[0];
+    const data = [...inputSteps];
+    data[index]["file"] = newFile;
+
+    try {
+      const reader = new FileReader();
+      reader.onload = function (onLoadEvent) {
+        data[index]["img"] = onLoadEvent.target.result;
+        setInputSteps(data);
+      };
+      reader.readAsDataURL(changeEvent.target.files[0]);
+    } catch {
+      data[index]["img"] = "";
+      setInputSteps(data);
+    }
+  }
+
   function handleAddStep() {
     const additionalStep = {
       step: inputSteps.length + 1,
       title: "",
       img: "",
       description: "",
+      file: "",
     };
     setInputSteps((prevInputSteps) => [...prevInputSteps, additionalStep]);
     scrollToButton();
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     if (inputTutorialTitle.replace(/[^a-zA-Z0-9]/g, "").length < 5) {
       alert(
@@ -74,22 +92,38 @@ function CreateForm() {
       );
       return;
     }
-    const stepsWithModifiedUrls = inputSteps.map((inputStep) => {
-      return {
-        ...inputStep,
-        img: addProxyToImgUrl(inputStep.img),
-      };
-    });
 
+    setIsLoading(true);
+
+    // Upload images to Cloudinary and set URL
+    let index = 0;
+    for (const file of inputSteps) {
+      const formData = new FormData();
+      formData.append("file", file.file);
+      formData.append("upload_preset", "tutorial-img");
+      const data = await fetch(
+        "https://api.cloudinary.com/v1_1/kaifranke/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then((res) => res.json());
+      const updatedInputSteps = [...inputSteps];
+      updatedInputSteps[index]["img"] = data.secure_url;
+      setInputSteps(updatedInputSteps);
+      index += 1;
+    }
+
+    // Compile and format tutorial data
     const newTutorial = {
       name: inputTutorialTitle,
-      cover: stepsWithModifiedUrls[inputSteps.length - 1]["img"],
+      cover: inputSteps[inputSteps.length - 1]["img"],
       slug: inputTutorialTitle
         .toLowerCase()
         .replace(/[ ]+/g, "-")
         .replace(/[^\w-]+/g, "")
         .concat("-", slugSuffix()),
-      steps: [{ step: 0 }, ...stepsWithModifiedUrls],
+      steps: [{ step: 0 }, ...inputSteps],
     };
 
     addNewTutorial(newTutorial);
@@ -103,6 +137,21 @@ function CreateForm() {
 
   return (
     <>
+      <LoadingScreen isLoading={isLoading}>
+        <Image
+          src="/assets/uploading_animation-128x128.gif"
+          alt="rocket animation"
+          width={48}
+          height={48}
+        ></Image>
+        <p
+          style={{
+            marginTop: "2em",
+          }}
+        >
+          Uploading your images, please wait...
+        </p>
+      </LoadingScreen>
       <FormContainer id="tutorialForm" onSubmit={handleSubmit}>
         <FormCard>
           <StyledLabel isPrimary>
@@ -136,29 +185,56 @@ function CreateForm() {
                   required
                 />
               </StyledLabel>
-              <StyledLabel isPrimary={false}>
-                <LabelText>Picture URL</LabelText>
-                <StyledInput
-                  name="img"
-                  value={step.img.trim()}
-                  type="text"
-                  placeholder="https://www..."
-                  aria-placeholder="https://www..."
-                  pattern="(http)?s?:?(\/\/[^']*\.(?:gif|jpg|jpeg|jfif|pjpeg|pjp|png|webp))"
-                  onChange={(event) => handleFormChange(index, event)}
+
+              <UploadButton>
+                <UploadInputfield
+                  name="file"
+                  type="file"
+                  accept=".gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp, .png, .webp"
+                  onChange={(event) => handleUploadChange(index, event)}
                   required
-                />
-                <p
-                  style={{
-                    fontSize: "0.75em",
-                    marginBottom: "1em",
-                    color: "var(--gray-70)",
-                  }}
-                >
-                  Your URL must end on one of the following file extensions:
-                  .gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp, .png, .webp
-                </p>
-              </StyledLabel>
+                ></UploadInputfield>
+                <LabelText>Step picture</LabelText>
+                <UploadButtonBorder>
+                  <PreviewImage>
+                    {inputSteps[index]["img"] ? (
+                      <Image
+                        src={inputSteps[index]["img"]}
+                        layout="fill"
+                        objectFit="cover"
+                        alt="Upload preview"
+                      />
+                    ) : (
+                      <NoImage>
+                        <TbCameraOff
+                          style={{
+                            color: "inherit",
+                            fontSize: "1.5em",
+                            marginBottom: "0.2em",
+                          }}
+                        />
+                        No picture selected
+                      </NoImage>
+                    )}
+                  </PreviewImage>
+                  <PreviewFileName>
+                    {inputSteps[index].file
+                      ? inputSteps[index].file.name
+                      : "Please select a picture"}
+                  </PreviewFileName>
+                </UploadButtonBorder>
+              </UploadButton>
+              <p
+                style={{
+                  fontSize: "0.75em",
+                  marginBottom: "0.7em",
+                  color: "var(--gray-70)",
+                }}
+              >
+                Accepted file formats: .gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp,
+                .png, .webp
+              </p>
+
               <StyledLabel isPrimary={false}>
                 <LabelText>Step description</LabelText>
                 <StyledTextarea
@@ -231,7 +307,7 @@ const StyledInput = styled.input`
   border: 1px solid var(--gray-30);
   border-radius: 8px;
   padding: 0.4em;
-  margin-bottom: 0.7em;
+  margin-bottom: 1em;
 
   &::placeholder {
     color: var(--gray-30);
@@ -262,5 +338,63 @@ const StyledTextarea = styled.textarea`
 const StepNumber = styled.p`
   font-weight: 500;
   padding: 0.7em 0 0.3em 0;
+  color: var(--primary-100);
+`;
+
+const UploadButton = styled.label`
+  color: var(--darktext);
+  cursor: pointer;
+`;
+
+const UploadButtonBorder = styled.div`
+  padding: 0.3em;
+  margin: 0.5em 0;
+  border-radius: 8px;
+  border: 1px solid var(--gray-30);
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+`;
+
+const PreviewImage = styled.div`
+  position: relative;
+  overflow: hidden;
+  width: 5em;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background-color: var(--gray-70);
+  display: grid;
+  align-items: center;
+`;
+
+const PreviewFileName = styled.p`
+  color: var(--gray-70);
+`;
+
+const UploadInputfield = styled.input`
+  // Removes field's visibility but leaves its functionality to the label and screenreader ability
+  width: 1px;
+  height: 1px;
+`;
+
+const NoImage = styled.p`
+  color: var(--white);
+  text-align: center;
+  font-size: 0.8em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const LoadingScreen = styled.div`
+  display: ${({ isLoading }) => (isLoading ? "flex" : "none")};
+  flex-direction: column;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--background-opac-90);
+  z-index: 1;
   color: var(--primary-100);
 `;
