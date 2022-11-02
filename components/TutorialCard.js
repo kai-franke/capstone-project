@@ -28,6 +28,7 @@ const CardContainer = styled.div`
   padding: 1em 0.7em;
   text-align: left;
   box-shadow: var(--boxshadow-primary);
+  max-width: 600px;
 `;
 
 const StepTitle = styled.h2`
@@ -51,6 +52,6 @@ const StepDescription = styled.p`
 
 const ImageContainer = styled.div`
   position: relative;
+  width: 100%;
   aspect-ratio: 1;
-  width: 360px;
 `;
