@@ -1,11 +1,19 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { TbBook2, TbPalette, TbCaravan } from "react-icons/tb";
+import {
+  TbBook2,
+  TbPalette,
+  TbCaravan,
+  TbLogin,
+  TbLogout,
+} from "react-icons/tb";
 import { IconContext } from "react-icons";
+import { useSession, signOut, signIn } from "next-auth/react";
 
 function Footer() {
   const { pathname } = useRouter();
+  const { data: session } = useSession();
 
   return (
     <footer>
@@ -55,6 +63,31 @@ function Footer() {
             Create
           </NavItem>
         </Link>
+
+        <NavItem
+          isActive={false}
+          onClick={() => {
+            if (session) {
+              signOut({
+                callbackUrl: "/",
+              });
+            } else {
+              signIn();
+            }
+          }}
+        >
+          <IconContext.Provider
+            value={{
+              color: "inherit",
+              size: "2em",
+              title: "arrow icon",
+              style: { justifySelf: "center", alignSelf: "end" },
+            }}
+          >
+            {session ? <TbLogout /> : <TbLogin />}
+          </IconContext.Provider>
+          {session ? "Sign out" : "Sign In"}
+        </NavItem>
       </NavBar>
     </footer>
   );
@@ -96,4 +129,12 @@ const NavItem = styled.a`
       isActive ? "var(--primary-90)" : "var(--white)"};
     font-size: 0.75em;
   }
+`;
+
+const MyProvider = ({ values, children }) => (
+  <IconContext.Provider value={{ values }}>{children}</IconContext.Provider>
+);
+
+const MyProviderStyled = styled(MyProvider)`
+  color: red;
 `;
