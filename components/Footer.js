@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { TbBook2, TbPalette } from "react-icons/tb";
+import { TbBook2, TbPalette, TbCaravan } from "react-icons/tb";
 import { IconContext } from "react-icons";
 
 function Footer() {
@@ -10,6 +10,21 @@ function Footer() {
   return (
     <footer>
       <NavBar>
+        <Link href="/" passHref>
+          <NavItem isActive={pathname === "/"}>
+            <IconContext.Provider
+              value={{
+                color: "inherit",
+                size: "2em",
+                title: "arrow icon",
+                style: { justifySelf: "center", alignSelf: "end" },
+              }}
+            >
+              <TbCaravan />
+            </IconContext.Provider>
+            Home
+          </NavItem>
+        </Link>
         <Link href="/tutorials" passHref>
           <NavItem isActive={pathname === "/tutorials"}>
             <IconContext.Provider

@@ -1,5 +1,8 @@
 import Head from "next/head";
+import Link from "next/link";
+import { TbLock, TbBook2 } from "react-icons/tb";
 import styled from "styled-components";
+import { Button } from "../components/Buttons";
 import Headline from "../components/Headline";
 
 export default function Home() {
@@ -13,7 +16,41 @@ export default function Home() {
 
       <main>
         <Headline>Tutorial Maker</Headline>
+        <HomeButtonContainer>
+          <Button isPrimary>
+            Login
+            <TbLock
+              style={{
+                color: "inherit",
+                fontSize: "1.4em",
+                marginLeft: "0.5em",
+              }}
+            />
+          </Button>
+          <Link href="/tutorials" passHref>
+            <Button>
+              Library
+              <TbBook2
+                style={{
+                  color: "inherit",
+                  fontSize: "1.4em",
+                  marginLeft: "0.5em",
+                }}
+              />
+            </Button>
+          </Link>
+        </HomeButtonContainer>
       </main>
     </div>
   );
 }
+
+const HomeButtonContainer = styled.div`
+  width: 100%;
+  gap: 0.5em;
+  display: grid;
+  justify-content: center;
+  align-items: start;
+  position: absolute;
+  top: 40%;
+`;
