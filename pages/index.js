@@ -4,8 +4,11 @@ import { TbLock, TbBook2 } from "react-icons/tb";
 import styled from "styled-components";
 import { Button } from "../components/Buttons";
 import Headline from "../components/Headline";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Home() {
+  const { data: session } = useSession();
+
   return (
     <div>
       <Head>
@@ -17,7 +20,15 @@ export default function Home() {
       <main>
         <Headline>Tutorial Maker</Headline>
         <HomeButtonContainer>
-          <Button isPrimary>
+        {session ? (
+        <>
+          <p>Signed in as {session.user.email}</p>
+          <Button onClick={() => signOut()}>Sign out</Button>
+        </>
+      ) : (
+        <>
+          <p>Not signed in</p>
+          <Button isPrimary onClick={() => signIn()}>
             Login
             <TbLock
               style={{
@@ -26,7 +37,19 @@ export default function Home() {
                 marginLeft: "0.5em",
               }}
             />
-          </Button>
+         </Button>
+        </>
+      )}
+          {/* <Button isPrimary>
+            Login
+            <TbLock
+              style={{
+                color: "inherit",
+                fontSize: "1.4em",
+                marginLeft: "0.5em",
+              }}
+            />
+          </Button> */}
           <Link href="/tutorials" passHref>
             <Button>
               Library
