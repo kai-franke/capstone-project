@@ -130,11 +130,3 @@ const NavItem = styled.a`
     font-size: 0.75em;
   }
 `;
-
-const MyProvider = ({ values, children }) => (
-  <IconContext.Provider value={{ values }}>{children}</IconContext.Provider>
-);
-
-const MyProviderStyled = styled(MyProvider)`
-  color: red;
-`;

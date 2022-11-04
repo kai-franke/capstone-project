@@ -10,6 +10,7 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
+  
 };
 
 export default NextAuth(authOptions);

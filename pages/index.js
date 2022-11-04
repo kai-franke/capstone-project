@@ -1,7 +1,19 @@
+import { useSession, signOut, signIn } from "next-auth/react";
 import Head from "next/head";
+import Link from "next/link";
+import { IconContext } from "react-icons";
+import { TbBook2, TbLogin, TbLogout } from "react-icons/tb";
+import styled from "styled-components";
+import { Button } from "../components/Buttons";
 import Headline from "../components/Headline";
 
 export default function Home() {
+  const { data: session } = useSession();
+  const iconStyle = {
+    color: "inherit",
+    fontSize: "1.4em",
+    marginRight: "0.5em",
+  };
 
   return (
     <>
@@ -13,7 +25,43 @@ export default function Home() {
 
       <main>
         <Headline>Tutorial Maker</Headline>
+        <HomeButtons>
+          <Button
+            isPrimary={!session}
+            onClick={() => {
+              if (session) {
+                signOut({
+                  callbackUrl: "/",
+                });
+              } else {
+                signIn();
+              }
+            }}
+          >
+            {session ? (
+              <TbLogout style={iconStyle} />
+            ) : (
+              <TbLogin style={iconStyle} />
+            )}
+            {session ? "Sign out" : "Sign In"}
+          </Button>
+
+          <Link href="/tutorials" passHref>
+            <Button>
+              <TbBook2 style={iconStyle} />
+              Library
+            </Button>
+          </Link>
+        </HomeButtons>
       </main>
     </>
   );
 }
+
+const HomeButtons = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20vh auto;
+  align-items: center;
+  gap: 1em;
+`;

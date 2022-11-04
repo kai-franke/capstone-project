@@ -2,7 +2,7 @@ import CreateForm from "../components/CreateForm";
 import Headline from "../components/Headline";
 import { getSession } from "next-auth/react";
 
-export default function CreatePage({ session }) {
+export default function CreatePage() {
   return (
     <>
       <Headline>Create a new tutorial</Headline>

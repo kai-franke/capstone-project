@@ -5,6 +5,7 @@ import { TbCheck, TbPlus, TbCameraOff } from "react-icons/tb";
 import { customAlphabet } from "nanoid";
 import { Button, ButtonContainer } from "./Buttons";
 import Image from "next/image";
+import { useSession, signOut, signIn } from "next-auth/react";
 
 const slugSuffix = customAlphabet(
   "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
@@ -16,13 +17,13 @@ function sanitizeString(dirtyString) {
   // Thank you, https://github.com/Roland-Hufnagel and Felix!
 }
 
-function CreateForm() {
+export default function CreateForm() {
   const [inputSteps, setInputSteps] = useState([
     { step: 1, title: "", img: "", description: "", file: "" },
   ]);
   const [inputTutorialTitle, setInputTutorialTitle] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const { data: session } = useSession();
   const router = useRouter();
   const buttonRef = useRef();
 
@@ -124,6 +125,7 @@ function CreateForm() {
         .replace(/[^\w-]+/g, "")
         .concat("-", slugSuffix()),
       steps: [{ step: 0 }, ...inputSteps],
+      author: session.user.email,
     };
 
     addNewTutorial(newTutorial);
@@ -272,8 +274,6 @@ function CreateForm() {
     </>
   );
 }
-
-export default CreateForm;
 
 const FormContainer = styled.form`
   padding: 1em;
