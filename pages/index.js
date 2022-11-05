@@ -25,25 +25,23 @@ export default function Home() {
       <main>
         <Headline>Tutorial Maker</Headline>
         <HomeButtons>
-          <Button
-            isPrimary={!session}
-            onClick={() => {
-              if (session) {
+          {session ? (
+            <Button
+              onClick={() =>
                 signOut({
                   callbackUrl: "/",
-                });
-              } else {
-                signIn();
+                })
               }
-            }}
-          >
-            {session ? (
+            >
               <TbLogout style={iconStyle} />
-            ) : (
+              Sign out
+            </Button>
+          ) : (
+            <Button isPrimary onClick={() => signIn()}>
               <TbLogin style={iconStyle} />
-            )}
-            {session ? "Sign out" : "Sign In"}
-          </Button>
+              Sign in
+            </Button>
+          )}
 
           <Link href="/tutorials" passHref>
             <Button>

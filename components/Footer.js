@@ -43,15 +43,12 @@ function Footer() {
           </NavItem>
         </Link>
         {session ? (
-          <NavItem
-            isActive={false}
-            onClick={() => signOut({ callbackUrl: "/" })}
-          >
+          <NavItem onClick={() => signOut({ callbackUrl: "/" })}>
             <TbLogout style={iconStyle} />
             Sign out
           </NavItem>
         ) : (
-          <NavItem isActive={false} onClick={() => signIn()}>
+          <NavItem onClick={() => signIn()}>
             <TbLogin style={iconStyle} />
             Sign in
           </NavItem>
