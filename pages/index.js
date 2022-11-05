@@ -1,7 +1,6 @@
 import { useSession, signOut, signIn } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
-import { IconContext } from "react-icons";
 import { TbBook2, TbLogin, TbLogout } from "react-icons/tb";
 import styled from "styled-components";
 import { Button } from "../components/Buttons";

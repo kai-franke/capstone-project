@@ -8,86 +8,54 @@ import {
   TbLogin,
   TbLogout,
 } from "react-icons/tb";
-import { IconContext } from "react-icons";
 import { useSession, signOut, signIn } from "next-auth/react";
 
 function Footer() {
   const { pathname } = useRouter();
   const { data: session } = useSession();
+  const iconStyle = {
+    color: "inherit",
+    fontSize: "2em",
+    justifySelf: "center",
+    alignSelf: "end",
+  };
 
   return (
     <footer>
       <NavBar>
         <Link href="/" passHref>
           <NavItem isActive={pathname === "/"}>
-            <IconContext.Provider
-              value={{
-                color: "inherit",
-                size: "2em",
-                title: "arrow icon",
-                style: { justifySelf: "center", alignSelf: "end" },
-              }}
-            >
-              <TbCaravan />
-            </IconContext.Provider>
+            <TbCaravan style={iconStyle} />
             Home
           </NavItem>
         </Link>
         <Link href="/tutorials" passHref>
           <NavItem isActive={pathname === "/tutorials"}>
-            <IconContext.Provider
-              value={{
-                color: "inherit",
-                size: "2em",
-                title: "arrow icon",
-                style: { justifySelf: "center", alignSelf: "end" },
-              }}
-            >
-              <TbBook2 />
-            </IconContext.Provider>
+            <TbBook2 style={iconStyle} />
             Library
           </NavItem>
         </Link>
+
         <Link href="/create" passHref>
           <NavItem isActive={pathname === "/create"}>
-            <IconContext.Provider
-              value={{
-                color: "inherit",
-                size: "2em",
-                title: "arrow icon",
-                style: { justifySelf: "center", alignSelf: "end" },
-              }}
-            >
-              <TbPalette />
-            </IconContext.Provider>
+            <TbPalette style={iconStyle} />
             Create
           </NavItem>
         </Link>
-
-        <NavItem
-          isActive={false}
-          onClick={() => {
-            if (session) {
-              signOut({
-                callbackUrl: "/",
-              });
-            } else {
-              signIn();
-            }
-          }}
-        >
-          <IconContext.Provider
-            value={{
-              color: "inherit",
-              size: "2em",
-              title: "arrow icon",
-              style: { justifySelf: "center", alignSelf: "end" },
-            }}
+        {session ? (
+          <NavItem
+            isActive={false}
+            onClick={() => signOut({ callbackUrl: "/" })}
           >
-            {session ? <TbLogout /> : <TbLogin />}
-          </IconContext.Provider>
-          {session ? "Sign out" : "Sign In"}
-        </NavItem>
+            <TbLogout style={iconStyle} />
+            Sign out
+          </NavItem>
+        ) : (
+          <NavItem isActive={false} onClick={() => signIn()}>
+            <TbLogin style={iconStyle} />
+            Sign in
+          </NavItem>
+        )}
       </NavBar>
     </footer>
   );
