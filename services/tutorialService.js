@@ -12,6 +12,7 @@ export async function getAllTutorials() {
     cover: tutorial.cover,
     slug: tutorial.slug,
     steps: tutorial.steps,
+    author: tutorial.author,
   }));
 
   return sanitizedTutorials;
@@ -28,6 +29,7 @@ export async function getTutorialBySlug(slug) {
     cover: tutorial.cover,
     slug: tutorial.slug,
     steps: tutorial.steps,
+    author: tutorial.author,
   };
   return sanitizedTutorial;
 }

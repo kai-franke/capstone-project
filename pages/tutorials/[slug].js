@@ -64,7 +64,7 @@ export default function Tutorial({ name, steps, id, slug }) {
           </Button>
         )}
         {currentStep === steps.length && (
-          <Link href="/tutorials">
+          <Link href="/tutorials" passHref>
             <Button isPrimary>back to library</Button>
           </Link>
         )}

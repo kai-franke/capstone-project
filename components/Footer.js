@@ -1,45 +1,58 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { TbBook2, TbPalette } from "react-icons/tb";
-import { IconContext } from "react-icons";
+import {
+  TbBook2,
+  TbPalette,
+  TbCaravan,
+  TbLogin,
+  TbLogout,
+} from "react-icons/tb";
+import { useSession, signOut, signIn } from "next-auth/react";
 
 function Footer() {
   const { pathname } = useRouter();
+  const { data: session } = useSession();
+  const iconStyle = {
+    color: "inherit",
+    fontSize: "2em",
+    justifySelf: "center",
+    alignSelf: "end",
+  };
 
   return (
     <footer>
       <NavBar>
+        <Link href="/" passHref>
+          <NavItem isActive={pathname === "/"}>
+            <TbCaravan style={iconStyle} />
+            Home
+          </NavItem>
+        </Link>
         <Link href="/tutorials" passHref>
           <NavItem isActive={pathname === "/tutorials"}>
-            <IconContext.Provider
-              value={{
-                color: "inherit",
-                size: "2em",
-                title: "arrow icon",
-                style: { justifySelf: "center", alignSelf: "end" },
-              }}
-            >
-              <TbBook2 />
-            </IconContext.Provider>
+            <TbBook2 style={iconStyle} />
             Library
           </NavItem>
         </Link>
+
         <Link href="/create" passHref>
           <NavItem isActive={pathname === "/create"}>
-            <IconContext.Provider
-              value={{
-                color: "inherit",
-                size: "2em",
-                title: "arrow icon",
-                style: { justifySelf: "center", alignSelf: "end" },
-              }}
-            >
-              <TbPalette />
-            </IconContext.Provider>
+            <TbPalette style={iconStyle} />
             Create
           </NavItem>
         </Link>
+        {session ? (
+          <NavItem onClick={() => signOut({ callbackUrl: "/" })}>
+            <TbLogout style={iconStyle} />
+            Sign out
+          </NavItem>
+        ) : (
+          <NavItem onClick={() => signIn()}>
+            <TbLogin style={iconStyle} />
+            Sign in
+          </NavItem>
+        )}
       </NavBar>
     </footer>
   );

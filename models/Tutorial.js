@@ -7,6 +7,7 @@ const tutorialSchema = new Schema({
   cover: { type: String, required: true },
   slug: { type: String, required: true },
   steps: { type: Array, required: true },
+  author: { type: String, required: true },
 });
 
 const Tutorial =

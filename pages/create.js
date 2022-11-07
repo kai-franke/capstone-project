@@ -1,7 +1,8 @@
 import CreateForm from "../components/CreateForm";
 import Headline from "../components/Headline";
+import { getSession } from "next-auth/react";
 
-function CreatePage() {
+export default function CreatePage() {
   return (
     <>
       <Headline>Create a new tutorial</Headline>
@@ -10,4 +11,21 @@ function CreatePage() {
   );
 }
 
-export default CreatePage;
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "api/auth/signin",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
+}
