@@ -98,7 +98,7 @@ const LogoContainer = styled.div`
 const CallToAction = styled.section`
   background-color: var(--primary-50);
   color: var(--darktext);
-  margin: 1.5em 1em;
+  margin: 1.5em auto;
   padding: 1.5em 1em;
   box-shadow: var(--boxshadow-primary);
   min-width: 320px;
