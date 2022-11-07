@@ -35,7 +35,9 @@ export default function Home() {
       </LogoContainer>
 
       <CallToLibrary>
-        <Subline>All public tutorials</Subline>
+        <Subline style={{ color: "var(--darktext)" }}>
+          All public tutorials
+        </Subline>
         <Paragraph>
           Browse the collection of all public tutorials in the library and
           choose what you would like to to learn.
@@ -49,8 +51,10 @@ export default function Home() {
       </CallToLibrary>
 
       <CallToCreate>
-        <Subline>Create your own tutorial</Subline>
-        <Paragraph style={{ textAlign: "right" }}>
+        <Subline style={{ color: "var(--darktext)" }}>
+          Create your own tutorial
+        </Subline>
+        <Paragraph>
           Create an illustrated step-by-step tutorial and share your knowledge
           and skills with family, friends or the rest of the world.
         </Paragraph>
@@ -80,24 +84,30 @@ const LogoContainer = styled.div`
 `;
 
 const CallToAction = styled.section`
-  margin: 1em auto;
-  padding: 0 2em;
-  width: 360px;
-  min-height: 250px;
+  background-color: var(--primary-50);
+  color: var(--darktext);
+  margin: 1.5em 1em;
+  padding: 1.5em 1em;
+  box-shadow: var(--boxshadow-primary);
+  min-width: 320px;
+  max-width: 600px;
+  //min-height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
+  align-items: flex-start;
 `;
 
 const CallToLibrary = styled(CallToAction)`
-  background: center / contain no-repeat url("/assets/blob_1.svg");
-  align-items: flex-start;
+  //background: center / contain no-repeat url("/assets/blob_1.svg");
+  //align-items: flex-start;
   //right: 10vw;
 `;
 
 const CallToCreate = styled(CallToAction)`
-  background: center / contain no-repeat url("/assets/blob_2.svg");
-  align-items: flex-end;
+  // background: center / contain no-repeat url("/assets/blob_2.svg");
+  //text-align: right;
+  //align-items: flex-end;
   //left: 10vw;
 `;
