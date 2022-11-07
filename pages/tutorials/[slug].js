@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button, ButtonContainer } from "../../components/Buttons";
-import Headline from "../../components/Headline";
+import { Headline } from "../../components/TextElements";
 import TutorialCard from "../../components/TutorialCard";
 import TutorialEndCard from "../../components/TutorialEndCard";
 import TutorialStartCard from "../../components/TutorialStartCard";

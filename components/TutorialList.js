@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { IconContext } from "react-icons";
 import ListContainer from "./ListContainer";
+import { Subline } from "./TextElements";
 
 export default function TutorialList({ tutorials }) {
   return (
@@ -58,10 +59,6 @@ const ListImage = styled.figure`
   aspect-ratio: 1;
 `;
 
-const ListName = styled.h2`
-  font-weight: 500;
-  font-size: 1.2em;
-  line-height: 1.35em;
-  color: var(--primary-100);
+const ListName = styled(Subline)`
   padding: 0.15em 0;
 `;

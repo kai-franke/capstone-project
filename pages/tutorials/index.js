@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Headline from "../../components/Headline";
+import { Headline } from "../../components/TextElements";
 import TutorialList from "../../components/TutorialList";
 
 export default function TutorialsPage() {

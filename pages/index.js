@@ -1,10 +1,10 @@
 import { useSession, signOut, signIn } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
-import { TbBook2, TbLogin, TbLogout } from "react-icons/tb";
+import { TbBook2, TbPalette } from "react-icons/tb";
 import styled from "styled-components";
 import { Button } from "../components/Buttons";
-import Headline from "../components/Headline";
+import { Paragraph, Subline } from "../components/TextElements";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -22,35 +22,45 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <Headline>Tutorial Maker</Headline>
-        <HomeButtons>
-          {session ? (
-            <Button
-              onClick={() =>
-                signOut({
-                  callbackUrl: "/",
-                })
-              }
-            >
-              <TbLogout style={iconStyle} />
-              Sign out
-            </Button>
-          ) : (
-            <Button isPrimary onClick={() => signIn()}>
-              <TbLogin style={iconStyle} />
-              Sign in
-            </Button>
-          )}
+      <LogoContainer>
+        <h1>
+          <object
+            type="image/svg+xml"
+            data="/assets/hamster logo v2.svg"
+            aria-label="How to bathe a hamster – Your tutorial maker | logo"
+          >
+            How to bathe a hamster – Your tutorial maker | logo
+          </object>
+        </h1>
+      </LogoContainer>
 
-          <Link href="/tutorials" passHref>
-            <Button>
-              <TbBook2 style={iconStyle} />
-              Library
-            </Button>
-          </Link>
-        </HomeButtons>
-      </main>
+      <CallToLibrary>
+        <Subline>All public tutorials</Subline>
+        <Paragraph>
+          Browse the collection of all public tutorials in the library and
+          choose what you would like to to learn.
+        </Paragraph>
+        <Link href="/tutorials" passHref>
+          <Button isPrimary>
+            <TbBook2 style={iconStyle} />
+            Go to library
+          </Button>
+        </Link>
+      </CallToLibrary>
+
+      <CallToCreate>
+        <Subline>Create your own tutorial</Subline>
+        <Paragraph style={{ textAlign: "right" }}>
+          Create an illustrated step-by-step tutorial and share your knowledge
+          and skills with family, friends or the rest of the world.
+        </Paragraph>
+        <Link href="/tutorials" passHref>
+          <Button isPrimary>
+            <TbPalette style={iconStyle} />
+            Create a tutorial
+          </Button>
+        </Link>
+      </CallToCreate>
     </>
   );
 }
@@ -61,4 +71,33 @@ const HomeButtons = styled.div`
   margin: 20vh auto;
   align-items: center;
   gap: 1em;
+`;
+
+const LogoContainer = styled.div`
+  max-width: 450px;
+  margin: 5em auto 0 auto;
+  padding: 0 2em;
+`;
+
+const CallToAction = styled.section`
+  margin: 1em auto;
+  padding: 0 2em;
+  width: 400px;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+`;
+
+const CallToLibrary = styled(CallToAction)`
+  background: center / contain no-repeat url("/assets/blob_1.svg");
+  align-items: flex-start;
+  right: 10vw;
+`;
+
+const CallToCreate = styled(CallToAction)`
+  background: center / contain no-repeat url("/assets/blob_2.svg");
+  align-items: flex-end;
+  left: 10vw;
 `;

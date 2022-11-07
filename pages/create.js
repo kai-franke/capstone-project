@@ -1,5 +1,5 @@
 import CreateForm from "../components/CreateForm";
-import Headline from "../components/Headline";
+import { Headline } from "../components/TextElements";
 import { getSession } from "next-auth/react";
 
 export default function CreatePage() {
