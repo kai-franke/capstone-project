@@ -61,6 +61,17 @@ export default function Home() {
           </Button>
         </Link>
       </CallToCreate>
+      <About>
+        <Subline>What is this all about?</Subline>
+        <Paragraph>
+          Being able to pass on knowledge was an important factor that made
+          today&apos;s civilization possible. How to bathe a hamster should help
+          you to learn from each other in an uncomplicated way. For this
+          purpose, simple step-by-step instructions can be created and shared
+          afterwards. You are invited to share your knowledge and learn
+          yourself.
+        </Paragraph>
+      </About>
     </>
   );
 }
@@ -100,4 +111,20 @@ const CallToCreate = styled(CallToAction)`
   background: center / contain no-repeat url("/assets/blob_2.svg");
   align-items: flex-end;
   //left: 10vw;
+`;
+
+const About = styled.section`
+  background-color: var(--white);
+  color: var(--darktext);
+  margin: 1.5em 1em;
+  padding: 1.5em 1em;
+  box-shadow: var(--boxshadow-primary);
+  min-width: 320px;
+  max-width: 600px;
+  //min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  align-items: flex-start;
 `;

@@ -65,6 +65,18 @@ export default function Home() {
           </Button>
         </Link>
       </CallToCreate>
+
+      <CallToAction style={{ backgroundColor: "var(--white)" }}>
+        <Subline>What is this all about?</Subline>
+        <Paragraph>
+          Being able to pass on knowledge was an important factor that made
+          today&apos;s civilization possible. How to bathe a hamster should help
+          you to learn from each other in an uncomplicated way. For this
+          purpose, simple step-by-step instructions can be created and shared
+          afterwards. You are invited to share your knowledge and learn
+          yourself.
+        </Paragraph>
+      </CallToAction>
     </>
   );
 }
