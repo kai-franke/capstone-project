@@ -34,8 +34,10 @@ export default function Home() {
         </h1>
       </LogoContainer>
 
-      <CallToLibrary>
-        <Subline>All public tutorials</Subline>
+      <StyledSection>
+        <Subline style={{ color: "var(--darktext)" }}>
+          All public tutorials
+        </Subline>
         <Paragraph>
           Browse the collection of all public tutorials in the library and
           choose what you would like to to learn.
@@ -46,21 +48,24 @@ export default function Home() {
             Go to library
           </Button>
         </Link>
-      </CallToLibrary>
+      </StyledSection>
 
-      <CallToCreate>
-        <Subline>Create your own tutorial</Subline>
-        <Paragraph style={{ textAlign: "right" }}>
+      <StyledSection>
+        <Subline style={{ color: "var(--darktext)" }}>
+          Create your own tutorial
+        </Subline>
+        <Paragraph>
           Create an illustrated step-by-step tutorial and share your knowledge
           and skills with family, friends or the rest of the world.
         </Paragraph>
-        <Link href="/tutorials" passHref>
+        <Link href="/create" passHref>
           <Button isPrimary>
             <TbPalette style={iconStyle} />
             Create a tutorial
           </Button>
         </Link>
-      </CallToCreate>
+      </StyledSection>
+
       <About>
         <Subline>What is this all about?</Subline>
         <Paragraph>
@@ -90,41 +95,21 @@ const LogoContainer = styled.div`
   padding: 0 2em;
 `;
 
-const CallToAction = styled.section`
-  margin: 1em auto;
-  padding: 0 2em;
-  width: 360px;
-  min-height: 250px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-`;
-
-const CallToLibrary = styled(CallToAction)`
-  background: center / contain no-repeat url("/assets/blob_1.svg");
-  align-items: flex-start;
-  //right: 10vw;
-`;
-
-const CallToCreate = styled(CallToAction)`
-  background: center / contain no-repeat url("/assets/blob_2.svg");
-  align-items: flex-end;
-  //left: 10vw;
-`;
-
-const About = styled.section`
-  background-color: var(--white);
+const StyledSection = styled.section`
+  background-color: var(--primary-50);
   color: var(--darktext);
   margin: 1.5em auto;
   padding: 1.5em 1em;
   box-shadow: var(--boxshadow-primary);
   min-width: 320px;
   max-width: 600px;
-  //min-height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
   align-items: flex-start;
+`;
+
+const About = styled(StyledSection)`
+  background-color: var(--white);
 `;
