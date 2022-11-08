@@ -1,10 +1,9 @@
-import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { TbBook2, TbPalette } from "react-icons/tb";
 import styled from "styled-components";
 import { Button } from "../components/Buttons";
-import { Paragraph, Subline } from "../components/TextElements";
+import { Paragraph, Subline, DarkSubline } from "../components/TextElements";
 
 export default function Home() {
   const iconStyle = {
@@ -109,6 +108,4 @@ const About = styled(StyledSection)`
   background-color: var(--white);
 `;
 
-const DarkSubline = styled(Subline)`
-  color: var(--darktext);
-`;
+

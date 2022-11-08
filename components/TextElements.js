@@ -13,6 +13,10 @@ const Subline = styled.h2`
   color: var(--primary-100);
 `;
 
+const DarkSubline = styled(Subline)`
+  color: var(--darktext);
+`;
+
 const Paragraph = styled.p`
   font-size: 0.9em;
   line-height: 1.6em;
@@ -21,4 +25,4 @@ const Paragraph = styled.p`
   padding: 0.7em 0;
 `;
 
-export { Headline, Subline, Paragraph };
+export { Headline, Subline, DarkSubline, Paragraph };
