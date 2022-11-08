@@ -22,26 +22,23 @@ export async function getServerSideProps({ req }) {
   return {
     props: {
       userTutorials: userTutorials,
+      userName: session.user.name,
     },
   };
 }
 
-export default function TutorialsPage({ userTutorials }) {
+export default function TutorialsPage({ userTutorials, userName }) {
   const [tutorials, setTutorials] = useState(userTutorials);
   const [isLoading, setLoading] = useState(false);
 
-  const { data: session } = useSession();
-  console.log('session', session.user.name)
-
-
   return (
     <>
-      <Subline>{`Welcome, ${session.user.name}!`}</Subline>
+      <Subline>{`Welcome, ${userName}!`}</Subline>
       <Headline>Your tutorials</Headline>
       {isLoading ? (
         <Message>Loading...</Message>
-      ) : !tutorials ? (
-        <Message>No tutorial data</Message>
+      ) : tutorials.length < 1 ? (
+        <Message>You haven&apos;t created any tutorials yet</Message>
       ) : (
         <>
           <TutorialList tutorials={tutorials} />
