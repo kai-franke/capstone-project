@@ -37,9 +37,6 @@ export async function getServerSideProps({ req }) {
 }
 
 export default function TutorialsPage({ userTutorials, userName }) {
-  const [tutorials, setTutorials] = useState(userTutorials);
-  const [isLoading, setLoading] = useState(false);
-
   return (
     <>
       <Greeting>{`Welcome, ${userName}!`}</Greeting>
@@ -50,13 +47,11 @@ export default function TutorialsPage({ userTutorials, userName }) {
         </Button>
       </Link>
       <Headline>Your tutorials</Headline>
-      {isLoading ? (
-        <Message>Loading...</Message>
-      ) : tutorials.length < 1 ? (
+      {userTutorials.length < 1 ? (
         <Message>You haven&apos;t created any tutorials yet</Message>
       ) : (
         <>
-          <TutorialList tutorials={tutorials} />
+          <TutorialList tutorials={userTutorials} />
           <SmallMessage>No more tutorials</SmallMessage>
         </>
       )}
