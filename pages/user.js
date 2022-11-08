@@ -58,7 +58,7 @@ export default function TutorialsPage({ userTutorials, userName }) {
   );
 }
 const Greeting = styled(Subline)`
-  padding: 1em 0 1em 0;
+  padding: 1em 0;
 `;
 
 const Message = styled.p`
