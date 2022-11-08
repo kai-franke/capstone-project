@@ -19,7 +19,7 @@ export default function TutorialsPage() {
 
   return (
     <>
-      <Headline>My tutorials</Headline>
+      <Headline>All public tutorials</Headline>
       {isLoading ? (
         <Message>Loading...</Message>
       ) : !tutorials ? (

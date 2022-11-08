@@ -42,7 +42,7 @@ export default function TutorialsPage({ userTutorials, userName }) {
 
   return (
     <>
-      <Subline>{`Welcome, ${userName}!`}</Subline>
+      <Greeting>{`Welcome, ${userName}!`}</Greeting>
       <Link href="/create" passHref>
         <Button isPrimary>
           <TbPlus style={iconStyle} />
@@ -57,16 +57,23 @@ export default function TutorialsPage({ userTutorials, userName }) {
       ) : (
         <>
           <TutorialList tutorials={tutorials} />
-          <Message>No more tutorials</Message>
+          <SmallMessage>No more tutorials</SmallMessage>
         </>
       )}
     </>
   );
 }
+const Greeting = styled(Subline)`
+  padding: 1em 0 1em 0;
+`;
 
 const Message = styled.p`
   text-align: center;
-  font-size: 0.7em;
+  font-size: 1em;
   color: var(--lighttext);
   margin-top: 1.5em;
+`;
+
+const SmallMessage = styled(Message)`
+  font-size: 0.7em;
 `;
