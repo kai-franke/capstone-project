@@ -114,6 +114,10 @@ const GlobalStyle = createGlobalStyle`
           color: var(--darktext);
           padding-bottom: 5em;
       }
+
+      main {
+        padding: 0 1em;
+      }
   `;
 
 export default GlobalStyle;

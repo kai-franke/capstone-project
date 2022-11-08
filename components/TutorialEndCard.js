@@ -21,10 +21,10 @@ export default function TutorialEndCard() {
 const CardContainer = styled.div`
   background-color: var(--primary-100);
   color: var(--white);
-  margin: 1em;
+  margin: 1em auto;
   padding: 2em 0.7em 3em 0.7em;
   text-align: center;
-  box-shadow: var(--boxshadow-primary)
+  box-shadow: var(--boxshadow-primary);
 `;
 
 const Subline = styled.h2`

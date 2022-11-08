@@ -1,4 +1,4 @@
-import { useSession, signOut, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { TbBook2, TbPalette } from "react-icons/tb";
@@ -7,7 +7,6 @@ import { Button } from "../components/Buttons";
 import { Paragraph, Subline } from "../components/TextElements";
 
 export default function Home() {
-  const { data: session } = useSession();
   const iconStyle = {
     color: "inherit",
     fontSize: "1.4em",
@@ -35,9 +34,7 @@ export default function Home() {
       </LogoContainer>
 
       <StyledSection>
-        <Subline style={{ color: "var(--darktext)" }}>
-          All public tutorials
-        </Subline>
+        <DarkSubline>All public tutorials</DarkSubline>
         <Paragraph>
           Browse the collection of all public tutorials in the library and
           choose what you would like to to learn.
@@ -51,9 +48,7 @@ export default function Home() {
       </StyledSection>
 
       <StyledSection>
-        <Subline style={{ color: "var(--darktext)" }}>
-          Create your own tutorial
-        </Subline>
+        <DarkSubline>Create your own tutorial</DarkSubline>
         <Paragraph>
           Create an illustrated step-by-step tutorial and share your knowledge
           and skills with family, friends or the rest of the world.
@@ -112,4 +107,8 @@ const StyledSection = styled.section`
 
 const About = styled(StyledSection)`
   background-color: var(--white);
+`;
+
+const DarkSubline = styled(Subline)`
+  color: var(--darktext);
 `;

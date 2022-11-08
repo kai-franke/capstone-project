@@ -25,7 +25,7 @@ export default function TutorialCard({ step }) {
 const CardContainer = styled.div`
   background-color: var(--white);
   color: var(--primary-100);
-  margin: 1em;
+  margin: 1em auto;
   padding: 1em 0.7em;
   text-align: left;
   box-shadow: var(--boxshadow-primary);

@@ -154,6 +154,7 @@ export default function CreateForm() {
           Uploading your images, please wait...
         </p>
       </LoadingScreen>
+
       <FormContainer id="tutorialForm" onSubmit={handleSubmit}>
         <FormCard>
           <StyledLabel isPrimary>
@@ -276,7 +277,7 @@ export default function CreateForm() {
 }
 
 const FormContainer = styled.form`
-  padding: 1em;
+  margin: 1em auto;
   list-style: none;
   display: grid;
   gap: 1em;
