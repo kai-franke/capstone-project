@@ -1,6 +1,5 @@
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { TbPlus } from "react-icons/tb";
 import styled from "styled-components";
 import { Button } from "../components/Buttons";
