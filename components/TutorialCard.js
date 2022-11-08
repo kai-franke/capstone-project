@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
+import { Paragraph } from "./TextElements";
 
 export default function TutorialCard({ step }) {
   return (
@@ -15,7 +16,7 @@ export default function TutorialCard({ step }) {
         </ImageContainer>
         <StepNumber>Step {step.step}</StepNumber>
         <StepTitle>{step.title}</StepTitle>
-        <StepDescription>{step.description}</StepDescription>
+        <Paragraph>{step.description}</Paragraph>
       </CardContainer>
     </>
   );
@@ -24,7 +25,7 @@ export default function TutorialCard({ step }) {
 const CardContainer = styled.div`
   background-color: var(--white);
   color: var(--primary-100);
-  margin: 1em;
+  margin: 1em auto;
   padding: 1em 0.7em;
   text-align: left;
   box-shadow: var(--boxshadow-primary);
@@ -40,14 +41,6 @@ const StepTitle = styled.h2`
 const StepNumber = styled.p`
   font-weight: 500;
   padding: 0.7em 0 0.3em 0;
-`;
-
-const StepDescription = styled.p`
-  font-size: 0.9em;
-  line-height: 1.6em;
-  font-weight: 300;
-  color: var(--copytext);
-  padding: 0.7em 0;
 `;
 
 const ImageContainer = styled.div`

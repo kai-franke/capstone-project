@@ -14,6 +14,7 @@ const Button = styled.button`
     isPrimary ? "var(--primary-100)" : "var(--gray-70)"};
   color: ${({ isPrimary }) => (isPrimary ? "var(--white)" : "var(--gray-70)")};
   transition: 300ms linear;
+  line-height: 1.2;
 
   &:hover {
     cursor: pointer;
