@@ -33,3 +33,20 @@ export async function getTutorialBySlug(slug) {
   };
   return sanitizedTutorial;
 }
+
+export async function getTutorialByUser(usermail) {
+  await dbConnect();
+  const allTutorials = await Tutorial.find();
+  const tutorials = allTutorials.filter((tutorial) => tutorial.author === usermail);
+
+  const sanitizedTutorials = tutorials.map((tutorial) => ({
+    id: tutorial._id.valueOf(),
+    name: tutorial.name,
+    cover: tutorial.cover,
+    slug: tutorial.slug,
+    steps: tutorial.steps,
+    author: tutorial.author,
+  }));
+
+  return sanitizedTutorials;
+}
