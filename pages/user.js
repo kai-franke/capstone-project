@@ -1,9 +1,18 @@
 import { getSession, useSession } from "next-auth/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import { TbPlus } from "react-icons/tb";
 import styled from "styled-components";
+import { Button } from "../components/Buttons";
 import { Headline, Subline } from "../components/TextElements";
 import TutorialList from "../components/TutorialList";
 import { getTutorialByUser } from "../services/tutorialService";
+
+const iconStyle = {
+  color: "inherit",
+  fontSize: "1.4em",
+  marginRight: "0.5em",
+};
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -34,6 +43,12 @@ export default function TutorialsPage({ userTutorials, userName }) {
   return (
     <>
       <Subline>{`Welcome, ${userName}!`}</Subline>
+      <Link href="/create" passHref>
+        <Button isPrimary>
+          <TbPlus style={iconStyle} />
+          Create tutorial
+        </Button>
+      </Link>
       <Headline>Your tutorials</Headline>
       {isLoading ? (
         <Message>Loading...</Message>
