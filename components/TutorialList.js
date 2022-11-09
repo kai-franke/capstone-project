@@ -1,12 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
-import { MdKeyboardArrowRight } from "react-icons/md";
-import { IconContext } from "react-icons";
+import { TbTrash, TbChevronRight, TbCopy } from "react-icons/tb";
 import ListContainer from "./ListContainer";
 import { Subline } from "./TextElements";
 
-export default function TutorialList({ tutorials }) {
+const iconStyle = {
+  color: "var(--primary-100)",
+  fontSize: "1.5em",
+  alignSelf: "end",
+  justifySelf: "end",
+};
+
+export default function TutorialList({ tutorials, showDelete }) {
   return (
     <ListContainer>
       {tutorials.map((tutorial) => (
@@ -21,16 +27,12 @@ export default function TutorialList({ tutorials }) {
               ></Image>
             </ListImage>
             <ListName>{tutorial.name}</ListName>
-            <IconContext.Provider
-              value={{
-                color: "#19A7B0",
-                size: "2em",
-                title: "arrow icon",
-                style: { alignSelf: "end", justifySelf: "end" },
-              }}
-            >
-              <MdKeyboardArrowRight />
-            </IconContext.Provider>
+            <ListDelete>
+              <TbTrash style={iconStyle} />
+            </ListDelete>
+            <ListStart>
+              <TbChevronRight style={iconStyle} />
+            </ListStart>
           </ListItem>
         </Link>
       ))}
@@ -43,7 +45,7 @@ const ListItem = styled.li`
   padding: 0.7em;
   display: grid;
   column-gap: 0.7em;
-  grid-template-columns: 5.625em 1fr;
+  grid-template-columns: 5.625em 1fr 1.4em;
   box-shadow: var(--boxshadow-primary);
   transition: 300ms linear;
 
@@ -54,11 +56,34 @@ const ListItem = styled.li`
 `;
 
 const ListImage = styled.figure`
-  grid-row: 1 / span 2;
+  grid-area: 1 / 1 / 4 / 2;
   position: relative;
   aspect-ratio: 1;
 `;
 
 const ListName = styled(Subline)`
+  grid-area: 1 / 2 / 4 / 3;
   padding: 0.15em 0;
+  //background-color: blue;
+`;
+
+const ListDelete = styled.button`
+  all: unset;
+  grid-area: 1 / 3 / 2 / 4;
+  //background-color: green;
+  place-self: center end;
+`;
+
+/* const ListCopy = styled.button`
+  all: unset;
+  grid-area: 2 / 3 / 3 / 4;
+  //background-color: yellow;
+  place-self: center end;
+`; */
+
+const ListStart = styled.button`
+  all: unset;
+  //background-color: purple;
+  grid-area: 3 / 3 / 4 / 4;
+  place-self: center end;
 `;

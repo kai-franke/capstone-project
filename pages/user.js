@@ -50,7 +50,7 @@ export default function TutorialsPage({ userTutorials, userName }) {
         <Message>You haven&apos;t created any tutorials yet</Message>
       ) : (
         <>
-          <TutorialList tutorials={userTutorials} />
+          <TutorialList tutorials={userTutorials} showDelete />
           <SmallMessage>No more tutorials</SmallMessage>
         </>
       )}

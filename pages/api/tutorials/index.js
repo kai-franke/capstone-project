@@ -8,13 +8,18 @@ export default async function handler(request, response) {
     return response.status(200).json(tutorials);
   } else if (request.method === "POST") {
     await dbConnect();
-
     const postData = JSON.parse(request.body);
     const newTutorial = await Tutorial.create(postData);
-
     return response
       .status(201)
       .json({ message: "Tutorial created", createdSlug: newTutorial.slug });
+  } else if (request.method === "DELETE") {
+    const { id } = request.query;
+    await dbConnect();
+    await Tutorial.findByIdAndDelete(id);
+    return response
+      .status(200)
+      .json({ message: "Tutorial deleted", deletedId: id });
   }
 
   return response.status(405).json({ message: "HTTP method is not allowed" });
