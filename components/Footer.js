@@ -7,6 +7,7 @@ import {
   TbCaravan,
   TbLogin,
   TbLogout,
+  TbUser,
 } from "react-icons/tb";
 import { useSession, signOut, signIn } from "next-auth/react";
 
@@ -40,6 +41,12 @@ function Footer() {
           <NavItem isActive={pathname === "/create"}>
             <TbPalette style={iconStyle} />
             Create
+          </NavItem>
+        </Link>
+        <Link href="/user" passHref>
+          <NavItem isActive={pathname === "/user"}>
+            <TbUser style={iconStyle} />
+            User
           </NavItem>
         </Link>
         {session ? (
