@@ -12,6 +12,12 @@ const iconStyle = {
   justifySelf: "end",
 };
 
+function deleteHandler(event, id) {
+  event.stopPropagation();
+  console.log("delete!");
+  console.log('id', id)
+}
+
 export default function TutorialList({ tutorials, showDelete }) {
   return (
     <ListContainer>
@@ -28,12 +34,7 @@ export default function TutorialList({ tutorials, showDelete }) {
             </ListImage>
             <ListName>{tutorial.name}</ListName>
             {showDelete && (
-              <ListDelete
-                onClick={(e) => {
-                  e.stopPropagation();
-                  console.log("delete!");
-                }}
-              >
+              <ListDelete onClick={event => deleteHandler(event, tutorial.id)}>
                 <TbTrash style={iconStyle} />
               </ListDelete>
             )}
