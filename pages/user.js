@@ -1,6 +1,5 @@
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { TbPlus } from "react-icons/tb";
 import styled from "styled-components";
 import { Button } from "../components/Buttons";
@@ -59,7 +58,7 @@ export default function TutorialsPage({ userTutorials, userName }) {
   );
 }
 const Greeting = styled(Subline)`
-  padding: 1em 0 1em 0;
+  padding: 1em 0;
 `;
 
 const Message = styled.p`
