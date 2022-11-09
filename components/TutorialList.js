@@ -27,9 +27,16 @@ export default function TutorialList({ tutorials, showDelete }) {
               ></Image>
             </ListImage>
             <ListName>{tutorial.name}</ListName>
-            <ListDelete>
-              <TbTrash style={iconStyle} />
-            </ListDelete>
+            {showDelete && (
+              <ListDelete
+                onClick={(e) => {
+                  e.stopPropagation();
+                  console.log("delete!");
+                }}
+              >
+                <TbTrash style={iconStyle} />
+              </ListDelete>
+            )}
             <ListStart>
               <TbChevronRight style={iconStyle} />
             </ListStart>
