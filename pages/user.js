@@ -1,9 +1,11 @@
 import { getSession } from "next-auth/react";
 import Link from "next/link";
-import { TbPlus } from "react-icons/tb";
+import { useState } from "react";
+import { TbCheck, TbPlus, TbTrash, TbX } from "react-icons/tb";
 import styled from "styled-components";
 import { Button } from "../components/Buttons";
-import { Headline, Subline } from "../components/TextElements";
+import Modal from "../components/modals/Modal";
+import { Headline, Paragraph, Subline } from "../components/TextElements";
 import TutorialList from "../components/TutorialList";
 import { getTutorialByUser } from "../services/tutorialService";
 
@@ -36,8 +38,37 @@ export async function getServerSideProps({ req }) {
 }
 
 export default function TutorialsPage({ userTutorials, userName }) {
+  const [showModal, setShowModal] = useState(true);
+
+  function modalButton() {
+    setShowModal(true);
+    console.log("button!");
+  }
+
+  function closeModal() {
+    setShowModal(false);
+  }
+
+  function deleteTest(event) {
+    //event.stopPropagation();
+    console.log("delete!");
+  }
+
   return (
     <>
+      {showModal && (
+        <Modal click={closeModal} deleteHandler={(event) => deleteTest(event)}>
+          <TbTrash style={{ fontSize: "1.5em" }} />
+          <Paragraph>Do you really want to delete this tutorial?</Paragraph>
+          <Button isPrimary>
+            <TbX style={iconStyle} /> no, cancel
+          </Button>
+          <Button onClick={deleteTest}>
+            <TbCheck style={iconStyle} /> yes, delete
+          </Button>
+        </Modal>
+      )}
+      <Button onClick={modalButton}>MODAL</Button>
       <Greeting>{`Welcome, ${userName}!`}</Greeting>
       <Link href="/create" passHref>
         <Button isPrimary>
@@ -57,6 +88,7 @@ export default function TutorialsPage({ userTutorials, userName }) {
     </>
   );
 }
+
 const Greeting = styled(Subline)`
   padding: 1em 0;
 `;
