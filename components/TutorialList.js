@@ -7,7 +7,7 @@ import { Subline } from "./TextElements";
 
 const iconStyle = {
   color: "var(--primary-100)",
-  fontSize: "1.5em",
+  fontSize: "1.3em",
   alignSelf: "end",
   justifySelf: "end",
 };

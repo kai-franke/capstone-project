@@ -9,6 +9,7 @@ const ModalLayer = styled.div`
   flex-direction: column;
   position: fixed;
   top: 0;
+  left: 0;
   justify-content: center;
   align-items: center;
   width: 100%;

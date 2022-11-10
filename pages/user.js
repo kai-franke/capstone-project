@@ -1,5 +1,6 @@
 import { getSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { TbCheck, TbPlus, TbTrash, TbX } from "react-icons/tb";
 import styled from "styled-components";
@@ -34,14 +35,19 @@ export async function getServerSideProps({ req }) {
 export default function TutorialsPage({ userTutorials, userName }) {
   const [showModal, setShowModal] = useState(false);
   const [tutorialToBeDeleted, setTutorialToBeDeleted] = useState("");
+  const router = useRouter();
 
   function deleteDialoge(id) {
     setShowModal(true);
     setTutorialToBeDeleted(id);
   }
 
-  function deleteTutorial() {
-    console.log("tutorialToBeDeleted", tutorialToBeDeleted);
+  async function deleteTutorial() {
+    const response = await fetch(`/api/tutorials/${tutorialToBeDeleted}`, {
+      method: "DELETE",
+    });
+    await response.json();
+    router.push("/user");
   }
 
   return (
