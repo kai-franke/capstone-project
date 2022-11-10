@@ -7,6 +7,7 @@ const Button = styled.button`
   border: solid 2px;
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 0.4em 1em;
   background-color: ${({ isPrimary }) =>
     isPrimary ? "var(--primary-100)" : "var(--background-pale)"};

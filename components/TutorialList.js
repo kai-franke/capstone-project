@@ -12,17 +12,20 @@ const iconStyle = {
   justifySelf: "end",
 };
 
-function deleteHandler(event, id) {
-  event.stopPropagation();
-  console.log("delete!");
-  console.log('id', id)
-}
+export default function TutorialList({
+  tutorials,
+  showDeleteIcon,
+  deleteDialoge,
+}) {
+  function deleteHandler(event, id) {
+    event.stopPropagation();
+    deleteDialoge(id);
+  }
 
-export default function TutorialList({ tutorials, showDelete }) {
   return (
     <ListContainer>
       {tutorials.map((tutorial) => (
-        <Link key={tutorial.id} href={`/tutorials/${tutorial.slug}`}>
+        <Link key={tutorial.id} href={`/tutorials/${tutorial.slug}`} passHref>
           <ListItem>
             <ListImage>
               <Image
@@ -33,8 +36,10 @@ export default function TutorialList({ tutorials, showDelete }) {
               ></Image>
             </ListImage>
             <ListName>{tutorial.name}</ListName>
-            {showDelete && (
-              <ListDelete onClick={event => deleteHandler(event, tutorial.id)}>
+            {showDeleteIcon && (
+              <ListDelete
+                onClick={(event) => deleteHandler(event, tutorial.id)}
+              >
                 <TbTrash style={iconStyle} />
               </ListDelete>
             )}

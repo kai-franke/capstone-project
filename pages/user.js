@@ -3,17 +3,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { TbCheck, TbPlus, TbTrash, TbX } from "react-icons/tb";
 import styled from "styled-components";
-import { Button } from "../components/Buttons";
-import Modal from "../components/modals/Modal";
+import { Button, ButtonContainer } from "../components/Buttons";
+import Modal from "../components/Modal";
 import { Headline, Paragraph, Subline } from "../components/TextElements";
 import TutorialList from "../components/TutorialList";
 import { getTutorialByUser } from "../services/tutorialService";
-
-const iconStyle = {
-  color: "inherit",
-  fontSize: "1.4em",
-  marginRight: "0.5em",
-};
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -38,41 +32,39 @@ export async function getServerSideProps({ req }) {
 }
 
 export default function TutorialsPage({ userTutorials, userName }) {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [tutorialToBeDeleted, setTutorialToBeDeleted] = useState("");
 
-  function modalButton() {
+  function deleteDialoge(id) {
     setShowModal(true);
-    console.log("button!");
+    setTutorialToBeDeleted(id);
   }
 
-  function closeModal() {
-    setShowModal(false);
-  }
-
-  function deleteTest(event) {
-    //event.stopPropagation();
-    console.log("delete!");
+  function deleteTutorial() {
+    console.log("tutorialToBeDeleted", tutorialToBeDeleted);
   }
 
   return (
     <>
       {showModal && (
-        <Modal click={closeModal} deleteHandler={(event) => deleteTest(event)}>
+        <Modal click={() => setShowModal(false)}>
           <TbTrash style={{ fontSize: "1.5em" }} />
           <Paragraph>Do you really want to delete this tutorial?</Paragraph>
-          <Button isPrimary>
-            <TbX style={iconStyle} /> no, cancel
-          </Button>
-          <Button onClick={deleteTest}>
-            <TbCheck style={iconStyle} /> yes, delete
-          </Button>
+          <ButtonContainer>
+            <Button isPrimary>
+              <TbX style={leftIconStyle} /> no, cancel
+            </Button>
+            <Button onClick={deleteTutorial}>
+              yes, delete <TbCheck style={reftIconStyle} />
+            </Button>
+          </ButtonContainer>
         </Modal>
       )}
-      <Button onClick={modalButton}>MODAL</Button>
+
       <Greeting>{`Welcome, ${userName}!`}</Greeting>
       <Link href="/create" passHref>
         <Button isPrimary>
-          <TbPlus style={iconStyle} />
+          <TbPlus style={leftIconStyle} />
           Create tutorial
         </Button>
       </Link>
@@ -81,7 +73,11 @@ export default function TutorialsPage({ userTutorials, userName }) {
         <Message>You haven&apos;t created any tutorials yet</Message>
       ) : (
         <>
-          <TutorialList tutorials={userTutorials} showDelete />
+          <TutorialList
+            tutorials={userTutorials}
+            showDeleteIcon
+            deleteDialoge={deleteDialoge}
+          />
           <SmallMessage>No more tutorials</SmallMessage>
         </>
       )}
@@ -103,3 +99,15 @@ const Message = styled.p`
 const SmallMessage = styled(Message)`
   font-size: 0.7em;
 `;
+
+const leftIconStyle = {
+  color: "inherit",
+  fontSize: "1.4em",
+  marginRight: "0.3em",
+};
+
+const reftIconStyle = {
+  color: "inherit",
+  fontSize: "1.4em",
+  marginLeft: "0.3em",
+};
