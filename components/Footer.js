@@ -52,12 +52,12 @@ function Footer() {
         {session ? (
           <NavItem onClick={() => signOut({ callbackUrl: "/" })}>
             <TbLogout style={iconStyle} />
-            Sign out
+            Log out
           </NavItem>
         ) : (
           <NavItem onClick={() => signIn()}>
             <TbLogin style={iconStyle} />
-            Sign in
+            Log in
           </NavItem>
         )}
       </NavBar>
