@@ -58,10 +58,10 @@ export default function TutorialsPage({ userTutorials, userName }) {
           <Paragraph>Do you really want to delete this tutorial?</Paragraph>
           <ButtonContainer>
             <Button isPrimary>
-              <TbX style={leftIconStyle} /> no, cancel
+              <TbX style={leftIconStyle} /> No, cancel
             </Button>
             <Button onClick={deleteTutorial}>
-              yes, delete <TbCheck style={reftIconStyle} />
+              Yes, delete <TbCheck style={reftIconStyle} />
             </Button>
           </ButtonContainer>
         </Modal>

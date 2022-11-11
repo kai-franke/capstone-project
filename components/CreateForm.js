@@ -263,10 +263,10 @@ export default function CreateForm() {
               marginRight: "0.5em",
             }}
           />
-          add step
+          Add step
         </Button>
         <Button isPrimary type="submit" form="tutorialForm">
-          finish creating
+          Finish creating
           <TbCheck
             style={{ color: "inherit", fontSize: "1.4em", marginLeft: "0.5em" }}
           />

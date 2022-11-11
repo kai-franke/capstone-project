@@ -51,21 +51,21 @@ export default function Tutorial({ name, steps, id, slug }) {
       <ButtonContainer>
         {currentStep === 0 ? (
           <Link href="/tutorials" passHref>
-            <Button isPrimary={false}>back to library</Button>
+            <Button isPrimary={false}>Back to library</Button>
           </Link>
         ) : (
           <Button isPrimary={false} onClick={() => subtractStep()}>
-            {currentStep === 1 ? "back to start" : "prev"}
+            {currentStep === 1 ? "Back to start" : "Prev"}
           </Button>
         )}
         {currentStep !== steps.length && (
           <Button isPrimary onClick={() => addStep()}>
-            {currentStep === 0 ? "start" : "next"}
+            {currentStep === 0 ? "Start" : "Next"}
           </Button>
         )}
         {currentStep === steps.length && (
           <Link href="/tutorials" passHref>
-            <Button isPrimary>back to library</Button>
+            <Button isPrimary>Back to library</Button>
           </Link>
         )}
       </ButtonContainer>
