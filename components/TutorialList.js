@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
-import { TbTrash, TbChevronRight, TbCopy } from "react-icons/tb";
+import { TbTrash, TbChevronRight } from "react-icons/tb";
 import ListContainer from "./ListContainer";
 import { Subline } from "./TextElements";
 
@@ -77,26 +77,16 @@ const ListImage = styled.figure`
 const ListName = styled(Subline)`
   grid-area: 1 / 2 / 4 / 3;
   padding: 0.15em 0;
-  //background-color: blue;
 `;
 
 const ListDelete = styled.button`
   all: unset;
   grid-area: 1 / 3 / 2 / 4;
-  //background-color: green;
   place-self: center end;
 `;
 
-/* const ListCopy = styled.button`
-  all: unset;
-  grid-area: 2 / 3 / 3 / 4;
-  //background-color: yellow;
-  place-self: center end;
-`; */
-
 const ListStart = styled.button`
   all: unset;
-  //background-color: purple;
   grid-area: 3 / 3 / 4 / 4;
   place-self: center end;
 `;
