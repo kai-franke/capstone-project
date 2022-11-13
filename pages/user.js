@@ -4,7 +4,12 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { TbCheck, TbPlus, TbTrash, TbX } from "react-icons/tb";
 import styled from "styled-components";
-import { Button, ButtonContainer, leftIconStyle, rightIconStyle } from "../components/Buttons";
+import {
+  Button,
+  ButtonContainer,
+  leftIconStyle,
+  rightIconStyle,
+} from "../components/Buttons";
 import Modal from "../components/Modal";
 import { Headline, Paragraph, Subline } from "../components/TextElements";
 import TutorialList from "../components/TutorialList";
@@ -16,7 +21,7 @@ export async function getServerSideProps({ req }) {
   if (!session) {
     return {
       redirect: {
-        destination: "api/auth/signin",
+        destination: "/api/auth/signin",
         permanent: false,
       },
     };

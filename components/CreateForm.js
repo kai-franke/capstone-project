@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { TbCheck, TbPlus, TbCameraOff } from "react-icons/tb";
@@ -6,6 +6,9 @@ import { customAlphabet } from "nanoid";
 import { Button, ButtonContainer } from "./Buttons";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import Modal from "./Modal";
+import Lottie from "lottie-web";
+import { Paragraph } from "./TextElements";
 
 const slugSuffix = customAlphabet(
   "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
@@ -26,6 +29,18 @@ export default function CreateForm() {
   const { data: session } = useSession();
   const router = useRouter();
   const buttonRef = useRef();
+  const lottiefile = useRef(null);
+
+  useEffect(() => {
+    Lottie.loadAnimation({
+      container: lottiefile.current,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      animationData: require("/public/assets/uploading_animation.json"),
+    });
+    return () => Lottie.destroy();
+  }, [isLoading]);
 
   async function addNewTutorial(data) {
     try {
@@ -139,21 +154,12 @@ export default function CreateForm() {
 
   return (
     <>
-      <LoadingScreen isLoading={isLoading}>
-        <Image
-          src="/assets/uploading_animation-128x128.gif"
-          alt="rocket animation"
-          width={48}
-          height={48}
-        ></Image>
-        <p
-          style={{
-            marginTop: "2em",
-          }}
-        >
-          Uploading your images, please wait...
-        </p>
-      </LoadingScreen>
+      {isLoading && (
+        <Modal>
+          <LoadingAnimation ref={lottiefile} />
+          <Paragraph>Uploading your images, please wait...</Paragraph>
+        </Modal>
+      )}
 
       <FormContainer id="tutorialForm" onSubmit={handleSubmit}>
         <FormCard>
@@ -388,15 +394,6 @@ const NoImage = styled.p`
   align-items: center;
 `;
 
-const LoadingScreen = styled.div`
-  display: ${({ isLoading }) => (isLoading ? "flex" : "none")};
-  flex-direction: column;
-  position: fixed;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-  background-color: var(--background-opac-90);
-  z-index: 1;
-  color: var(--primary-100);
+const LoadingAnimation = styled.div`
+  height: 100px;
 `;
