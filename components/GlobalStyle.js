@@ -22,24 +22,7 @@ const GlobalStyle = createGlobalStyle`
      
       }
   
-      /* poppins-100 - latin */
-        @font-face {
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 100;
-        src: local(''),
-            url('/fonts/poppins-v20-latin-100.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-            url('/fonts/poppins-v20-latin-100.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-        }
-        /* poppins-200 - latin */
-        @font-face {
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 200;
-        src: local(''),
-            url('/fonts/poppins-v20-latin-200.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-            url('/fonts/poppins-v20-latin-200.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-        }
+     
         /* poppins-300 - latin */
         @font-face {
         font-family: 'Poppins';
@@ -67,15 +50,7 @@ const GlobalStyle = createGlobalStyle`
             url('/fonts/poppins-v20-latin-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
             url('/fonts/poppins-v20-latin-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
         }
-        /* poppins-600 - latin */
-        @font-face {
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 600;
-        src: local(''),
-            url('/fonts/poppins-v20-latin-600.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-            url('/fonts/poppins-v20-latin-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-        }
+       
         /* poppins-700 - latin */
         @font-face {
         font-family: 'Poppins';
@@ -85,15 +60,7 @@ const GlobalStyle = createGlobalStyle`
             url('/fonts/poppins-v20-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
             url('/fonts/poppins-v20-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
         }
-        /* poppins-800 - latin */
-        @font-face {
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 800;
-        src: local(''),
-            url('/fonts/poppins-v20-latin-800.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-            url('/fonts/poppins-v20-latin-800.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
+    
 
 
       *,
@@ -113,10 +80,6 @@ const GlobalStyle = createGlobalStyle`
           background-color: var(--background);
           color: var(--darktext);
           padding-bottom: 5em;
-      }
-
-      main {
-        padding: 0 1em;
       }
   `;
 

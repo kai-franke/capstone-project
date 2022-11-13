@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button } from "./Buttons";
 import Lottie from "lottie-web";
 import { useEffect, useRef } from "react";
+import { Paragraph, Subline } from "./TextElements";
 
 export default function TutorialEndCard() {
   const fireworks = useRef(null);
@@ -20,13 +21,13 @@ export default function TutorialEndCard() {
 
   return (
     <CardContainer>
-      <Subline>100%</Subline>
+      <WhiteSubline>100%</WhiteSubline>
       <div ref={fireworks} />
-      <Subline>Congratulations!</Subline>
-      <StyledP>
+      <WhiteSubline>Congratulations!</WhiteSubline>
+      <WhiteParagraph>
         Someone has shared knowledge with you. <br />
         Why don&apos;t you share yours?
-      </StyledP>
+      </WhiteParagraph>
       <Link href="/create" passHref>
         <Button>Create a tutorial</Button>
       </Link>
@@ -45,13 +46,12 @@ const CardContainer = styled.div`
   box-shadow: var(--boxshadow-primary);
 `;
 
-const Subline = styled.h2`
-  font-weight: 500;
-  font-size: 1.2em;
-  padding: 1em;
+const WhiteSubline = styled(Subline)`
+  color: var(--white);
+  padding: 0 1em 1em 1em;
 `;
 
-const StyledP = styled.p`
-  font-weight: 300;
+const WhiteParagraph = styled(Paragraph)`
+  color: var(--white);
   margin-bottom: 1.5em;
 `;
