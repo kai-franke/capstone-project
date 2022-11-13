@@ -2,17 +2,27 @@ import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
 import { Button } from "./Buttons";
+import Lottie from "lottie-web";
+import { useEffect, useRef } from "react";
 
 export default function TutorialEndCard() {
+  const fireworks = useRef(null);
+
+  useEffect(() => {
+    const instance = Lottie.loadAnimation({
+      container: fireworks.current,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      animationData: require("/public/assets/tutorial-end-card_animation.json"),
+    });
+    return () => instance.destroy();
+  }, []);
+
   return (
     <CardContainer>
       <Subline>100%</Subline>
-      <Image
-        src="/assets/tutorial-end-card_animation_300x300.gif"
-        alt="rocket animation"
-        width={300}
-        height={300}
-      ></Image>
+      <div ref={fireworks} />
       <Subline>Congratulations!</Subline>
       <StyledP>
         Someone has shared knowledge with you. <br />
