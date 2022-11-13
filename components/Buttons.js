@@ -41,5 +41,4 @@ const rightIconStyle = {
   marginLeft: "0.3em",
 };
 
-
 export { Button, ButtonContainer, leftIconStyle, rightIconStyle };

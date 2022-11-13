@@ -199,7 +199,7 @@ export default function CreateForm() {
                 ></UploadInputfield>
                 <LabelText>Step picture</LabelText>
                 <UploadButtonBorder>
-                  <PreviewImage>
+                  <PreviewImage showBorder={inputSteps[index]["img"] === ""}>
                     {inputSteps[index]["img"] ? (
                       <Image
                         src={inputSteps[index]["img"]}
@@ -362,8 +362,9 @@ const PreviewImage = styled.div`
   overflow: hidden;
   width: 5em;
   aspect-ratio: 1;
-  border-radius: 8px;
-  background-color: var(--gray-70);
+  border: ${({ showBorder }) =>
+    showBorder ? "2px dotted var(--gray-30)" : "none"};
+  border-radius: 5px;
   display: grid;
   align-items: center;
 `;
@@ -379,7 +380,7 @@ const UploadInputfield = styled.input`
 `;
 
 const NoImage = styled.p`
-  color: var(--white);
+  color: var(--gray-70);
   text-align: center;
   font-size: 0.8em;
   display: flex;

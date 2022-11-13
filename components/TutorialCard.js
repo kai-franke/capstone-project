@@ -7,12 +7,12 @@ export default function TutorialCard({ step }) {
     <>
       <CardContainer>
         <ImageContainer>
-        <Image
-          src={step.img}
-          alt={step.title}
-          layout="fill"
-          objectFit="cover"
-        ></Image>
+          <Image
+            src={step.img}
+            alt={step.title}
+            layout="fill"
+            objectFit="cover"
+          ></Image>
         </ImageContainer>
         <StepNumber>Step {step.step}</StepNumber>
         <StepTitle>{step.title}</StepTitle>
