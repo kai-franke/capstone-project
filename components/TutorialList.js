@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
 import { TbTrash, TbChevronRight } from "react-icons/tb";
-import ListContainer from "./ListContainer";
 import { Subline } from "./TextElements";
 
 const iconStyle = {
@@ -89,4 +88,11 @@ const ListStart = styled.button`
   all: unset;
   grid-area: 3 / 3 / 4 / 4;
   place-self: center end;
+`;
+
+const ListContainer = styled.ul`
+  padding: 1em 0;
+  list-style: none;
+  display: grid;
+  gap: 1em;
 `;

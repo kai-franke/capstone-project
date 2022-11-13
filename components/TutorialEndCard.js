@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
 import { Button } from "./Buttons";
@@ -9,14 +8,14 @@ export default function TutorialEndCard() {
   const fireworks = useRef(null);
 
   useEffect(() => {
-    const instance = Lottie.loadAnimation({
+    Lottie.loadAnimation({
       container: fireworks.current,
       renderer: "svg",
       loop: true,
       autoplay: true,
       animationData: require("/public/assets/tutorial-end-card_animation.json"),
     });
-    return () => instance.destroy();
+    return () => Lottie.destroy();
   }, []);
 
   return (
@@ -39,7 +38,7 @@ const CardContainer = styled.div`
   background-color: var(--primary-100);
   color: var(--white);
   margin: 1em auto;
-  padding: 2em 0.7em 3em 0.7em;
+  padding: 2em 0.7em 2em 0.7em;
   text-align: center;
   display: grid;
   justify-items: center;
