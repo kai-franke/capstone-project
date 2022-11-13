@@ -5,7 +5,7 @@ import { TbCheck, TbPlus, TbCameraOff } from "react-icons/tb";
 import { customAlphabet } from "nanoid";
 import { Button, ButtonContainer } from "./Buttons";
 import Image from "next/image";
-import { useSession, signOut, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 const slugSuffix = customAlphabet(
   "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",

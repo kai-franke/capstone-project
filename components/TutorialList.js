@@ -5,7 +5,6 @@ import {
   TbTrash,
   TbChevronRight,
   TbCopy,
-  TbShare,
   TbMessage2Share,
 } from "react-icons/tb";
 import { Paragraph, Subline } from "./TextElements";
@@ -15,7 +14,6 @@ import {
   Button,
   ButtonContainer,
   leftIconStyle,
-  rightIconStyle,
 } from "./Buttons";
 
 const iconStyle = {
