@@ -29,4 +29,17 @@ const ButtonContainer = styled.div`
   gap: 1em;
 `;
 
-export { Button, ButtonContainer };
+const leftIconStyle = {
+  color: "inherit",
+  fontSize: "1.4em",
+  marginRight: "0.3em",
+};
+
+const rightIconStyle = {
+  color: "inherit",
+  fontSize: "1.4em",
+  marginLeft: "0.3em",
+};
+
+
+export { Button, ButtonContainer, leftIconStyle, rightIconStyle };

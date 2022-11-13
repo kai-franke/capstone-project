@@ -1,5 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import styled from "styled-components";
+import { Button } from "./Buttons";
 
 export default function TutorialEndCard() {
   return (
@@ -12,8 +14,13 @@ export default function TutorialEndCard() {
         height={300}
       ></Image>
       <Subline>Congratulations!</Subline>
-      <StyledP>Someone has shared knowledge with you.</StyledP>
-      <StyledP>Why don&apos;t you share yours?</StyledP>
+      <StyledP>
+        Someone has shared knowledge with you. <br />
+        Why don&apos;t you share yours?
+      </StyledP>
+      <Link href="/create" passHref>
+        <Button>Create a tutorial</Button>
+      </Link>
     </CardContainer>
   );
 }
@@ -24,6 +31,8 @@ const CardContainer = styled.div`
   margin: 1em auto;
   padding: 2em 0.7em 3em 0.7em;
   text-align: center;
+  display: grid;
+  justify-items: center;
   box-shadow: var(--boxshadow-primary);
 `;
 
@@ -35,4 +44,5 @@ const Subline = styled.h2`
 
 const StyledP = styled.p`
   font-weight: 300;
+  margin-bottom: 1.5em;
 `;
