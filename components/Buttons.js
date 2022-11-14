@@ -15,6 +15,7 @@ const Button = styled.button`
     isPrimary ? "var(--primary-100)" : "var(--gray-70)"};
   color: ${({ isPrimary }) => (isPrimary ? "var(--white)" : "var(--gray-70)")};
   transition: 300ms linear;
+  font-size: 0.9em;
 
   &:hover {
     cursor: pointer;
@@ -29,4 +30,16 @@ const ButtonContainer = styled.div`
   gap: 1em;
 `;
 
-export { Button, ButtonContainer };
+const leftIconStyle = {
+  color: "inherit",
+  fontSize: "1.4em",
+  marginRight: "0.3em",
+};
+
+const rightIconStyle = {
+  color: "inherit",
+  fontSize: "1.4em",
+  marginLeft: "0.3em",
+};
+
+export { Button, ButtonContainer, leftIconStyle, rightIconStyle };

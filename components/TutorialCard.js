@@ -1,18 +1,18 @@
 import Image from "next/image";
 import styled from "styled-components";
-import { Paragraph } from "./TextElements";
+import { Paragraph, Subline } from "./TextElements";
 
 export default function TutorialCard({ step }) {
   return (
     <>
       <CardContainer>
         <ImageContainer>
-        <Image
-          src={step.img}
-          alt={step.title}
-          layout="fill"
-          objectFit="cover"
-        ></Image>
+          <Image
+            src={step.img}
+            alt={step.title}
+            layout="fill"
+            objectFit="cover"
+          ></Image>
         </ImageContainer>
         <StepNumber>Step {step.step}</StepNumber>
         <StepTitle>{step.title}</StepTitle>
@@ -32,10 +32,8 @@ const CardContainer = styled.div`
   max-width: 600px;
 `;
 
-const StepTitle = styled.h2`
+const StepTitle = styled(Subline)`
   color: var(--darktext);
-  font-weight: 500;
-  font-size: 1.2em;
 `;
 
 const StepNumber = styled.p`

@@ -4,7 +4,12 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { TbCheck, TbPlus, TbTrash, TbX } from "react-icons/tb";
 import styled from "styled-components";
-import { Button, ButtonContainer } from "../components/Buttons";
+import {
+  Button,
+  ButtonContainer,
+  leftIconStyle,
+  rightIconStyle,
+} from "../components/Buttons";
 import Modal from "../components/Modal";
 import { Headline, Paragraph, Subline } from "../components/TextElements";
 import TutorialList from "../components/TutorialList";
@@ -16,7 +21,7 @@ export async function getServerSideProps({ req }) {
   if (!session) {
     return {
       redirect: {
-        destination: "api/auth/signin",
+        destination: "/api/auth/signin",
         permanent: false,
       },
     };
@@ -61,7 +66,7 @@ export default function TutorialsPage({ userTutorials, userName }) {
               <TbX style={leftIconStyle} /> No, cancel
             </Button>
             <Button onClick={deleteTutorial}>
-              Yes, delete <TbCheck style={reftIconStyle} />
+              Yes, delete <TbCheck style={rightIconStyle} />
             </Button>
           </ButtonContainer>
         </Modal>
@@ -105,15 +110,3 @@ const Message = styled.p`
 const SmallMessage = styled(Message)`
   font-size: 0.7em;
 `;
-
-const leftIconStyle = {
-  color: "inherit",
-  fontSize: "1.4em",
-  marginRight: "0.3em",
-};
-
-const reftIconStyle = {
-  color: "inherit",
-  fontSize: "1.4em",
-  marginLeft: "0.3em",
-};
