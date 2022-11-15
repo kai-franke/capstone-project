@@ -1,34 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<img width="250" alt="hamster_skizze" src="https://user-images.githubusercontent.com/71948045/201959248-544b6848-773e-4fd7-8b0a-e4d20ae522c1.png">
 
-## Getting Started
+# How to Bathe a Hamster
+## Your Tutorial Maker
 
-First, run the development server:
+Easily create illustrated step-by-step tutorials to share your knowledge and skills with friends or family.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+- Create instructions with as many steps as you like
+- Add an image, a caption and a description to each step
+- Share the link of your tutorial to make your knowledge available to others
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Tech stack
+- Next.js
+- React
+- MongoDB
+- MongoDB Atlas
+- mongoose
+- Cloudinary
+- LottieFiles
+- Styled-Components
+- Eslint
+- Prettier
+- Node.js
+- Git
+- GitHub Workflow
+- Vercel
+- Creative Cloud
+- Figma
