@@ -101,9 +101,6 @@ export default function CreateForm() {
   }
 
   function handleDeleteStep(index) {
-    // A tutorial must not contain less than one step
-    if (inputSteps.length < 2) return;
-
     const remainingSteps = inputSteps.filter(
       (inputStep) => inputStep.step !== index + 1
     );
@@ -196,13 +193,15 @@ export default function CreateForm() {
             <FormCard key={index}>
               <FlexWrapper>
                 <StepNumber>Step {index + 1}</StepNumber>
-                <StepDelete
-                  type="button"
-                  onClick={() => handleDeleteStep(index)}
-                  aria-label="Delete step"
-                >
-                  <TbTrash />
-                </StepDelete>
+                {inputSteps.length > 1 && (
+                  <StepDelete
+                    type="button"
+                    onClick={() => handleDeleteStep(index)}
+                    aria-label="Delete step"
+                  >
+                    <TbTrash />
+                  </StepDelete>
+                )}
               </FlexWrapper>
               <StyledLabel isPrimary={false}>
                 <LabelText>Step title</LabelText>
