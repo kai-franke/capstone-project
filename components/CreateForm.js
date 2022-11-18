@@ -101,6 +101,9 @@ export default function CreateForm() {
   }
 
   function handleDeleteStep(index) {
+    // A tutorial must not contain less than one step
+    if (inputSteps.length < 2) return;
+
     const remainingSteps = inputSteps.filter(
       (inputStep) => inputStep.step !== index + 1
     );
@@ -421,6 +424,10 @@ const StepDelete = styled.button`
   all: unset;
   color: var(--gray-70);
   cursor: pointer;
+
+  & hover {
+    color: var(--primary-100);
+  }
 `;
 
 const FlexWrapper = styled.div`
