@@ -191,10 +191,15 @@ export default function CreateForm() {
         {inputSteps.map((step, index) => {
           return (
             <FormCard key={index}>
-              <StepDelete type="button" onClick={() => handleDeleteStep(index)}>
-                <TbTrash />
-              </StepDelete>
-              <StepNumber>Step {index + 1}</StepNumber>
+              <FlexWrapper>
+                <StepNumber>Step {index + 1}</StepNumber>
+                <StepDelete
+                  type="button"
+                  onClick={() => handleDeleteStep(index)}
+                >
+                  <TbTrash />
+                </StepDelete>
+              </FlexWrapper>
               <StyledLabel isPrimary={false}>
                 <LabelText>Step title</LabelText>
                 <StyledInput
@@ -307,7 +312,6 @@ const FormCard = styled.fieldset`
   background-color: var(--white);
   padding: 0.7em;
   display: grid;
-  grid: 1fr 1fr;
   box-shadow: var(--boxshadow-primary);
   transition: 300ms linear;
 `;
@@ -414,6 +418,11 @@ const LoadingAnimation = styled.div`
 
 const StepDelete = styled.button`
   all: unset;
-  background-color: red;
+  color: var(--gray-70);
   cursor: pointer;
+`;
+
+const FlexWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
