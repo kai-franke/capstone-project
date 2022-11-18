@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { TbCheck, TbPlus, TbCameraOff } from "react-icons/tb";
+import { TbCheck, TbPlus, TbCameraOff, TbTrash } from "react-icons/tb";
 import { customAlphabet } from "nanoid";
 import { Button, ButtonContainer } from "./Buttons";
 import Image from "next/image";
@@ -100,6 +100,16 @@ export default function CreateForm() {
     scrollToButton();
   }
 
+  function handleDeleteStep(index) {
+    const remainingSteps = inputSteps.filter(
+      (inputStep) => inputStep.step !== index + 1
+    );
+    const renumberedSteps = remainingSteps.map((remainingStep, index) => {
+      return { ...remainingStep, step: index + 1 };
+    });
+    setInputSteps(renumberedSteps);
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     if (inputTutorialTitle.replace(/[^a-zA-Z0-9]/g, "").length < 5) {
@@ -180,7 +190,10 @@ export default function CreateForm() {
 
         {inputSteps.map((step, index) => {
           return (
-            <FormCard key={index.toString()}>
+            <FormCard key={index}>
+              <StepDelete type="button" onClick={() => handleDeleteStep(index)}>
+                <TbTrash />
+              </StepDelete>
               <StepNumber>Step {index + 1}</StepNumber>
               <StyledLabel isPrimary={false}>
                 <LabelText>Step title</LabelText>
@@ -294,6 +307,7 @@ const FormCard = styled.fieldset`
   background-color: var(--white);
   padding: 0.7em;
   display: grid;
+  grid: 1fr 1fr;
   box-shadow: var(--boxshadow-primary);
   transition: 300ms linear;
 `;
@@ -396,4 +410,10 @@ const NoImage = styled.p`
 
 const LoadingAnimation = styled.div`
   height: 100px;
+`;
+
+const StepDelete = styled.button`
+  all: unset;
+  background-color: red;
+  cursor: pointer;
 `;
