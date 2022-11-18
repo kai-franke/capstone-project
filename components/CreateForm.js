@@ -196,6 +196,7 @@ export default function CreateForm() {
                 <StepDelete
                   type="button"
                   onClick={() => handleDeleteStep(index)}
+                  aria-label="Delete step"
                 >
                   <TbTrash />
                 </StepDelete>
