@@ -101,10 +101,9 @@ export default function CreateForm() {
   }
 
   function handleDeleteStep(index) {
-    const remainingSteps = inputSteps.filter(
-      (inputStep) => inputStep.step !== index + 1
-    );
-    const renumberedSteps = remainingSteps.map((remainingStep, index) => {
+    const data = inputSteps;
+    data.splice(index, 1);
+    const renumberedSteps = data.map((remainingStep, index) => {
       return { ...remainingStep, step: index + 1 };
     });
     setInputSteps(renumberedSteps);
