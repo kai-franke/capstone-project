@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Fragment } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import {
@@ -48,6 +48,15 @@ export default function CreateForm() {
     return () => Lottie.destroy();
   }, [isLoading]);
 
+  function renumberSteps(wrongNumberedSteps) {
+    const correctNumberedSteps = wrongNumberedSteps.map(
+      (wrongNumberedStep, index) => {
+        return { ...wrongNumberedStep, step: index + 1 };
+      }
+    );
+    return correctNumberedSteps;
+  }
+
   async function addNewTutorial(data) {
     try {
       const response = await fetch("/api/tutorials", {
@@ -94,7 +103,7 @@ export default function CreateForm() {
     }
   }
 
-  function handleAddStep() {
+  function handleAddStep(position) {
     const additionalStep = {
       step: inputSteps.length + 1,
       title: "",
@@ -102,16 +111,18 @@ export default function CreateForm() {
       description: "",
       file: "",
     };
-    setInputSteps((prevInputSteps) => [...prevInputSteps, additionalStep]);
+    setInputSteps((prevInputSteps) => {
+      const data = [...prevInputSteps];
+      data.splice(position, 0, additionalStep);
+      return data;
+    });
     scrollToButton();
   }
 
   function handleDeleteStep(index) {
     const data = inputSteps;
     data.splice(index, 1);
-    const renumberedSteps = data.map((remainingStep, index) => {
-      return { ...remainingStep, step: index + 1 };
-    });
+    const renumberedSteps = renumberSteps(data);
     setInputSteps(renumberedSteps);
   }
 
@@ -195,8 +206,8 @@ export default function CreateForm() {
 
         {inputSteps.map((step, index) => {
           return (
-            <>
-              <FormCard key={index}>
+            <Fragment key={index}>
+              <FormCard>
                 <FlexWrapper>
                   <StepNumber>Step {index + 1}</StepNumber>
                   {inputSteps.length > 1 && (
@@ -285,17 +296,20 @@ export default function CreateForm() {
                 </StyledLabel>
               </FormCard>
               {index < inputSteps.length - 1 && (
-                <InsertButton type="button">
+                <InsertButton
+                  type="button"
+                  onClick={() => console.log("click ", index)}
+                >
                   <TbDirection fontSize="2em" />
                   Insert step
                 </InsertButton>
               )}
-            </>
+            </Fragment>
           );
         })}
       </FormContainer>
       <ButtonContainer>
-        <Button ref={buttonRef} isPrimary onClick={handleAddStep}>
+        <Button ref={buttonRef} isPrimary onClick={() => handleAddStep(-1)}>
           <TbPlus
             style={{
               color: "inherit",
