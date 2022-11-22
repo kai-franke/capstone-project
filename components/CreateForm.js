@@ -1,7 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { TbCheck, TbPlus, TbCameraOff, TbTrash } from "react-icons/tb";
+import {
+  TbCheck,
+  TbPlus,
+  TbCameraOff,
+  TbTrash,
+  TbDirection,
+} from "react-icons/tb";
 import { customAlphabet } from "nanoid";
 import { Button, ButtonContainer } from "./Buttons";
 import Image from "next/image";
@@ -189,94 +195,102 @@ export default function CreateForm() {
 
         {inputSteps.map((step, index) => {
           return (
-            <FormCard key={index}>
-              <FlexWrapper>
-                <StepNumber>Step {index + 1}</StepNumber>
-                {inputSteps.length > 1 && (
-                  <StepDelete
-                    type="button"
-                    onClick={() => handleDeleteStep(index)}
-                    aria-label="Delete step"
-                  >
-                    <TbTrash />
-                  </StepDelete>
-                )}
-              </FlexWrapper>
-              <StyledLabel isPrimary={false}>
-                <LabelText>Step title</LabelText>
-                <StyledInput
-                  name="title"
-                  value={step.title}
-                  placeholder="e.g. Prepare your tools"
-                  aria-placeholder="e.g. Prepare your tools"
-                  maxLength="60"
-                  onChange={(event) => handleFormChange(index, event)}
-                  required
-                />
-              </StyledLabel>
+            <>
+              <FormCard key={index}>
+                <FlexWrapper>
+                  <StepNumber>Step {index + 1}</StepNumber>
+                  {inputSteps.length > 1 && (
+                    <StepDelete
+                      type="button"
+                      onClick={() => handleDeleteStep(index)}
+                      aria-label="Delete step"
+                    >
+                      <TbTrash />
+                    </StepDelete>
+                  )}
+                </FlexWrapper>
+                <StyledLabel isPrimary={false}>
+                  <LabelText>Step title</LabelText>
+                  <StyledInput
+                    name="title"
+                    value={step.title}
+                    placeholder="e.g. Prepare your tools"
+                    aria-placeholder="e.g. Prepare your tools"
+                    maxLength="60"
+                    onChange={(event) => handleFormChange(index, event)}
+                    required
+                  />
+                </StyledLabel>
 
-              <UploadButton>
-                <UploadInputfield
-                  name="file"
-                  type="file"
-                  accept=".gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp, .png, .webp"
-                  onChange={(event) => handleUploadChange(index, event)}
-                  required
-                ></UploadInputfield>
-                <LabelText>Step picture</LabelText>
-                <UploadButtonBorder>
-                  <PreviewImage showBorder={inputSteps[index]["img"] === ""}>
-                    {inputSteps[index]["img"] ? (
-                      <Image
-                        src={inputSteps[index]["img"]}
-                        layout="fill"
-                        objectFit="cover"
-                        alt="Upload preview"
-                      />
-                    ) : (
-                      <NoImage>
-                        <TbCameraOff
-                          style={{
-                            color: "inherit",
-                            fontSize: "1.5em",
-                            marginBottom: "0.2em",
-                          }}
+                <UploadButton>
+                  <UploadInputfield
+                    name="file"
+                    type="file"
+                    accept=".gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp, .png, .webp"
+                    onChange={(event) => handleUploadChange(index, event)}
+                    required
+                  ></UploadInputfield>
+                  <LabelText>Step picture</LabelText>
+                  <UploadButtonBorder>
+                    <PreviewImage showBorder={inputSteps[index]["img"] === ""}>
+                      {inputSteps[index]["img"] ? (
+                        <Image
+                          src={inputSteps[index]["img"]}
+                          layout="fill"
+                          objectFit="cover"
+                          alt="Upload preview"
                         />
-                        No picture selected
-                      </NoImage>
-                    )}
-                  </PreviewImage>
-                  <PreviewFileName>
-                    {inputSteps[index].file
-                      ? inputSteps[index].file.name
-                      : "Please select a picture"}
-                  </PreviewFileName>
-                </UploadButtonBorder>
-              </UploadButton>
-              <p
-                style={{
-                  fontSize: "0.75em",
-                  marginBottom: "0.7em",
-                  color: "var(--gray-70)",
-                }}
-              >
-                Accepted file formats: .gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp,
-                .png, .webp
-              </p>
+                      ) : (
+                        <NoImage>
+                          <TbCameraOff
+                            style={{
+                              color: "inherit",
+                              fontSize: "1.5em",
+                              marginBottom: "0.2em",
+                            }}
+                          />
+                          No picture selected
+                        </NoImage>
+                      )}
+                    </PreviewImage>
+                    <PreviewFileName>
+                      {inputSteps[index].file
+                        ? inputSteps[index].file.name
+                        : "Please select a picture"}
+                    </PreviewFileName>
+                  </UploadButtonBorder>
+                </UploadButton>
+                <p
+                  style={{
+                    fontSize: "0.75em",
+                    marginBottom: "0.7em",
+                    color: "var(--gray-70)",
+                  }}
+                >
+                  Accepted file formats: .gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp,
+                  .png, .webp
+                </p>
 
-              <StyledLabel isPrimary={false}>
-                <LabelText>Step description</LabelText>
-                <StyledTextarea
-                  name="description"
-                  value={step.description}
-                  placeholder="Enter a description"
-                  aria-placeholder="Enter a description"
-                  maxLength="300"
-                  onChange={(event) => handleFormChange(index, event)}
-                  required
-                />
-              </StyledLabel>
-            </FormCard>
+                <StyledLabel isPrimary={false}>
+                  <LabelText>Step description</LabelText>
+                  <StyledTextarea
+                    name="description"
+                    value={step.description}
+                    placeholder="Enter a description"
+                    aria-placeholder="Enter a description"
+                    maxLength="300"
+                    onChange={(event) => handleFormChange(index, event)}
+                    required
+                  />
+                </StyledLabel>
+              </FormCard>
+              {index < inputSteps.length - 1 && (
+                <InsertButton type="button">
+                  <TbDirection />
+                  insert step
+                </InsertButton>
+              )}
+            </>
           );
         })}
       </FormContainer>
@@ -423,7 +437,7 @@ const StepDelete = styled.button`
   color: var(--gray-70);
   cursor: pointer;
 
-  & hover {
+  &:hover {
     color: var(--primary-100);
   }
 `;
@@ -431,4 +445,16 @@ const StepDelete = styled.button`
 const FlexWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const InsertButton = styled.button`
+  all: unset;
+  text-align: center;
+  color: var(--gray-70);
+  font-size: 0.8em;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--primary-100);
+  }
 `;
