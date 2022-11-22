@@ -286,8 +286,8 @@ export default function CreateForm() {
               </FormCard>
               {index < inputSteps.length - 1 && (
                 <InsertButton type="button">
-                  <TbDirection />
-                  insert step
+                  <TbDirection fontSize="2em" />
+                  Insert step
                 </InsertButton>
               )}
             </>
@@ -449,9 +449,12 @@ const FlexWrapper = styled.div`
 
 const InsertButton = styled.button`
   all: unset;
-  text-align: center;
+  padding-right: 0.6em;
   color: var(--gray-70);
   font-size: 0.8em;
+  justify-self: center;
+  display: flex;
+  align-items: center;
   cursor: pointer;
 
   &:hover {
