@@ -90,7 +90,7 @@ export default function CreateForm() {
     const newFile = changeEvent.target.files[0];
     const data = [...inputSteps];
     data[index]["file"] = newFile;
-    console.log('data', data)
+    console.log("data", data);
 
     try {
       const reader = new FileReader();
@@ -263,7 +263,7 @@ export default function CreateForm() {
                     type="file"
                     accept=".gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp, .png, .webp"
                     onChange={(event) => handleUploadChange(index, event)}
-                    required
+                    //required
                   ></UploadInputfield>
                   <LabelText>Step picture</LabelText>
                   <UploadButtonBorder>
