@@ -7,6 +7,7 @@ import {
   TbCameraOff,
   TbTrash,
   TbDirection,
+  TbChevronUp,
 } from "react-icons/tb";
 import { customAlphabet } from "nanoid";
 import { Button, ButtonContainer } from "./Buttons";
@@ -89,6 +90,7 @@ export default function CreateForm() {
     const newFile = changeEvent.target.files[0];
     const data = [...inputSteps];
     data[index]["file"] = newFile;
+    console.log('data', data)
 
     try {
       const reader = new FileReader();
@@ -103,20 +105,21 @@ export default function CreateForm() {
     }
   }
 
-  function handleAddStep(position) {
+  function handleAddStep(index) {
     const additionalStep = {
-      step: inputSteps.length + 1,
+      step: index + 1,
       title: "",
       img: "",
       description: "",
       file: "",
     };
-    setInputSteps((prevInputSteps) => {
-      const data = [...prevInputSteps];
-      data.splice(position, 0, additionalStep);
-      return renumberSteps(data);
-    });
-    position === inputSteps.length ? scrollToButton() : scrollDown();
+    const data = inputSteps;
+    data.splice(index, 0, additionalStep);
+    const renumberedSteps = renumberSteps(data);
+    setInputSteps(renumberedSteps);
+    index === inputSteps.length - 1 ? scrollToButton() : scrollDown150Px();
+    console.log("ADD inputSteps", inputSteps);
+    console.log("ADD renumberedSteps", renumberedSteps);
   }
 
   function handleDeleteStep(index) {
@@ -124,6 +127,8 @@ export default function CreateForm() {
     data.splice(index, 1);
     const renumberedSteps = renumberSteps(data);
     setInputSteps(renumberedSteps);
+    console.log("DELETE inputSteps", inputSteps);
+    console.log("DELETE renumberedSteps", renumberedSteps);
   }
 
   async function handleSubmit(event) {
@@ -178,7 +183,7 @@ export default function CreateForm() {
     });
   }
 
-  function scrollDown() {
+  function scrollDown150Px() {
     window.scrollBy({
       top: 150,
       behavior: "smooth",
@@ -214,6 +219,18 @@ export default function CreateForm() {
         {inputSteps.map((step, index) => {
           return (
             <Fragment key={index}>
+              <InsertButton type="button" onClick={() => handleAddStep(index)}>
+                {index === 0 ? (
+                  <>
+                    <TbChevronUp fontSize="1.5em" /> Add step before
+                  </>
+                ) : (
+                  <>
+                    <TbDirection fontSize="2em" /> Insert step
+                  </>
+                )}
+              </InsertButton>
+
               <FormCard>
                 <FlexWrapper>
                   <StepNumber>Step {index + 1}</StepNumber>
@@ -302,15 +319,6 @@ export default function CreateForm() {
                   />
                 </StyledLabel>
               </FormCard>
-              {index < inputSteps.length - 1 && (
-                <InsertButton
-                  type="button"
-                  onClick={() => handleAddStep(index + 1)}
-                >
-                  <TbDirection fontSize="2em" />
-                  Insert step
-                </InsertButton>
-              )}
             </Fragment>
           );
         })}
