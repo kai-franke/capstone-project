@@ -114,9 +114,9 @@ export default function CreateForm() {
     setInputSteps((prevInputSteps) => {
       const data = [...prevInputSteps];
       data.splice(position, 0, additionalStep);
-      return data;
+      return renumberSteps(data);
     });
-    scrollToButton();
+    position === inputSteps.length ? scrollToButton() : scrollDown();
   }
 
   function handleDeleteStep(index) {
@@ -175,6 +175,13 @@ export default function CreateForm() {
   function scrollToButton() {
     setTimeout(() => {
       buttonRef.current.scrollIntoView({ behavior: "smooth" });
+    });
+  }
+
+  function scrollDown() {
+    window.scrollBy({
+      top: 150,
+      behavior: "smooth",
     });
   }
 
@@ -298,7 +305,7 @@ export default function CreateForm() {
               {index < inputSteps.length - 1 && (
                 <InsertButton
                   type="button"
-                  onClick={() => console.log("click ", index)}
+                  onClick={() => handleAddStep(index + 1)}
                 >
                   <TbDirection fontSize="2em" />
                   Insert step
@@ -309,7 +316,11 @@ export default function CreateForm() {
         })}
       </FormContainer>
       <ButtonContainer>
-        <Button ref={buttonRef} isPrimary onClick={() => handleAddStep(-1)}>
+        <Button
+          ref={buttonRef}
+          isPrimary
+          onClick={() => handleAddStep(inputSteps.length)}
+        >
           <TbPlus
             style={{
               color: "inherit",
