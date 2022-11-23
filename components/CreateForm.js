@@ -105,30 +105,21 @@ export default function CreateForm() {
     }
   }
 
-  function handleAddStep(index) {
+  function handleChangeStepAmount(start, deleteCount) {
     const additionalStep = {
-      step: index + 1,
+      step: start + 1,
       title: "",
       img: "",
       description: "",
       file: "",
     };
     const data = inputSteps;
-    data.splice(index, 0, additionalStep);
+    deleteCount ? data.splice(start, deleteCount) : data.splice(start, deleteCount, additionalStep);
     const renumberedSteps = renumberSteps(data);
     setInputSteps(renumberedSteps);
-    index === inputSteps.length - 1 ? scrollToButton() : scrollDown150Px();
+    start === inputSteps.length - 1 ? scrollToButton() : scrollDown150Px();
     console.log("ADD inputSteps", inputSteps);
     console.log("ADD renumberedSteps", renumberedSteps);
-  }
-
-  function handleDeleteStep(index) {
-    const data = inputSteps;
-    data.splice(index, 1);
-    const renumberedSteps = renumberSteps(data);
-    setInputSteps(renumberedSteps);
-    console.log("DELETE inputSteps", inputSteps);
-    console.log("DELETE renumberedSteps", renumberedSteps);
   }
 
   async function handleSubmit(event) {
@@ -219,7 +210,7 @@ export default function CreateForm() {
         {inputSteps.map((step, index) => {
           return (
             <Fragment key={index}>
-              <InsertButton type="button" onClick={() => handleAddStep(index)}>
+              <InsertButton type="button" onClick={() => handleChangeStepAmount(index, 0)}>
                 {index === 0 ? (
                   <>
                     <TbChevronUp fontSize="1.5em" /> Add step before
@@ -237,7 +228,7 @@ export default function CreateForm() {
                   {inputSteps.length > 1 && (
                     <StepDelete
                       type="button"
-                      onClick={() => handleDeleteStep(index)}
+                      onClick={() => handleChangeStepAmount(index, 1)}
                       aria-label="Delete step"
                     >
                       <TbTrash />
@@ -327,7 +318,7 @@ export default function CreateForm() {
         <Button
           ref={buttonRef}
           isPrimary
-          onClick={() => handleAddStep(inputSteps.length)}
+          onClick={() => handleChangeStepAmount(inputSteps.length, 0)}
         >
           <TbPlus
             style={{
