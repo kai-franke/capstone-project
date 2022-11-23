@@ -90,7 +90,6 @@ export default function CreateForm() {
     const newFile = changeEvent.target.files[0];
     const data = [...inputSteps];
     data[index]["file"] = newFile;
-    console.log("data", data);
 
     try {
       const reader = new FileReader();
@@ -114,12 +113,12 @@ export default function CreateForm() {
       file: "",
     };
     const data = inputSteps;
-    deleteCount ? data.splice(start, deleteCount) : data.splice(start, deleteCount, additionalStep);
+    deleteCount
+      ? data.splice(start, deleteCount)
+      : data.splice(start, deleteCount, additionalStep);
     const renumberedSteps = renumberSteps(data);
     setInputSteps(renumberedSteps);
     start === inputSteps.length - 1 ? scrollToButton() : scrollDown150Px();
-    console.log("ADD inputSteps", inputSteps);
-    console.log("ADD renumberedSteps", renumberedSteps);
   }
 
   async function handleSubmit(event) {
@@ -210,7 +209,10 @@ export default function CreateForm() {
         {inputSteps.map((step, index) => {
           return (
             <Fragment key={index}>
-              <InsertButton type="button" onClick={() => handleChangeStepAmount(index, 0)}>
+              <InsertButton
+                type="button"
+                onClick={() => handleChangeStepAmount(index, 0)}
+              >
                 {index === 0 ? (
                   <>
                     <TbChevronUp fontSize="1.5em" /> Add step before
