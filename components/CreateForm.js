@@ -27,6 +27,15 @@ function sanitizeString(dirtyString) {
   // Thank you, https://github.com/Roland-Hufnagel and Felix!
 }
 
+function renumberSteps(wrongNumberedSteps) {
+  const correctNumberedSteps = wrongNumberedSteps.map(
+    (wrongNumberedStep, index) => {
+      return { ...wrongNumberedStep, step: index + 1 };
+    }
+  );
+  return correctNumberedSteps;
+}
+
 export default function CreateForm() {
   const [inputSteps, setInputSteps] = useState([
     { step: 1, title: "", img: "", description: "", file: "" },
@@ -48,15 +57,6 @@ export default function CreateForm() {
     });
     return () => Lottie.destroy();
   }, [isLoading]);
-
-  function renumberSteps(wrongNumberedSteps) {
-    const correctNumberedSteps = wrongNumberedSteps.map(
-      (wrongNumberedStep, index) => {
-        return { ...wrongNumberedStep, step: index + 1 };
-      }
-    );
-    return correctNumberedSteps;
-  }
 
   async function addNewTutorial(data) {
     try {
@@ -113,7 +113,6 @@ export default function CreateForm() {
       description: "",
       file: "",
     };
-
     if (deleteCount) {
       data.splice(start, deleteCount);
     } else {
