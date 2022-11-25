@@ -105,6 +105,7 @@ export default function CreateForm() {
   }
 
   function handleChangeStepAmount(start, deleteCount) {
+    const data = inputSteps;
     const additionalStep = {
       step: start + 1,
       title: "",
@@ -112,12 +113,13 @@ export default function CreateForm() {
       description: "",
       file: "",
     };
-    const data = inputSteps;
-    deleteCount
-      ? data.splice(start, deleteCount)
-      : data.splice(start, deleteCount, additionalStep);
-    const renumberedSteps = renumberSteps(data);
-    setInputSteps(renumberedSteps);
+
+    if (deleteCount) {
+      data.splice(start, deleteCount);
+    } else {
+      data.splice(start, deleteCount, additionalStep);
+    }
+    setInputSteps(renumberSteps(data));
     start === inputSteps.length - 1 ? scrollToButton() : scrollDown150Px();
   }
 
