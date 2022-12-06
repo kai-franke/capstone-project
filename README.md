@@ -27,3 +27,5 @@ Easily create illustrated step-by-step tutorials to share your knowledge and ski
 - Vercel
 - Creative Cloud
 - Figma
+
+![how_to_bathe_a_hamster_mockup_1b](https://user-images.githubusercontent.com/71948045/206014044-b6ef7110-fed9-4939-9799-197362d1444b.png)
