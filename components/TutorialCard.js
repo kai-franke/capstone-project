@@ -17,6 +17,10 @@ export default function TutorialCard({ step, totalSteps, jumpToStep }) {
         <StepNumber>
           <CurrentStepNumber>Step {step.step}&nbsp;</CurrentStepNumber>
           <TotalStepNumbers>&nbsp;of {totalSteps}</TotalStepNumbers>
+          <EnterStepNumber
+            type="number"
+            onBlur={(event) => jumpToStep(event)}
+          />
         </StepNumber>
         <StepTitle>{step.title}</StepTitle>
         <Paragraph>{step.description}</Paragraph>
@@ -46,6 +50,12 @@ const StepNumber = styled.div`
 const CurrentStepNumber = styled.p`
   font-weight: 500;
   padding: 0.7em 0 0.3em 0;
+`;
+
+const EnterStepNumber = styled.input`
+  all: unset;
+  //font-weight: 500;
+  //padding: 0.7em 0 0.3em 0;
 `;
 
 const TotalStepNumbers = styled.p`

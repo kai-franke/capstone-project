@@ -36,8 +36,11 @@ export default function Tutorial({ name, steps, id, slug }) {
     );
   }
 
-  function jumpToStep(jumpStep) {
+  function jumpToStep(event) {
+    event.preventDefault();
+    const jumpStep = event.target.value;
     if (jumpStep < steps.length) {
+      console.log(jumpStep);
       setCurrentStep(jumpStep);
     } else {
       return;
