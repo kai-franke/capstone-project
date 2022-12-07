@@ -2,7 +2,7 @@ import Image from "next/image";
 import styled from "styled-components";
 import { Paragraph, Subline } from "./TextElements";
 
-export default function TutorialCard({ step }) {
+export default function TutorialCard({ step, totalSteps, jumpToStep }) {
   return (
     <>
       <CardContainer>
@@ -14,7 +14,10 @@ export default function TutorialCard({ step }) {
             objectFit="cover"
           ></Image>
         </ImageContainer>
-        <StepNumber>Step {step.step}</StepNumber>
+        <StepNumber>
+          <CurrentStepNumber>Step {step.step}&nbsp;</CurrentStepNumber>
+          <TotalStepNumbers>&nbsp;of {totalSteps}</TotalStepNumbers>
+        </StepNumber>
         <StepTitle>{step.title}</StepTitle>
         <Paragraph>{step.description}</Paragraph>
       </CardContainer>
@@ -36,8 +39,18 @@ const StepTitle = styled(Subline)`
   color: var(--darktext);
 `;
 
-const StepNumber = styled.p`
+const StepNumber = styled.div`
+  display: flex;
+`;
+
+const CurrentStepNumber = styled.p`
   font-weight: 500;
+  padding: 0.7em 0 0.3em 0;
+`;
+
+const TotalStepNumbers = styled.p`
+  color: var(--gray-30);
+  font-weight: 300;
   padding: 0.7em 0 0.3em 0;
 `;
 

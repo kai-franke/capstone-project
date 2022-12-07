@@ -36,6 +36,14 @@ export default function Tutorial({ name, steps, id, slug }) {
     );
   }
 
+  function jumpToStep(jumpStep) {
+    if (jumpStep < steps.length) {
+      setCurrentStep(jumpStep);
+    } else {
+      return;
+    }
+  }
+
   return (
     <>
       <Headline>{name}</Headline>
@@ -43,7 +51,11 @@ export default function Tutorial({ name, steps, id, slug }) {
       {currentStep === 0 ? (
         <TutorialStartCard />
       ) : currentStep < steps.length ? (
-        <TutorialCard step={steps[currentStep]} />
+        <TutorialCard
+          step={steps[currentStep]}
+          totalSteps={steps.length - 1}
+          jumpToStep={jumpToStep}
+        />
       ) : (
         <TutorialEndCard />
       )}
