@@ -1,8 +1,22 @@
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Paragraph, Subline } from "./TextElements";
 
 export default function TutorialCard({ step, totalSteps, jumpToStep }) {
+  const [stepNumberInput, setStepNumberInput] = useState(step.step);
+
+  function handleStepChange(event) {
+    const eventValue = event.target.value;
+    if (eventValue === "" || (eventValue > 0 && eventValue <= totalSteps)) {
+      setStepNumberInput(eventValue);
+    }
+  }
+
+  useEffect(() => {
+    setStepNumberInput(step.step);
+  }, [step.step]);
+
   return (
     <>
       <CardContainer>
@@ -15,12 +29,16 @@ export default function TutorialCard({ step, totalSteps, jumpToStep }) {
           ></Image>
         </ImageContainer>
         <StepNumber>
-          <CurrentStepNumber>Step {step.step}&nbsp;</CurrentStepNumber>
-          <TotalStepNumbers>&nbsp;of {totalSteps}</TotalStepNumbers>
-          <EnterStepNumber
+          <StepText>Step&nbsp;</StepText>
+          <CurrentStepNumber
+            value={stepNumberInput}
             type="number"
+            min="1"
+            max={totalSteps}
+            onChange={(event) => handleStepChange(event)}
             onBlur={(event) => jumpToStep(event)}
           />
+          <TotalStepNumbers>of {totalSteps}</TotalStepNumbers>
         </StepNumber>
         <StepTitle>{step.title}</StepTitle>
         <Paragraph>{step.description}</Paragraph>
@@ -47,15 +65,15 @@ const StepNumber = styled.div`
   display: flex;
 `;
 
-const CurrentStepNumber = styled.p`
+const StepText = styled.p`
   font-weight: 500;
   padding: 0.7em 0 0.3em 0;
 `;
 
-const EnterStepNumber = styled.input`
+const CurrentStepNumber = styled.input`
   all: unset;
-  //font-weight: 500;
-  //padding: 0.7em 0 0.3em 0;
+  font-weight: 500;
+  padding: 0.7em 0 0.3em 0;
 `;
 
 const TotalStepNumbers = styled.p`
