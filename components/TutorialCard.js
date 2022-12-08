@@ -8,21 +8,24 @@ export default function TutorialCard({ step, totalSteps, setCurrentStep }) {
 
   function handleStepChange(event) {
     const eventValue = event.target.value;
-    if (eventValue === "" || (eventValue > 0 && eventValue <= totalSteps)) {
-      setStepNumberInput(eventValue);
+    const sanitizedEventValue = eventValue.trim().replace(".", "");
+    if (
+      sanitizedEventValue === "" ||
+      (sanitizedEventValue > 0 && sanitizedEventValue <= totalSteps)
+    ) {
+      setStepNumberInput(sanitizedEventValue);
     }
   }
 
-  function handleKeyUp(event) {
+  function handleKeyDown(event) {
     if (event.key === "Enter") {
       jumpToStep();
     }
   }
 
   function jumpToStep() {
-    const jumpStep = stepNumberInput;
     if (stepNumberInput !== "") {
-      setCurrentStep(jumpStep);
+      setCurrentStep(stepNumberInput);
     } else {
       setStepNumberInput(step.step);
     }
@@ -51,6 +54,7 @@ export default function TutorialCard({ step, totalSteps, setCurrentStep }) {
             inputMode="numeric"
             min="1"
             max={totalSteps}
+            pattern="\d*"
             widthFactor={
               stepNumberInput.length
                 ? stepNumberInput.length
@@ -58,7 +62,7 @@ export default function TutorialCard({ step, totalSteps, setCurrentStep }) {
             }
             onInput={(event) => handleStepChange(event)}
             onBlur={() => jumpToStep()}
-            onKeyUp={(event) => handleKeyUp(event)}
+            onKeyDown={(event) => handleKeyDown(event)}
           />
           <TotalStepNumbers>of {totalSteps}</TotalStepNumbers>
         </StepNumber>
