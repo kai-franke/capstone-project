@@ -13,6 +13,12 @@ export default function TutorialCard({ step, totalSteps, setCurrentStep }) {
     }
   }
 
+  function handleKeyUp(event) {
+    if (event.key === "Enter") {
+      jumpToStep();
+    }
+  }
+
   function jumpToStep() {
     const jumpStep = stepNumberInput;
     if (stepNumberInput !== "") {
@@ -52,6 +58,7 @@ export default function TutorialCard({ step, totalSteps, setCurrentStep }) {
             }
             onInput={(event) => handleStepChange(event)}
             onBlur={() => jumpToStep()}
+            onKeyUp={(event) => handleKeyUp(event)}
           />
           <TotalStepNumbers>of {totalSteps}</TotalStepNumbers>
         </StepNumber>
