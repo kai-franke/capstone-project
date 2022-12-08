@@ -13,6 +13,9 @@ export default function TutorialCard({ step, totalSteps, jumpToStep }) {
     }
   }
 
+  console.log("stepNumberInput.length", stepNumberInput.length);
+  console.log("step.step", step.step.toString().length);
+
   useEffect(() => {
     setStepNumberInput(step.step);
   }, [step.step]);
@@ -32,10 +35,16 @@ export default function TutorialCard({ step, totalSteps, jumpToStep }) {
           <StepText>Step&nbsp;</StepText>
           <CurrentStepNumber
             value={stepNumberInput}
-            type="number"
+            type="text"
+            inputMode="numeric"
             min="1"
             max={totalSteps}
-            onChange={(event) => handleStepChange(event)}
+            widthFactor={
+              stepNumberInput.length
+                ? stepNumberInput.length
+                : step.step.toString().length
+            }
+            onInput={(event) => handleStepChange(event)}
             onBlur={(event) => jumpToStep(event)}
           />
           <TotalStepNumbers>of {totalSteps}</TotalStepNumbers>
@@ -63,6 +72,7 @@ const StepTitle = styled(Subline)`
 
 const StepNumber = styled.div`
   display: flex;
+  align-content: flex-start;
 `;
 
 const StepText = styled.p`
@@ -72,8 +82,18 @@ const StepText = styled.p`
 
 const CurrentStepNumber = styled.input`
   all: unset;
+  width: ${(props) => props.widthFactor * 0.85}em;
+  height: 1em;
   font-weight: 500;
-  padding: 0.7em 0 0.3em 0;
+  padding: 0.3em 0 0.1em 0;
+  margin: 0.67em 0.35em 0 1px;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px dashed var(--gray-30);
+    margin: 0.6em 0.3em 0 0;
+  }
 `;
 
 const TotalStepNumbers = styled.p`
