@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Paragraph, Subline } from "./TextElements";
 
-export default function TutorialCard({ step, totalSteps, jumpToStep }) {
+export default function TutorialCard({ step, totalSteps, setCurrentStep }) {
   const [stepNumberInput, setStepNumberInput] = useState(step.step);
 
   function handleStepChange(event) {
@@ -13,8 +13,14 @@ export default function TutorialCard({ step, totalSteps, jumpToStep }) {
     }
   }
 
-  console.log("stepNumberInput.length", stepNumberInput.length);
-  console.log("step.step", step.step.toString().length);
+  function jumpToStep() {
+    const jumpStep = stepNumberInput;
+    if (stepNumberInput !== "") {
+      setCurrentStep(jumpStep);
+    } else {
+      setStepNumberInput(step.step);
+    }
+  }
 
   useEffect(() => {
     setStepNumberInput(step.step);
@@ -32,7 +38,7 @@ export default function TutorialCard({ step, totalSteps, jumpToStep }) {
           ></Image>
         </ImageContainer>
         <StepNumber>
-          <StepText>Step&nbsp;</StepText>
+          <StepText>Step</StepText>
           <CurrentStepNumber
             value={stepNumberInput}
             type="text"
@@ -45,7 +51,7 @@ export default function TutorialCard({ step, totalSteps, jumpToStep }) {
                 : step.step.toString().length
             }
             onInput={(event) => handleStepChange(event)}
-            onBlur={(event) => jumpToStep(event)}
+            onBlur={() => jumpToStep()}
           />
           <TotalStepNumbers>of {totalSteps}</TotalStepNumbers>
         </StepNumber>
@@ -85,14 +91,14 @@ const CurrentStepNumber = styled.input`
   width: ${(props) => props.widthFactor * 0.85}em;
   height: 1em;
   font-weight: 500;
-  padding: 0.3em 0 0.1em 0;
-  margin: 0.67em 0.35em 0 1px;
+  padding: 0.25em 0 0.1em 0;
+  margin: 0.67em 0.35em 0 4px;
   text-align: center;
   cursor: pointer;
 
   &:hover {
     border: 1px dashed var(--gray-30);
-    margin: 0.6em 0.3em 0 0;
+    margin: 0.62em 0.28em 0 3px;
   }
 `;
 

@@ -36,16 +36,6 @@ export default function Tutorial({ name, steps, id, slug }) {
     );
   }
 
-  function jumpToStep(event) {
-    const jumpStep = event.target.value;
-    console.log(jumpStep);
-    if (jumpStep > 0 && jumpStep < steps.length) {
-      setCurrentStep(jumpStep);
-    } else {
-      setCurrentStep((prevCurrentStep) => prevCurrentStep);
-    }
-  }
-
   return (
     <>
       <Headline>{name}</Headline>
@@ -56,7 +46,7 @@ export default function Tutorial({ name, steps, id, slug }) {
         <TutorialCard
           step={steps[currentStep]}
           totalSteps={steps.length - 1}
-          jumpToStep={jumpToStep}
+          setCurrentStep={setCurrentStep}
         />
       ) : (
         <TutorialEndCard />
