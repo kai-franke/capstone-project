@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Paragraph, Subline } from "./TextElements";
 
@@ -30,10 +30,6 @@ export default function TutorialCard({ step, totalSteps, setCurrentStep }) {
       setStepNumberInput(step.step);
     }
   }
-
-  useEffect(() => {
-    setStepNumberInput(step.step);
-  }, [step.step]);
 
   return (
     <>
