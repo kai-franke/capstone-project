@@ -31,6 +31,11 @@ export default function TutorialCard({ step, totalSteps, setCurrentStep }) {
     }
   }
 
+  // Updates the step number inside the input field if the next or prev buttons are used.
+  useEffect(() => {
+    setStepNumberInput(step.step);
+  }, [step.step]);
+
   return (
     <>
       <CardContainer>
