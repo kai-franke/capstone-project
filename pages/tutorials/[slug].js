@@ -43,7 +43,11 @@ export default function Tutorial({ name, steps, id, slug }) {
       {currentStep === 0 ? (
         <TutorialStartCard />
       ) : currentStep < steps.length ? (
-        <TutorialCard step={steps[currentStep]} />
+        <TutorialCard
+          step={steps[currentStep]}
+          totalSteps={steps.length - 1}
+          setCurrentStep={setCurrentStep}
+        />
       ) : (
         <TutorialEndCard />
       )}
