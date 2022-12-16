@@ -1,6 +1,7 @@
-import { Fragment, useEffect, useRef, useRouter, useState } from "react";
+import { useState, useRef, useEffect, Fragment } from "react";
+import { useRouter } from "next/router";
+import Image from "next/image";
 import { useSession } from "next-auth/react";
-import styled from "styled-components";
 import {
   TbCheck,
   TbPlus,
@@ -9,14 +10,15 @@ import {
   TbDirection,
   TbChevronUp,
 } from "react-icons/tb";
+import styled from "styled-components";
 import { customAlphabet } from "nanoid";
-import Image from "next/image";
 import Lottie from "lottie-web";
+
 import Modal from "./Modal";
 import { Button, ButtonContainer } from "./Buttons";
 import { Paragraph } from "./TextElements";
 
-// Possible letters for the random suffix when generating the URL
+// Possible letters for random suffix when generating URL
 const slugSuffix = customAlphabet(
   "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
   4
@@ -42,6 +44,7 @@ export default function CreateForm() {
   ]);
   const [inputTutorialTitle, setInputTutorialTitle] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
   const buttonRef = useRef();
   const lottiefile = useRef(null);
 
