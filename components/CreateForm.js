@@ -153,8 +153,7 @@ export default function CreateForm() {
         ).then((res) => res.json());
         updatedInputSteps[index]["img"] = data.secure_url;
       } else {
-        updatedInputSteps[index]["img"] =
-          "https://res.cloudinary.com/kaifranke/image/upload/v1671201612/tutorial-img/wamuke4f5patu8su7idk.jpg";
+        updatedInputSteps[index]["img"] = "/assets/placeholder_image_01.jpg";
       }
 
       setInputSteps(updatedInputSteps);
