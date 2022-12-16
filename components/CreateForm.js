@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect, Fragment } from "react";
-import { useRouter } from "next/router";
+import { Fragment, useEffect, useRef, useRouter, useState } from "react";
+import { useSession } from "next-auth/react";
 import styled from "styled-components";
 import {
   TbCheck,
@@ -10,13 +10,13 @@ import {
   TbChevronUp,
 } from "react-icons/tb";
 import { customAlphabet } from "nanoid";
-import { Button, ButtonContainer } from "./Buttons";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
-import Modal from "./Modal";
 import Lottie from "lottie-web";
+import Modal from "./Modal";
+import { Button, ButtonContainer } from "./Buttons";
 import { Paragraph } from "./TextElements";
 
+// Possible letters for the random suffix when generating the URL
 const slugSuffix = customAlphabet(
   "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
   4
@@ -42,10 +42,11 @@ export default function CreateForm() {
   ]);
   const [inputTutorialTitle, setInputTutorialTitle] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { data: session } = useSession();
-  const router = useRouter();
   const buttonRef = useRef();
   const lottiefile = useRef(null);
+
+  const { data: session } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     Lottie.loadAnimation({
@@ -136,9 +137,7 @@ export default function CreateForm() {
     // Upload images to Cloudinary and set URL
     let index = 0;
     for (const file of inputSteps) {
-      console.log(file.file ? "true" : "false");
       const updatedInputSteps = [...inputSteps];
-      console.log("updatedInputSteps", updatedInputSteps);
 
       if (file.file) {
         const formData = new FormData();
