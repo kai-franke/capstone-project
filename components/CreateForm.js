@@ -132,14 +132,14 @@ export default function CreateForm() {
     }
 
     setIsLoading(true);
-    
+
     // Upload images to Cloudinary and set URL
     let index = 0;
     for (const file of inputSteps) {
       console.log(file.file ? "true" : "false");
       const updatedInputSteps = [...inputSteps];
-      console.log('updatedInputSteps', updatedInputSteps)
-      
+      console.log("updatedInputSteps", updatedInputSteps);
+
       if (file.file) {
         const formData = new FormData();
         formData.append("file", file.file);
@@ -153,9 +153,10 @@ export default function CreateForm() {
         ).then((res) => res.json());
         updatedInputSteps[index]["img"] = data.secure_url;
       } else {
-        updatedInputSteps[index]["img"] = "https://res.cloudinary.com/kaifranke/image/upload/v1667569442/tutorial-img/mgp26zuuz375achigedy.jpg"
+        updatedInputSteps[index]["img"] =
+          "https://res.cloudinary.com/kaifranke/image/upload/v1671201612/tutorial-img/wamuke4f5patu8su7idk.jpg";
       }
-      
+
       setInputSteps(updatedInputSteps);
       index += 1;
     }
