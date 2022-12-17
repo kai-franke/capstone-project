@@ -1,15 +1,24 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Fragment } from "react";
 import { useRouter } from "next/router";
-import styled from "styled-components";
-import { TbCheck, TbPlus, TbCameraOff, TbTrash } from "react-icons/tb";
-import { customAlphabet } from "nanoid";
-import { Button, ButtonContainer } from "./Buttons";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import Modal from "./Modal";
+import {
+  TbCheck,
+  TbPlus,
+  TbCameraOff,
+  TbTrash,
+  TbDirection,
+  TbChevronUp,
+} from "react-icons/tb";
+import styled from "styled-components";
+import { customAlphabet } from "nanoid";
 import Lottie from "lottie-web";
+
+import Modal from "./Modal";
+import { Button, ButtonContainer } from "./Buttons";
 import { Paragraph } from "./TextElements";
 
+// Possible letters for random suffix when generating URL
 const slugSuffix = customAlphabet(
   "23456789abcdefghklmnpqrstuvwxyzABCDEFGHKLMNPQRSTUVWXYZ",
   4
@@ -20,16 +29,27 @@ function sanitizeString(dirtyString) {
   // Thank you, https://github.com/Roland-Hufnagel and Felix!
 }
 
+function renumberSteps(wrongNumberedSteps) {
+  const correctNumberedSteps = wrongNumberedSteps.map(
+    (wrongNumberedStep, index) => {
+      return { ...wrongNumberedStep, step: index + 1 };
+    }
+  );
+  return correctNumberedSteps;
+}
+
 export default function CreateForm() {
   const [inputSteps, setInputSteps] = useState([
     { step: 1, title: "", img: "", description: "", file: "" },
   ]);
   const [inputTutorialTitle, setInputTutorialTitle] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { data: session } = useSession();
-  const router = useRouter();
+
   const buttonRef = useRef();
   const lottiefile = useRef(null);
+
+  const { data: session } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     Lottie.loadAnimation({
@@ -88,25 +108,22 @@ export default function CreateForm() {
     }
   }
 
-  function handleAddStep() {
+  function handleChangeStepAmount(start, deleteCount) {
+    const data = inputSteps;
     const additionalStep = {
-      step: inputSteps.length + 1,
+      step: start + 1,
       title: "",
       img: "",
       description: "",
       file: "",
     };
-    setInputSteps((prevInputSteps) => [...prevInputSteps, additionalStep]);
-    scrollToButton();
-  }
-
-  function handleDeleteStep(index) {
-    const data = inputSteps;
-    data.splice(index, 1);
-    const renumberedSteps = data.map((remainingStep, index) => {
-      return { ...remainingStep, step: index + 1 };
-    });
-    setInputSteps(renumberedSteps);
+    if (deleteCount) {
+      data.splice(start, deleteCount);
+    } else {
+      data.splice(start, deleteCount, additionalStep);
+    }
+    setInputSteps(renumberSteps(data));
+    start === inputSteps.length - 1 ? scrollToButton() : scrollDown150Px();
   }
 
   async function handleSubmit(event) {
@@ -123,18 +140,24 @@ export default function CreateForm() {
     // Upload images to Cloudinary and set URL
     let index = 0;
     for (const file of inputSteps) {
-      const formData = new FormData();
-      formData.append("file", file.file);
-      formData.append("upload_preset", "tutorial-img");
-      const data = await fetch(
-        "https://api.cloudinary.com/v1_1/kaifranke/image/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      ).then((res) => res.json());
       const updatedInputSteps = [...inputSteps];
-      updatedInputSteps[index]["img"] = data.secure_url;
+
+      if (file.file) {
+        const formData = new FormData();
+        formData.append("file", file.file);
+        formData.append("upload_preset", "tutorial-img");
+        const data = await fetch(
+          "https://api.cloudinary.com/v1_1/kaifranke/image/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        ).then((res) => res.json());
+        updatedInputSteps[index]["img"] = data.secure_url;
+      } else {
+        updatedInputSteps[index]["img"] = "/assets/placeholder_image_01.jpg";
+      }
+
       setInputSteps(updatedInputSteps);
       index += 1;
     }
@@ -158,6 +181,13 @@ export default function CreateForm() {
   function scrollToButton() {
     setTimeout(() => {
       buttonRef.current.scrollIntoView({ behavior: "smooth" });
+    });
+  }
+
+  function scrollDown150Px() {
+    window.scrollBy({
+      top: 150,
+      behavior: "smooth",
     });
   }
 
@@ -189,99 +219,120 @@ export default function CreateForm() {
 
         {inputSteps.map((step, index) => {
           return (
-            <FormCard key={index}>
-              <FlexWrapper>
-                <StepNumber>Step {index + 1}</StepNumber>
-                {inputSteps.length > 1 && (
-                  <StepDelete
-                    type="button"
-                    onClick={() => handleDeleteStep(index)}
-                    aria-label="Delete step"
-                  >
-                    <TbTrash />
-                  </StepDelete>
-                )}
-              </FlexWrapper>
-              <StyledLabel isPrimary={false}>
-                <LabelText>Step title</LabelText>
-                <StyledInput
-                  name="title"
-                  value={step.title}
-                  placeholder="e.g. Prepare your tools"
-                  aria-placeholder="e.g. Prepare your tools"
-                  maxLength="60"
-                  onChange={(event) => handleFormChange(index, event)}
-                  required
-                />
-              </StyledLabel>
-
-              <UploadButton>
-                <UploadInputfield
-                  name="file"
-                  type="file"
-                  accept=".gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp, .png, .webp"
-                  onChange={(event) => handleUploadChange(index, event)}
-                  required
-                ></UploadInputfield>
-                <LabelText>Step picture</LabelText>
-                <UploadButtonBorder>
-                  <PreviewImage showBorder={inputSteps[index]["img"] === ""}>
-                    {inputSteps[index]["img"] ? (
-                      <Image
-                        src={inputSteps[index]["img"]}
-                        layout="fill"
-                        objectFit="cover"
-                        alt="Upload preview"
-                      />
-                    ) : (
-                      <NoImage>
-                        <TbCameraOff
-                          style={{
-                            color: "inherit",
-                            fontSize: "1.5em",
-                            marginBottom: "0.2em",
-                          }}
-                        />
-                        No picture selected
-                      </NoImage>
-                    )}
-                  </PreviewImage>
-                  <PreviewFileName>
-                    {inputSteps[index].file
-                      ? inputSteps[index].file.name
-                      : "Please select a picture"}
-                  </PreviewFileName>
-                </UploadButtonBorder>
-              </UploadButton>
-              <p
-                style={{
-                  fontSize: "0.75em",
-                  marginBottom: "0.7em",
-                  color: "var(--gray-70)",
-                }}
+            <Fragment key={index}>
+              <InsertButton
+                type="button"
+                onClick={() => handleChangeStepAmount(index, 0)}
               >
-                Accepted file formats: .gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp,
-                .png, .webp
-              </p>
+                {index === 0 ? (
+                  <>
+                    <TbChevronUp fontSize="1.5em" /> Add step before
+                  </>
+                ) : (
+                  <>
+                    <TbDirection fontSize="2em" /> Insert step
+                  </>
+                )}
+              </InsertButton>
 
-              <StyledLabel isPrimary={false}>
-                <LabelText>Step description</LabelText>
-                <StyledTextarea
-                  name="description"
-                  value={step.description}
-                  placeholder="Enter a description"
-                  aria-placeholder="Enter a description"
-                  maxLength="300"
-                  onChange={(event) => handleFormChange(index, event)}
-                  required
-                />
-              </StyledLabel>
-            </FormCard>
+              <FormCard>
+                <FlexWrapper>
+                  <StepNumber>Step {index + 1}</StepNumber>
+                  {inputSteps.length > 1 && (
+                    <StepDelete
+                      type="button"
+                      onClick={() => handleChangeStepAmount(index, 1)}
+                      aria-label="Delete step"
+                    >
+                      <TbTrash />
+                    </StepDelete>
+                  )}
+                </FlexWrapper>
+                <StyledLabel isPrimary={false}>
+                  <LabelText>Step title</LabelText>
+                  <StyledInput
+                    name="title"
+                    value={step.title}
+                    placeholder="e.g. Prepare your tools"
+                    aria-placeholder="e.g. Prepare your tools"
+                    maxLength="60"
+                    onChange={(event) => handleFormChange(index, event)}
+                    required
+                  />
+                </StyledLabel>
+
+                <UploadButton>
+                  <UploadInputfield
+                    name="file"
+                    type="file"
+                    accept=".gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp, .png, .webp"
+                    onChange={(event) => handleUploadChange(index, event)}
+                    //required
+                  ></UploadInputfield>
+                  <LabelText>Step picture</LabelText>
+                  <UploadButtonBorder>
+                    <PreviewImage showBorder={inputSteps[index]["img"] === ""}>
+                      {inputSteps[index]["img"] ? (
+                        <Image
+                          src={inputSteps[index]["img"]}
+                          layout="fill"
+                          objectFit="cover"
+                          alt="Upload preview"
+                        />
+                      ) : (
+                        <NoImage>
+                          <TbCameraOff
+                            style={{
+                              color: "inherit",
+                              fontSize: "1.5em",
+                              marginBottom: "0.2em",
+                            }}
+                          />
+                          No picture selected
+                        </NoImage>
+                      )}
+                    </PreviewImage>
+                    <PreviewFileName>
+                      {inputSteps[index].file
+                        ? inputSteps[index].file.name
+                        : "Please select a picture"}
+                    </PreviewFileName>
+                  </UploadButtonBorder>
+                </UploadButton>
+                <p
+                  style={{
+                    fontSize: "0.75em",
+                    marginBottom: "0.7em",
+                    color: "var(--gray-70)",
+                  }}
+                >
+                  Accepted file formats: .gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp,
+                  .png, .webp
+                </p>
+
+                <StyledLabel isPrimary={false}>
+                  <LabelText>Step description</LabelText>
+                  <StyledTextarea
+                    name="description"
+                    value={step.description}
+                    placeholder="Enter a description"
+                    aria-placeholder="Enter a description"
+                    maxLength="300"
+                    onChange={(event) => handleFormChange(index, event)}
+                    required
+                  />
+                </StyledLabel>
+              </FormCard>
+            </Fragment>
           );
         })}
       </FormContainer>
       <ButtonContainer>
-        <Button ref={buttonRef} isPrimary onClick={handleAddStep}>
+        <Button
+          ref={buttonRef}
+          isPrimary
+          onClick={() => handleChangeStepAmount(inputSteps.length, 0)}
+        >
           <TbPlus
             style={{
               color: "inherit",
@@ -423,7 +474,7 @@ const StepDelete = styled.button`
   color: var(--gray-70);
   cursor: pointer;
 
-  & hover {
+  &:hover {
     color: var(--primary-100);
   }
 `;
@@ -431,4 +482,19 @@ const StepDelete = styled.button`
 const FlexWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const InsertButton = styled.button`
+  all: unset;
+  padding-right: 0.6em;
+  color: var(--gray-70);
+  font-size: 0.8em;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--primary-100);
+  }
 `;
