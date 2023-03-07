@@ -33,6 +33,7 @@ export async function getTutorialBySlug(slug) {
     slug: tutorial.slug,
     steps: tutorial.steps,
     author: tutorial.author,
+    public: tutorial.public,
   };
   return sanitizedTutorial;
 }
@@ -51,6 +52,7 @@ export async function getTutorialByUser(usermail) {
     slug: tutorial.slug,
     steps: tutorial.steps,
     author: tutorial.author,
+    public: tutorial.public,
   }));
 
   return sanitizedTutorials;
