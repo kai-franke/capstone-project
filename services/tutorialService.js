@@ -6,14 +6,17 @@ export async function getAllTutorials() {
 
   const tutorials = await Tutorial.find();
 
-  const sanitizedTutorials = tutorials.map((tutorial) => ({
-    id: tutorial._id.valueOf(),
-    name: tutorial.name,
-    cover: tutorial.cover,
-    slug: tutorial.slug,
-    steps: tutorial.steps,
-    author: tutorial.author,
-  }));
+  const sanitizedTutorials = tutorials
+    .map((tutorial) => ({
+      id: tutorial._id.valueOf(),
+      name: tutorial.name,
+      cover: tutorial.cover,
+      slug: tutorial.slug,
+      steps: tutorial.steps,
+      author: tutorial.author,
+      public: tutorial.public,
+    }))
+    .filter((tutorial) => tutorial.public === true);
 
   return sanitizedTutorials;
 }
@@ -30,6 +33,7 @@ export async function getTutorialBySlug(slug) {
     slug: tutorial.slug,
     steps: tutorial.steps,
     author: tutorial.author,
+    public: tutorial.public,
   };
   return sanitizedTutorial;
 }
@@ -37,7 +41,9 @@ export async function getTutorialBySlug(slug) {
 export async function getTutorialByUser(usermail) {
   await dbConnect();
   const allTutorials = await Tutorial.find();
-  const tutorials = allTutorials.filter((tutorial) => tutorial.author === usermail);
+  const tutorials = allTutorials.filter(
+    (tutorial) => tutorial.author === usermail
+  );
 
   const sanitizedTutorials = tutorials.map((tutorial) => ({
     id: tutorial._id.valueOf(),
@@ -46,6 +52,7 @@ export async function getTutorialByUser(usermail) {
     slug: tutorial.slug,
     steps: tutorial.steps,
     author: tutorial.author,
+    public: tutorial.public,
   }));
 
   return sanitizedTutorials;
