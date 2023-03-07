@@ -128,6 +128,7 @@ export default function CreateForm() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    console.log(event);
     if (inputTutorialTitle.replace(/[^a-zA-Z0-9]/g, "").length < 5) {
       alert(
         "The tutorial title must not consist of less than five letters and numbers (a-Z, 0-9, no special characters)."
@@ -173,6 +174,7 @@ export default function CreateForm() {
         .concat("-", slugSuffix()),
       steps: [{ step: 0 }, ...inputSteps],
       author: session.user.email,
+      public: event.target.tutorialPublic.checked,
     };
 
     addNewTutorial(newTutorial);
@@ -214,6 +216,10 @@ export default function CreateForm() {
               onChange={(event) => handleTitleChange(event)}
               value={inputTutorialTitle}
             />
+          </StyledLabel>
+          <StyledLabel>
+            <LabelText>Show tutorial in public library?</LabelText>
+            <StyledCheckbox name="tutorialPublic" type="checkbox" />
           </StyledLabel>
         </FormCard>
 
@@ -394,6 +400,12 @@ const StyledInput = styled.input`
   &:invalid {
     border-color: var(--primary-100);
   }
+`;
+
+const StyledCheckbox = styled.input`
+  border: 1px solid red;
+  width: 1.15em;
+  height: 1.15em;
 `;
 
 const StyledTextarea = styled.textarea`
