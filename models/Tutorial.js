@@ -8,6 +8,7 @@ const tutorialSchema = new Schema({
   slug: { type: String, required: true },
   steps: { type: Array, required: true },
   author: { type: String, required: true },
+  public: { type: Boolean, required: true },
 });
 
 const Tutorial =
