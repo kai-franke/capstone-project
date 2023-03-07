@@ -217,7 +217,7 @@ export default function CreateForm() {
               value={inputTutorialTitle}
             />
           </StyledLabel>
-          <StyledLabel>
+          <StyledLabel flex>
             <LabelText>Show tutorial in public library?</LabelText>
             <StyledCheckbox name="tutorialPublic" type="checkbox" />
           </StyledLabel>
@@ -376,9 +376,11 @@ const FormCard = styled.fieldset`
 `;
 
 const StyledLabel = styled.label`
-  display: grid;
+  display: ${({ flex }) =>
+    flex ? "flex" : "grid"};;
   color: ${({ isPrimary }) =>
     isPrimary ? "var(--primary-100)" : "var(--darktext)"};
+  align-items: center;
 `;
 
 const LabelText = styled.span`
@@ -403,9 +405,9 @@ const StyledInput = styled.input`
 `;
 
 const StyledCheckbox = styled.input`
-  border: 1px solid red;
-  width: 1.15em;
-  height: 1.15em;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-left: 0.5rem;
 `;
 
 const StyledTextarea = styled.textarea`
