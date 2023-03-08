@@ -21,6 +21,20 @@ export default async function handler(request, response) {
     } else {
       return response.status(401).json({ message: "Unauthorized" });
     }
+  } else if (request.method === "PUT") {
+    if (session) {
+      await dbConnect();
+      const data = JSON.parse(request.body);
+      const updatedTutorial = await Tutorial.findByIdAndUpdate(id, data);
+      return response
+        .json(200)
+        .json({
+          message: "Tutorial updated",
+          updatedTutorial: updatedTutorial,
+        });
+    } else {
+      return response.status(401).json({ message: "Unauthorized" });
+    }
   } else {
     return response.status(405).json({ message: "HTTP method is not allowed" });
   }
