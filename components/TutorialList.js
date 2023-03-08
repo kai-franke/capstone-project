@@ -6,6 +6,8 @@ import {
   TbChevronRight,
   TbCopy,
   TbMessage2Share,
+  TbEye,
+  TbEyeOff,
 } from "react-icons/tb";
 import { Paragraph, Subline } from "./TextElements";
 import { useState } from "react";
@@ -84,6 +86,9 @@ export default function TutorialList({
               <ListCopy onClick={(event) => copyHandler(event, tutorial.slug)}>
                 <TbCopy style={iconStyle} />
               </ListCopy>
+              <ListPublic>
+                {tutorial.public ? <TbEye style={iconStyle} /> : <TbEyeOff style={iconStyle} />}
+              </ListPublic>
               <ListStart>
                 <TbChevronRight style={iconStyle} />
               </ListStart>
@@ -137,6 +142,13 @@ const ListCopy = styled.button`
 const ListStart = styled.button`
   all: unset;
   grid-area: 3 / 3 / 4 / 4;
+  place-self: center end;
+  display: grid;
+`;
+
+const ListPublic = styled.button`
+  all: unset;
+  grid-area: 3 / 2 / 4 / 3;
   place-self: center end;
   display: grid;
 `;
